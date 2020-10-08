@@ -1,0 +1,5 @@
+<app-calendar-ui *ngIf="isTrainingPlansLoading; else loading"></app-calendar-ui>
+<ng-template #loading>
+  <h1>loading</h1>
+  <!-- <app-spinner></app-spinner> -->
+</ng-template>

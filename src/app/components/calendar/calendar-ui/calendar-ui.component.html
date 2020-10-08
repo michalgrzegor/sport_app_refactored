@@ -1,0 +1,6 @@
+<button (click)="previousMonth()">left</button>
+<h1>{{ trainingPlanName$ | async }}</h1>
+<button (click)="nextMonth()">right</button>
+<ng-container *ngIf="calendarData$ | async">
+  <p *ngFor="let day of calendarData$">{{ day.date | date }}</p>
+</ng-container>

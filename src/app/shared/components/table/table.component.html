@@ -1,0 +1,22 @@
+<div class="table__container">
+  <div class="table__legend">
+    <p
+      class="table__column-name"
+      *ngFor="let element of tableLegend; let index = index"
+      (click)="sort(element.name, element.corenspondingValue, index)"
+      [ngClass]="{ 'sort--active': index === sortIndex }"
+    >
+      {{ element.name }}
+    </p>
+  </div>
+  <div #row class="table__body">
+    <app-table-row
+      *ngFor="let row of tableData"
+      [rowData]="row"
+      [tableLegend]="tableLegend"
+      [isActive]="row.id === +activeId"
+      [attr.element-id]="row.id"
+      [attr.element-type]="row['athlete_name'] ? 'athlete' : 'program'"
+    ></app-table-row>
+  </div>
+</div>

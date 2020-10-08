@@ -1,0 +1,22 @@
+<div class="row__container" [ngClass]="{ 'background--active': isActive }">
+  <div class="row__value" *ngFor="let value of renderData">
+    <p
+      *ngIf="value.name && value.name.length > 10"
+      matTooltip="{{ value.name }}"
+      matTooltipClass="comment-tooltip"
+    >
+      {{ value.name | shorten: 10 }}
+    </p>
+    <p *ngIf="value.name && value.name.length <= 10">
+      {{ value.name }}
+    </p>
+    <i
+      *ngIf="!value.name"
+      class="material-icons row__icon"
+      [ngClass]="{ inactive: !value.active }"
+      matTooltip="{{ value.tooltip_text }}"
+      matTooltipClass="comment-tooltip"
+      >{{ value.icon_name }}</i
+    >
+  </div>
+</div>

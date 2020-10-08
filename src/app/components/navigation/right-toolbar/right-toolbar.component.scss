@@ -1,0 +1,9 @@
+@import "../../../shared/styles/colors";
+@import "../../../shared/styles/mixins";
+
+.right-toolbar__container {
+  height: calc(100vh - 64px);
+  width: 324px;
+  overflow: auto;
+  border-left: 1px solid $WhiteDotTwo;
+}

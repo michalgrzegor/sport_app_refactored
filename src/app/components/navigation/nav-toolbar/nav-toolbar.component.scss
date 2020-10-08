@@ -1,0 +1,50 @@
+@import "../../../shared/styles/colors";
+@import "../../../shared/styles/mixins";
+
+.nav__container {
+  background: $mainGreenLight;
+  height: 64px;
+  width: 100%;
+  @include boxShadow();
+  .container-center {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+
+    .nav__subcontainer {
+      max-width: 50%;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      height: 64px;
+
+      .nav__burger {
+        width: 64px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        button {
+          min-width: 48px;
+          height: 48px;
+          padding: 0;
+          border-radius: 50%;
+        }
+      }
+
+      .nav__logo {
+        width: 128px;
+      }
+    }
+
+    .position--left {
+      justify-content: flex-start;
+    }
+
+    .position--right {
+      justify-content: flex-end;
+    }
+  }
+}

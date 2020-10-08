@@ -1,0 +1,17 @@
+<div class="training-plans-list__header" *ngIf="!isWeb">
+  <h4 class="header__title">Program board</h4>
+  <button mat-button>
+    <!-- <mat-icon (click)="closeTrainingPlansListBoard()" class="menu-right-icon"
+        >close</mat-icon
+      > -->
+  </button>
+</div>
+
+<app-table
+  *ngIf="!isTrainingPlansListLoading; else loading"
+  [tableData]="trainingPlanList"
+  [tableLegend]="tableLegend"
+></app-table>
+<ng-template #loading>
+  <!-- <app-spinner></app-spinner> -->
+</ng-template>

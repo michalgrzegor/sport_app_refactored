@@ -1,0 +1,6 @@
+<div class="right-toolbar__container" [ngSwitch]="componentName">
+  <app-tile-editor *ngSwitchCase="'tileeditor'"></app-tile-editor>
+  <app-tiles-collection *ngSwitchCase="'tilecollection'"></app-tiles-collection>
+  <app-athlete-manager *ngSwitchCase="'athletemanager'"></app-athlete-manager>
+  <app-tp-menu *ngSwitchCase="'tp'"></app-tp-menu>
+</div>
