@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { getIsAuthenticated } from './shared/store/auth.selectors';
+import { getIsAuthenticated } from './store/selectors/auth.selectors';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
@@ -17,7 +17,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(
       this.store.select(getIsAuthenticated).subscribe((data) => {
-        console.log(data);
         this.isAuthenticated = data;
       })
     );

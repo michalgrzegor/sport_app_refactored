@@ -9,9 +9,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as fromTrainingPlansDataActions from '../../store/training-plans-data.actions';
+import * as fromTrainingPlansDataActions from '../../../store/actions/training-plans-data.actions';
 import { Subscription } from 'rxjs';
-import { getTrainingPlanId } from '../../store/training-plans-data.selectors';
+import { getTrainingPlanId } from '../../../store/selectors/training-plans-data.selectors';
 import { LegendElement } from '../../../components/tp-menu/tp-menu.component';
 import { TrainingPlanInfo } from '../../models/training-plan.interface';
 import { AthleteInformations } from '../../models/athlete.interface';
@@ -49,20 +49,20 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private sortByString = (sortBy: string, m: number) =>
-    this.tableData.sort((a, b) => {
+    [...this.tableData].sort((a, b) => {
       const valA = a[sortBy] ? a[sortBy].toUpperCase() : 'a';
       const valB = b[sortBy] ? b[sortBy].toUpperCase() : 'a';
       return valA > valB ? 1 * m : valB > valA ? -1 * m : 0;
     });
 
   private sortByBoolean = (sortBy: string, m: number) =>
-    this.tableData.sort((a, b) => {
+    [...this.tableData].sort((a, b) => {
       const valA = a[sortBy] ? true : false;
       const valB = b[sortBy] ? true : false;
       return valA === valB ? 0 : valA ? -1 * m : 1 * m;
     });
 
-  public sort = (name: string, sortBy: string, index: number) => {
+  public sortRows = (name: string, sortBy: string, index: number) => {
     const multiplier =
       index === this.sortIndex ? (this.sortMultiplier === -1 ? 1 : -1) : 1;
     this.sortMultiplier = multiplier;

@@ -1,0 +1,55 @@
+@import "./colors";
+@import "./mixins";
+
+.customForm {
+  position: relative;
+  box-sizing: border-box;
+  margin: 12px;
+
+  &__input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 48px;
+    border: none;
+    background: $WhiteDotOne;
+    padding: 0 10px;
+    @include textLato(400, 14px);
+  }
+
+  &__label {
+    @include textRaleway(400, 14px);
+    color: $fontWhiteHighContrast;
+    position: absolute;
+    top: 16px;
+    left: 10px;
+  }
+
+  &__input:focus {
+    outline: none;
+    border: none;
+    + .customForm__label {
+      transition: 0.3s;
+      top: 4px;
+      font-size: 10px;
+      color: $darkerBrightBlue;
+    }
+  }
+
+  .ng-dirty,
+  .ng-valid {
+    + .customForm__label {
+      top: 4px;
+      font-size: 10px;
+      color: $darkerBrightBlue;
+    }
+  }
+
+  &__error {
+    background: $brightRed;
+    min-height: 36px;
+    line-height: 36px;
+    padding: 0 10px;
+    margin: 0;
+    @include textRaleway(400, 14px);
+  }
+}

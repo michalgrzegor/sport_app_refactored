@@ -1,21 +1,14 @@
-import { getIsAuthenticated } from './../../shared/store/auth.selectors';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { tap, switchMap, map } from 'rxjs/operators';
-import * as fromTrainingPlansDataActions from '../../shared/store/training-plans-data.actions';
+import { tap } from 'rxjs/operators';
+import * as fromTrainingPlansDataActions from '../../store/actions/training-plans-data.actions';
 import {
   isTrainingPlanLoading,
   shouldLoadTrainingPlan,
   shouldLoadTrainingPlansList,
-} from '../../shared/store/training-plans-data.selectors';
+} from '../../store/selectors/training-plans-data.selectors';
 
 @Component({
   selector: 'app-calendar',
@@ -44,7 +37,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
       .add(
         this.store.select(shouldLoadTrainingPlan).subscribe((data) => {
           if (data) {
-            console.log(`laduje`);
             this.loadTrainingPlan(data);
           }
         })

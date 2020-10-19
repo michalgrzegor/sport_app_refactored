@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as MenuActions from '../../../shared/store/menu.actions';
+import * as MenuActions from '../../../store/actions/menu.actions';
 
 @Component({
   selector: 'app-nav-toolbar',

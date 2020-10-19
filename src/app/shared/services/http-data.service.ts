@@ -1,4 +1,3 @@
-import { getAccessToken } from './../store/auth.selectors';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -8,13 +7,14 @@ import {
 } from '../models/training-plan.interface';
 import { Store } from '@ngrx/store';
 import { switchMap, skipWhile } from 'rxjs/operators';
+import { getAccessToken } from 'src/app/store/selectors/auth.selectors';
+import { NewTrainingPlan } from '../models/new-training-plan';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpDataService {
   private URL = 'https://stormy-plains-57531.herokuapp.com/api/v1/';
-  private TOKEN: string;
 
   constructor(private httpClient: HttpClient, private store: Store) {}
 
@@ -31,7 +31,6 @@ export class HttpDataService {
   getTrainingPlansList = (): Observable<TrainingPlanInfo[]> =>
     this.getToken().pipe(
       switchMap((token) => {
-        console.log(token);
         return this.httpClient.get<TrainingPlanInfo[]>(
           `${this.URL}training_plans`,
           this.getHttpOptions(token)
@@ -42,9 +41,21 @@ export class HttpDataService {
   getTrainingPlan = (id: string): Observable<TrainingPlan> =>
     this.getToken().pipe(
       switchMap((token) => {
-        console.log(token);
         return this.httpClient.get<TrainingPlan>(
           `${this.URL}training_plans/${id}`,
+          this.getHttpOptions(token)
+        );
+      })
+    );
+
+  createTrainingPlan = (
+    newTrainingPlan: NewTrainingPlan
+  ): Observable<TrainingPlan> =>
+    this.getToken().pipe(
+      switchMap((token) => {
+        return this.httpClient.post<TrainingPlan>(
+          `${this.URL}training_plans`,
+          newTrainingPlan,
           this.getHttpOptions(token)
         );
       })

@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 import {
-  AccesTokenParams,
   RedirectQuery,
+  AccesTokenParams,
   SuccessfulAccesToken,
-} from '../models/auth.interface';
+} from 'src/app/shared/models/auth.interface';
 
 export const SetInAuthProcess = createAction(
   '[Auth Service] SET_IN_AUTH_PROCESS'
@@ -26,7 +26,4 @@ export const GetAccesToken = createAction(
 export const SetAccesToken = createAction(
   '[Auth Service] SET_ACCES_TOKEN',
   props<{ successfulResponse: SuccessfulAccesToken }>()
-);
-export const MakeRefreshToken = createAction(
-  '[Auth Service] MAKE_REFRESH_TOKEN'
 );

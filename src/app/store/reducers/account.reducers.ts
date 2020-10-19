@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import * as AccountActions from './account.actions';
+import * as AccountActions from '../actions/account.actions';
 
 export interface AccountState {
   accountLevel:
@@ -13,22 +13,6 @@ export interface AccountState {
 const InitialState: AccountState = {
   accountLevel: null,
 };
-
-// export function AccountReducer(
-//   state = InitialState,
-//   action: AccountActions.AccountActions
-// ): AccountState {
-//   switch (action.type) {
-//     case AccountActions.SET_ACCOUNT_LEVEL:
-//       return {
-//         ...state,
-//         accountLevel: action.payload,
-//       };
-
-//     default:
-//       return state;
-//   }
-// }
 
 const accountReducer = createReducer(
   InitialState,

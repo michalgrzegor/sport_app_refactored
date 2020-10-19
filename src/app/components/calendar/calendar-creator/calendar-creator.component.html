@@ -1,0 +1,29 @@
+<form class="creator" #calendarCreator="ngForm">
+    <div class="creator__element customForm">
+        <input class="customForm__input" type="text" [(ngModel)]="newTrainingPlan.training_plan_name" name="training_plan_name" #training_plan_name="ngModel" required>
+        <label class="customForm__label" for="">Training plan Name</label>
+        <p [hidden]="training_plan_name.valid || training_plan_name.pristine" class="customForm__error">This field is required</p>
+    </div>
+    <div class="creator__element customForm">
+        <input class="customForm__input" type="date" [ngModel] ="newTrainingPlan.date_from | date:'yyyy-MM-dd'" (ngModelChange)="newTrainingPlan.date_from = $event" name="date_from" #date_from="ngModel" required>
+        <label class="customForm__label" for="">Training plan start</label>
+        <p [hidden]="date_from.valid || date_from.pristine" class="customForm__error">This field is required</p>
+    </div>
+    <div class="creator__element customForm">
+        <input class="customForm__input" type="date" [ngModel] ="newTrainingPlan.date_to | date:'yyyy-MM-dd'" (ngModelChange)="newTrainingPlan.date_to = $event" name="date_to" #date_to="ngModel"  required>
+        <label class="customForm__label" for="">Training plan end</label>
+        <p [hidden]="date_to.valid || date_to.pristine" class="customForm__error">This field is required</p>
+    </div>
+    <div class="creator__element customForm">
+        <select class="customForm__input" [(ngModel)]="newTrainingPlan.training_sesion_number" name="training_sesion_number" #training_sesion_number="ngModel"  required>
+            <option  [value]="1">1</option>
+            <option  [value]="2">2</option>
+            <option  [value]="3">3</option>
+        </select>
+        <label class="customForm__label" for="">Sesions number</label>
+        <p [hidden]="training_sesion_number.valid || training_sesion_number.pristine" class="customForm__error">This field is required</p>
+    </div>
+    <div class="creator__btns">
+        <button (click)="createTrainingPlan()" type="button" [disabled]="!calendarCreator.form.valid"  class="creator__btn customBtn">Create</button>
+    </div>
+</form>

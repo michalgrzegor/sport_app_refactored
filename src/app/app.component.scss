@@ -1,19 +1,20 @@
 @import "./shared/styles/colors";
 @import "./shared/styles/mixins";
 
-.main__container {
+.main {
   max-width: 1440px;
   margin: 0 auto;
   height: calc(100vh - 64px);
 
-  .columns__container {
+  &__container {
     width: 100%;
     display: grid;
     grid-template-columns: auto 1fr auto;
+  }
 
-    .router__outlet {
-      height: calc(100vh - 64px);
-      overflow: auto;
-    }
+  &__outlet {
+    height: calc(100vh - 64px);
+    padding: 0 10px;
+    overflow: auto;
   }
 }

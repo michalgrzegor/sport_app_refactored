@@ -1,10 +1,10 @@
 import { ActionReducerMap } from '@ngrx/store';
 
-import * as fromMenu from './menu.reducers';
-import * as fromAccount from './account.reducers';
-import * as fromTrainingPlansData from './training-plans-data.reducers';
-import * as fromCalendarData from './calendar-data.reducers';
-import * as fromAuth from './auth.reducers';
+import * as fromMenu from './reducers/menu.reducers';
+import * as fromAccount from './reducers/account.reducers';
+import * as fromTrainingPlansData from './reducers/training-plans-data.reducers';
+import * as fromCalendarData from './reducers/calendar-data.reducers';
+import * as fromAuth from './reducers/auth.reducers';
 
 export interface AppState {
   menu: fromMenu.MenuState;

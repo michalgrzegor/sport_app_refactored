@@ -3,12 +3,12 @@ import { Subscription } from 'rxjs';
 import { BreakePointService } from '../../shared/services/breakpoint.service';
 
 import { Store } from '@ngrx/store';
-import * as fromTrainingPlansDataActions from '../../shared/store/training-plans-data.actions';
+import * as fromTrainingPlansDataActions from '../../store/actions/training-plans-data.actions';
 import {
   getTrainingPlansList,
   isTrainingPlansListLoading,
   shouldLoadTrainingPlansList,
-} from '../../shared/store/training-plans-data.selectors';
+} from '../../store/selectors/training-plans-data.selectors';
 import { TrainingPlanInfo } from '../../shared/models/training-plan.interface';
 
 export interface LegendElement {
@@ -65,9 +65,9 @@ export class TpMenuComponent implements OnInit, OnDestroy {
           .subscribe((data) => (this.isTrainingPlansListLoading = data))
       )
       .add(
-        this.store
-          .select(getTrainingPlansList)
-          .subscribe((data) => (this.trainingPlanList = data))
+        this.store.select(getTrainingPlansList).subscribe((data) => {
+          this.trainingPlanList = data;
+        })
       );
   }
 

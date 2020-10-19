@@ -1,4 +1,3 @@
-import { getIsAuthenticated } from './../store/auth.selectors';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import {
@@ -9,9 +8,9 @@ import {
   Router,
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { take, map } from 'rxjs/operators';
-import * as fromAuthActions from '../store/auth.actions';
+import { take, mergeMap } from 'rxjs/operators';
 import { RefreshAuthService } from '../auth/refresh-auth.service';
+import { getIsAuthenticated } from 'src/app/store/selectors/auth.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -32,19 +31,25 @@ export class IsAuthenticatedGuard implements CanActivate {
     | UrlTree {
     return this.store.select(getIsAuthenticated).pipe(
       take(1),
-      map((isAuth) => {
+      mergeMap((isAuth) => {
         if (isAuth) {
           return of(true);
         } else {
-          return this.store.dispatch(fromAuthActions.MakeRefreshToken());
-        }
-      }),
-      map((isAuth) => {
-        if (isAuth) {
-          return true;
-        } else {
-          this.router.navigate(['/login']);
-          return false;
+          if (this.refreshAuthService.checkRefreshToken()) {
+            return this.refreshAuthService.makeRefreshTokenRequest().pipe(
+              mergeMap((response) => {
+                if (response) {
+                  this.refreshAuthService.setSuccessfulRefreshToken(response);
+                  return of(true);
+                } else {
+                  this.router.navigate(['/login']);
+                  return of(false);
+                }
+              })
+            );
+          } else {
+            return of(false);
+          }
         }
       })
     );

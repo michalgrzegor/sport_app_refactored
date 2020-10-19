@@ -1,0 +1,27 @@
+@import "../../../shared/styles/colors";
+@import "../../../shared/styles/mixins";
+
+.info {
+  box-sizing: border-box;
+  width: 100%;
+  height: 56px;
+  border-bottom: 1px solid $WhiteDotTwo;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  &__title {
+    margin: 0;
+    @include textRaleway(800, 16px);
+    text-transform: uppercase;
+  }
+
+  &__btn {
+    position: absolute;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+}

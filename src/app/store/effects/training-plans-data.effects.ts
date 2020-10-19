@@ -1,10 +1,10 @@
-import { HttpDataService } from '../services/http-data.service';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, catchError, switchMap, tap } from 'rxjs/operators';
+import { map, catchError, switchMap, tap, mergeMap } from 'rxjs/operators';
 
 import { Store } from '@ngrx/store';
-import * as trainingPlansDataActions from './training-plans-data.actions';
+import * as trainingPlansDataActions from '../actions/training-plans-data.actions';
+import { HttpDataService } from 'src/app/shared/services/http-data.service';
 
 @Injectable()
 export class TrainingPlansDataEfects {
@@ -37,6 +37,27 @@ export class TrainingPlansDataEfects {
             return trainingPlansDataActions.SetTrainingPlan({ trainingPlan });
           })
           // catchError((error) => of(new DeleteItemFailureAction(error)))
+        )
+      )
+    )
+  );
+
+  createNewTrainingPlan$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(trainingPlansDataActions.CreateNewTrainingPlan),
+      mergeMap(({ newTrainingPlan }) =>
+        this.httpDataService.createTrainingPlan(newTrainingPlan).pipe(
+          switchMap((trainingPlan) =>
+            this.httpDataService.getTrainingPlansList().pipe(
+              map((trainingPlansList) => {
+                return trainingPlansDataActions.SetTrainingPlanAndPlansList({
+                  trainingPlansList,
+                  trainingPlan,
+                });
+              })
+              // catchError((error) => of(new DeleteItemFailureAction(error)))
+            )
+          )
         )
       )
     )

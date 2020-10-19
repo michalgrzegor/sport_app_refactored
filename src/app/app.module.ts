@@ -1,4 +1,4 @@
-import { AppStoreModule } from './shared/store/app-store.module';
+import { AppStoreModule } from './store/app-store.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -14,6 +14,9 @@ import { TilesCollectionComponent } from './components/tiles-collection/tiles-co
 import { TpMenuComponent } from './components/tp-menu/tp-menu.component';
 import { TableComponent } from './shared/components/table/table.component';
 import { TableRowComponent } from './shared/components/table/table-row/table-row.component';
+import { ModalComponent } from './shared/components/modal/modal.component';
+import { FormsModule } from '@angular/forms';
+import { ShortenTextPipe } from './shared/pipes/shorten-text.pipe';
 
 @NgModule({
   declarations: [
@@ -27,8 +30,16 @@ import { TableRowComponent } from './shared/components/table/table-row/table-row
     TpMenuComponent,
     TableComponent,
     TableRowComponent,
+    ModalComponent,
+    ShortenTextPipe,
   ],
-  imports: [BrowserModule, AppRoutingModule, AppStoreModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    AppStoreModule,
+    HttpClientModule,
+    FormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

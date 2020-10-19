@@ -1,17 +1,12 @@
-import { RefreshAuthService } from './../auth/refresh-auth.service';
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
-import { map, tap, mergeMap, switchMap, exhaustMap } from 'rxjs/operators';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { map, tap, mergeMap } from 'rxjs/operators';
 
-import { Store } from '@ngrx/store';
-// import * as fromApp from './app.reducers';
-import * as authActions from './auth.actions';
-import { HttpAuthService } from '../auth/http-auth.service';
-import { SuccessfulAccesToken } from '../models/auth.interface';
-import { RedirectAuthService } from '../auth/redirect-auth.service';
+import * as authActions from '../actions/auth.actions';
 import { Router } from '@angular/router';
-import { query } from '@angular/animations';
-import { of, Observable } from 'rxjs';
+import { HttpAuthService } from 'src/app/shared/auth/http-auth.service';
+import { RedirectAuthService } from 'src/app/shared/auth/redirect-auth.service';
+import { SuccessfulAccesToken } from 'src/app/shared/models/auth.interface';
 
 @Injectable()
 export class AuthEfects {
@@ -22,7 +17,6 @@ export class AuthEfects {
         return this.redirectAuthService.handleRedirect().pipe(
           map((redirectQuery) => {
             if (redirectQuery.code) {
-              console.log(`ten krok`, redirectQuery);
               return authActions.HandleSuccess({ redirectQuery });
             } else if (
               Object.keys(redirectQuery).length === 0 ||
@@ -60,11 +54,9 @@ export class AuthEfects {
   getAccesToken$ = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.GetAccesToken),
-      // tap(() => this._store.dispatch(new authActions.SetInAuthProcess())),
       mergeMap(({ accesTokenParams }) =>
         this.httpAuthService.getAccesToken(accesTokenParams).pipe(
           map((response: SuccessfulAccesToken) => {
-            console.log(response);
             localStorage.removeItem('pkce_state');
             localStorage.removeItem('pkce_code_verifier');
             localStorage.setItem('refresh_token', response.refresh_token);
@@ -87,53 +79,10 @@ export class AuthEfects {
     )
   );
 
-  makeRefreshToken$: Observable<boolean> = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(authActions.MakeRefreshToken),
-        mergeMap(() => {
-          if (this.refreshAuthService.checkRefreshToken()) {
-            return this.refreshAuthService.makeRefreshTokenRequest().pipe(
-              // tap((response) => {
-              //   if (response) {
-              //     console.log(response);
-              //     localStorage.setItem('refresh_token', response.refresh_token);
-              //     localStorage.setItem(
-              //       'refresh_token_created_at',
-              //       `${response.created_at}`
-              //     );
-              //     localStorage.setItem(
-              //       'refresh_token_expired_time',
-              //       `${response.expires_in}`
-              //     );
-              //     return authActions.SetAccesToken({
-              //       successfulResponse: response,
-              //     });
-              //   }
-              // }),
-              map((response) => {
-                if (response) {
-                  this.refreshAuthService.setSuccessfulRefreshToken(response);
-                  return true;
-                } else {
-                  return false;
-                }
-              })
-            );
-          } else if (!this.refreshAuthService.checkRefreshToken()) {
-            return of(false);
-          }
-        })
-      ),
-    { dispatch: false }
-  );
-
   constructor(
     private actions$: Actions,
     private httpAuthService: HttpAuthService,
     private redirectAuthService: RedirectAuthService,
-    private store: Store,
-    private router: Router,
-    private refreshAuthService: RefreshAuthService
+    private router: Router
   ) {}
 }

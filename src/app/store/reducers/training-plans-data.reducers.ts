@@ -2,8 +2,8 @@ import { Action, createReducer, on } from '@ngrx/store';
 import {
   TrainingPlanInfo,
   TrainingPlan,
-} from '../models/training-plan.interface';
-import * as TrainingPlansDataActions from './training-plans-data.actions';
+} from 'src/app/shared/models/training-plan.interface';
+import * as TrainingPlansDataActions from '../actions/training-plans-data.actions';
 
 export interface TrainingPlansDataState {
   trainingPlansLoading: boolean;
@@ -18,43 +18,6 @@ const InitialState: TrainingPlansDataState = {
   trainingPlanLoading: true,
   trainingPlan: null,
 };
-
-// export function TrainingPlansDataReducer(
-//   state = InitialState,
-//   action: TrainingPlansDataActions.TrainingPlansDataActions
-// ): TrainingPlansDataState {
-//   switch (action.type) {
-//     // case TrainingPlansDataActions.LOADING_TRAINING_PLANS_LIST:
-//     //   return {
-//     //     ...state,
-//     //     trainingPlansLoading: true,
-//     //   };
-
-//     // case TrainingPlansDataActions.SET_TRAINING_PLANS_LIST:
-//     //   return {
-//     //     ...state,
-//     //     trainingPlansLoading: false,
-//     //     trainingPlans: [...action.payload],
-//     //     trainingPlanLoading: action.payload.length > 0 ? true : false,
-//     //   };
-
-//     case TrainingPlansDataActions.LOADING_TRAINING_PLAN:
-//       return {
-//         ...state,
-//         trainingPlanLoading: true,
-//       };
-
-//     case TrainingPlansDataActions.SET_TRAINING_PLAN:
-//       return {
-//         ...state,
-//         trainingPlanLoading: false,
-//         trainingPlan: { ...action.payload },
-//       };
-
-//     default:
-//       return state;
-//   }
-// }
 
 const trainingPlansDataReducer = createReducer(
   InitialState,
@@ -79,7 +42,16 @@ const trainingPlansDataReducer = createReducer(
     ...state,
     trainingPlanLoading: false,
     trainingPlan: { ...trainingPlan },
-  }))
+  })),
+  on(
+    TrainingPlansDataActions.SetTrainingPlanAndPlansList,
+    (state, { trainingPlan, trainingPlansList }) => ({
+      ...state,
+      trainingPlanLoading: false,
+      trainingPlan: { ...trainingPlan },
+      trainingPlans: [...trainingPlansList],
+    })
+  )
 );
 
 export function reducer(

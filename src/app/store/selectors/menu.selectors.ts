@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
-import { MenuState } from './menu.reducers';
+import { AppState } from '../app.reducers';
 
-export const selectFeature = (state: MenuState) => state;
+export const selectFeature = (state: AppState) => state.menu;
 
 export const isLeftMenuOpen = createSelector(
   selectFeature,

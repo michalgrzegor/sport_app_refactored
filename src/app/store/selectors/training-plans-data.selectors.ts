@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { AppState } from './app.reducers';
+import { AppState } from '../app.reducers';
 
 export const selectFeature = (state: AppState) => state.trainingPlansData;
 

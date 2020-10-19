@@ -3,9 +3,8 @@ import { Injectable } from '@angular/core';
 import { getTime } from 'date-fns';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SuccessfulAccesToken } from '../models/auth.interface';
-import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import * as fromAuthActions from '../store/auth.actions';
+import * as fromAuthActions from '../../store/actions/auth.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -51,7 +50,6 @@ export class RefreshAuthService {
     );
 
   public setSuccessfulRefreshToken = (response: SuccessfulAccesToken) => {
-    console.log(response);
     localStorage.setItem('refresh_token', response.refresh_token);
     localStorage.setItem('refresh_token_created_at', `${response.created_at}`);
     localStorage.setItem(
@@ -64,43 +62,4 @@ export class RefreshAuthService {
       })
     );
   };
-
-  // private async handleLogout(response: any): Promise<any> {
-  //   if (response.status === 200) {
-  //     localStorage.removeItem('refresh_token');
-  //     localStorage.removeItem('refresh_token_created_at');
-  //     localStorage.removeItem('refresh_token_expired_time');
-  //     window.location.href = 'https://musing-ramanujan-8002a4.netlify.app';
-  //   }
-  //   return response;
-  // }
-
-  // async logout(): Promise<any> {
-  //   fetch(
-  //     `${this.URL}oauth/revoke?client_id=${
-  //       this.CONFIG.client_id
-  //     }&client_secret=${
-  //       this.CONFIG.client_secret
-  //     }&token=${TOKEN_HANDLER.getToken()}`,
-  //     {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/x-www-form-urlencoded',
-  //       },
-  //     }
-  //   )
-  //     .then((r) =>
-  //       this.errorHandling({
-  //         response: r,
-  //         message: 'something went wrong, try again',
-  //       })
-  //     )
-  //     .then((response) => this.handleLogout(response))
-  //     .catch((error) =>
-  //       this.errorHandling({
-  //         response: error,
-  //         message: 'something went wrong, try again',
-  //       })
-  //     );
-  // }
 }

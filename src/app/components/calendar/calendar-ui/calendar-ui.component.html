@@ -1,6 +1,15 @@
-<button (click)="previousMonth()">left</button>
-<h1>{{ trainingPlanName$ | async }}</h1>
-<button (click)="nextMonth()">right</button>
-<ng-container *ngIf="calendarData$ | async">
-  <p *ngFor="let day of calendarData$">{{ day.date | date }}</p>
-</ng-container>
+<div *ngIf="!(trainingPlanName$ | async); else isTp"  class="calendarUi">
+  <p class="calendarUi__noTp">You don't have a training plan yet. Create the <span (click)="openCreator()"  class="calendarUi__create">first one!</span> </p>
+</div>
+
+
+<ng-template #isTp>
+  <app-calendar-info></app-calendar-info>
+  
+  <button class="customBtn" (click)="previousMonth()">left</button>
+  <h1>{{ trainingPlanName$ | async }}</h1>
+  <button class="customBtn" (click)="nextMonth()">right</button>
+  <ng-container *ngIf="calendarData$ | async">
+    <p *ngFor="let day of (calendarData$ | async)">{{ day.date | date }}</p>
+  </ng-container>
+</ng-template>

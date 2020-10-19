@@ -1,0 +1,52 @@
+@import "../../styles/colors";
+@import "../../styles/mixins";
+
+.modal {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background: $WhiteDotFour;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__container {
+    background: $mainGreen;
+    max-width: 80vw;
+    min-width: 10vw;
+    max-height: 80vh;
+    min-height: 40vh;
+    overflow: hidden;
+  }
+
+  &__header {
+    box-sizing: border-box;
+    height: 56px;
+    border-bottom: 1px solid $WhiteDotTwo;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  &__title {
+    @include textRaleway(400, 16px);
+  }
+
+  &__button {
+    position: absolute;
+    right: 12px;
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+  }
+
+  &__component {
+    max-height: calc(80vh - 56px);
+    overflow: auto;
+  }
+}

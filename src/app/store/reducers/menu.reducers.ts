@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import * as MenuActions from './menu.actions';
+import * as MenuActions from '../actions/menu.actions';
 
 export interface MenuState {
   isLeftMenuOpen: boolean;
@@ -10,28 +10,6 @@ const InitialState: MenuState = {
   isLeftMenuOpen: true,
   rightMenuComponent: 'tp',
 };
-
-// export function MenuReducer(
-//   state = InitialState,
-//   action: MenuActions.MenuActions
-// ): MenuState {
-//   switch (action.type) {
-//     case MenuActions.TOGGLE_LEFT_MENU:
-//       return {
-//         ...state,
-//         isLeftMenuOpen: !state.isLeftMenuOpen,
-//       };
-
-//     case MenuActions.SET_RIGHT_MENU_COMPONENT:
-//       return {
-//         ...state,
-//         rightMenuComponent: action.payload,
-//       };
-
-//     default:
-//       return state;
-//   }
-// }
 
 const menuReducer = createReducer(
   InitialState,

@@ -1,4 +1,5 @@
-import { getCalendarData } from '../../../shared/store/calendar-data.selectors';
+import { HttpDataService } from 'src/app/shared/services/http-data.service';
+import { getCalendarData } from '../../../store/selectors/calendar-data.selectors';
 import {
   CalendarCreatorService,
   CalendarDay,
@@ -6,17 +7,20 @@ import {
 import {
   getTrainingPlan,
   getTrainingPlanName,
-} from '../../../shared/store/training-plans-data.selectors';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+} from '../../../store/selectors/training-plans-data.selectors';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import * as fromCalendarDataActions from '../../../shared/store/calendar-data.actions';
+import {
+  SetPreviousPage,
+  SetNextPage,
+} from '../../../store/actions/calendar-data.actions';
+import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
+import { CalendarCreatorComponent } from '../calendar-creator/calendar-creator.component';
+import { switchMap, tap } from 'rxjs/operators';
+import * as fromCalendarDataActions from '../../../store/actions/calendar-data.actions';
+import { CreateNewTrainingPlan } from 'src/app/store/actions/training-plans-data.actions';
 
 @Component({
   selector: 'app-calendar-ui',
@@ -31,6 +35,8 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store,
+    private modalService: ModalService,
+    private httpDataService: HttpDataService,
     private calendarCreator: CalendarCreatorService
   ) {}
 
@@ -38,34 +44,44 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.store
         .select(getTrainingPlan)
-        // .pipe(
-        //   switchMap((trainingPlan) => {
-        //     console.log(trainingPlan);
-        //     if (trainingPlan) {
-        //       return this.calendarCreator.createCalendar(trainingPlan);
-        //     } else {
-        //       return;
-        //     }
-        //   }),
-        //   tap((data) =>
-        //     this.store.dispatch(
-        //       fromCalendarDataActions.SetCalendarData({
-        //         calendar: data as CalendarDay[],
-        //       })
-        //     )
-        //   )
-        // )
+        .pipe(
+          switchMap((trainingPlan) => {
+            if (trainingPlan) {
+              return this.calendarCreator.createCalendar(trainingPlan);
+            } else {
+              return;
+            }
+          }),
+          tap((data) =>
+            this.store.dispatch(
+              fromCalendarDataActions.SetCalendarData({
+                calendar: data as CalendarDay[],
+              })
+            )
+          )
+        )
         .subscribe()
     );
     this.calendarData$ = this.store.select(getCalendarData);
     this.trainingPlanName$ = this.store.select(getTrainingPlanName);
   }
 
-  public previousMonth = () =>
-    this.store.dispatch(fromCalendarDataActions.SetPreviousPage());
+  public openCreator = () => {
+    this.modalService
+      .openModal(ModalComponent, CalendarCreatorComponent, {
+        title: 'Training plan creator',
+        style: [{ width: '400px' }],
+      })
+      .subscribe((data) => {
+        if (data) {
+          this.store.dispatch(CreateNewTrainingPlan({ newTrainingPlan: data }));
+        }
+      });
+  };
 
-  public nextMonth = () =>
-    this.store.dispatch(fromCalendarDataActions.SetNextPage());
+  public previousMonth = () => this.store.dispatch(SetPreviousPage());
+
+  public nextMonth = () => this.store.dispatch(SetNextPage());
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

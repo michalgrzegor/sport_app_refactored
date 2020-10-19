@@ -3,7 +3,7 @@
     <p
       class="table__column-name"
       *ngFor="let element of tableLegend; let index = index"
-      (click)="sort(element.name, element.corenspondingValue, index)"
+      (click)="sortRows(element.name, element.corenspondingValue, index)"
       [ngClass]="{ 'sort--active': index === sortIndex }"
     >
       {{ element.name }}

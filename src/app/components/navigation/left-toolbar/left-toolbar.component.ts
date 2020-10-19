@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import {
   Component,
   ElementRef,
@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import * as MenuActions from '../../../shared/store/menu.actions';
-import { isLeftMenuOpen } from 'src/app/shared/store/menu.selectors';
+import * as MenuActions from '../../../store/actions/menu.actions';
+import { isLeftMenuOpen } from 'src/app/store/selectors/menu.selectors';
 
 @Component({
   selector: 'app-left-toolbar',
@@ -28,20 +28,15 @@ export class LeftToolbarComponent implements OnInit, OnDestroy {
   @ViewChild('tilecollection', { static: true }) tilecollection: ElementRef;
   @ViewChild('tileeditor', { static: true }) tileeditor: ElementRef;
 
-  HTMLNavigatorElementsArray: HTMLElement[];
-
-  isLeftOpen = true;
+  private HTMLNavigatorElementsArray: HTMLElement[];
+  isLeftOpen: Observable<boolean>;
+  // public isLeftOpen = true;
 
   constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {
     this.HTMLNavigatorElementsArray = this.generateHTMLElementArray();
-
-    this.subscription.add(
-      this.store
-        .select(isLeftMenuOpen)
-        .subscribe((data) => (this.isLeftOpen = data))
-    );
+    this.isLeftOpen = this.store.select(isLeftMenuOpen);
   }
 
   private generateHTMLElementArray = (): HTMLElement[] =>
@@ -54,22 +49,22 @@ export class LeftToolbarComponent implements OnInit, OnDestroy {
       this.tileeditor,
     ].map((element) => element.nativeElement);
 
-  getIndexOfNavigatorButton = (pathArray: HTMLElement[]): number => {
+  private getIndexOfNavigatorButton = (pathArray: HTMLElement[]): number => {
     return this.HTMLNavigatorElementsArray.map((nodeElement) =>
       pathArray.includes(nodeElement)
     ).indexOf(true);
   };
 
-  navigateToAddress = (routerAddress: string) => {
+  private navigateToAddress = (routerAddress: string) => {
     this.router.navigate([`/${routerAddress}`]);
   };
 
-  changeComponent = (componentName: string) =>
+  private changeComponent = (componentName: string) =>
     this.store.dispatch(
       MenuActions.SetRightMenuComponent({ rightComponent: componentName })
     );
 
-  makeNavigation = (index: number) => {
+  private makeNavigation = (index: number) => {
     const button = this.HTMLNavigatorElementsArray[index];
     const rightPanelComponent = button.getAttribute('rightpanel');
     const routerAddress = button.getAttribute('routeraddress');

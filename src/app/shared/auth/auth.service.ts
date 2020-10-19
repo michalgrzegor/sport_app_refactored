@@ -8,14 +8,6 @@ export class AuthService {
   private URL: string;
   constructor() {
     this.URL = 'https://stormy-plains-57531.herokuapp.com/';
-    // this.CONFIG = {
-    //   client_id: 'FP1rr80oHoUmlKPq2VTdetRERSvt4Xp3JHNWm7SrGsA',
-    //   redirect_uri: 'http://localhost:8080/admin-panel.html',
-    //   authorization_endpoint: 'oauth/authorize',
-    //   token_endpoint: 'oauth/token',
-    //   requested_scopes: 'openid',
-    //   client_secret: 'SpQsQF-LC4bYQgrbHam7DTv7YqjTkKwYArhEEl7z_n8',
-    // };
 
     this.CONFIG = {
       client_id: '47IJONQpYYxJa9SfynWN2Fgh7dJ4mvA-wDqHLF-RLSo',

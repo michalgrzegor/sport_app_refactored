@@ -1,55 +1,63 @@
 <div
   class="left-toolbar__container"
-  [ngStyle]="{ width: isLeftOpen ? '256px' : '64px' }"
+  [ngStyle]="{ width: (isLeftOpen | async) ? '256px' : '64px' }"
   (click)="navigate($event)"
 >
   <div class="left-toolbar__element click--none">
     <i class="material-icons">chrome_reader_mode</i>
-    <span *ngIf="isLeftOpen" class="element__name">Main panel actions:</span>
+    <span *ngIf="isLeftOpen | async" class="element__name"
+      >Main panel actions:</span
+    >
   </div>
   <div class="left-toolbar__element">
     <button
       #athleteCards
       routeraddress="athletecard"
       rightpanel="athletemanager"
-      mat-button
+      class="customBtn"
     >
       <i class="material-icons">supervised_user_circle</i>
-      <span *ngIf="isLeftOpen" class="element__name">Athlete cards</span>
+      <span *ngIf="isLeftOpen | async" class="element__name"
+        >Athlete cards</span
+      >
     </button>
   </div>
   <div class="left-toolbar__element">
-    <button #programs routeraddress="calendar" rightpanel="tp" mat-button>
+    <button #programs routeraddress="calendar" rightpanel="tp" class="customBtn">
       <i class="material-icons">assignment</i>
-      <span *ngIf="isLeftOpen" class="element__name">Programs</span>
+      <span *ngIf="isLeftOpen | async" class="element__name">Programs</span>
     </button>
   </div>
   <div class="left-toolbar__element">
-    <button #board routeraddress="board" rightpanel="tp" mat-button>
+    <button #board routeraddress="board" rightpanel="tp" class="customBtn">
       <i class="material-icons">dashboard</i>
-      <span *ngIf="isLeftOpen" class="element__name">Board</span>
+      <span *ngIf="isLeftOpen | async" class="element__name">Board</span>
     </button>
   </div>
   <div class="left-toolbar__element">
-    <button #loop routeraddress="loops" mat-button>
+    <button #loop routeraddress="loops" class="customBtn">
       <i class="material-icons">loop</i>
-      <span *ngIf="isLeftOpen" class="element__name">Loops</span>
+      <span *ngIf="isLeftOpen | async" class="element__name">Loops</span>
     </button>
   </div>
   <div class="left-toolbar__element click--none">
     <i class="material-icons">chrome_reader_mode</i>
-    <span *ngIf="isLeftOpen" class="element__name">Right panel actions:</span>
+    <span *ngIf="isLeftOpen | async" class="element__name"
+      >Right panel actions:</span
+    >
   </div>
   <div class="left-toolbar__element">
-    <button #tilecollection rightpanel="tilecollection" mat-button>
+    <button #tilecollection rightpanel="tilecollection" class="customBtn">
       <i class="material-icons">collections_bookmark</i>
-      <span *ngIf="isLeftOpen" class="element__name">Tile collection</span>
+      <span *ngIf="isLeftOpen | async" class="element__name"
+        >Tile collection</span
+      >
     </button>
   </div>
   <div class="left-toolbar__element">
-    <button #tileeditor rightpanel="tileeditor" mat-button>
+    <button #tileeditor rightpanel="tileeditor" class="customBtn">
       <i class="material-icons">edit</i>
-      <span *ngIf="isLeftOpen" class="element__name">Tile editor</span>
+      <span *ngIf="isLeftOpen | async" class="element__name">Tile editor</span>
     </button>
   </div>
 </div>
