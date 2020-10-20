@@ -47,6 +47,7 @@ const trainingPlansDataReducer = createReducer(
     TrainingPlansDataActions.SetTrainingPlanAndPlansList,
     (state, { trainingPlan, trainingPlansList }) => ({
       ...state,
+      trainingPlansLoading: false,
       trainingPlanLoading: false,
       trainingPlan: { ...trainingPlan },
       trainingPlans: [...trainingPlansList],

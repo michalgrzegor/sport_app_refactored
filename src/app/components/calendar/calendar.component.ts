@@ -44,10 +44,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       .add(
         this.store
           .select(isTrainingPlanLoading)
-          .pipe(
-            tap((data) => (this.isTrainingPlansLoading = !data))
-            // tap(() => this._changeDetector.detectChanges())
-          )
+          .pipe(tap((data) => (this.isTrainingPlansLoading = !data)))
           .subscribe()
       );
   }

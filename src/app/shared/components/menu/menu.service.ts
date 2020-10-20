@@ -16,8 +16,11 @@ export class MenuService {
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
   private closeMenu = (id: string) => {
-    const menu = this.menuReferences.find((ref) => ref.id === id).componentRef;
-    menu.destroy();
+    const menu = this.menuReferences.find((ref) => ref.id === id);
+    menu.componentRef.destroy();
+    this.menuReferences = [
+      ...this.menuReferences.filter((ref) => ref.id !== id),
+    ];
   };
 
   private createMenuRef = (

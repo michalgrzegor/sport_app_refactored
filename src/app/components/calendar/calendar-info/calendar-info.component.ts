@@ -1,5 +1,10 @@
 import { MenuService } from './../../../shared/components/menu/menu.service';
-import { CreateNewTrainingPlan } from './../../../store/actions/training-plans-data.actions';
+import {
+  CreateNewTrainingPlan,
+  DeleteTrainingPlan,
+  LoadingTrainingPlan,
+  LoadingTrainingPlansList,
+} from './../../../store/actions/training-plans-data.actions';
 import { ModalComponent } from './../../../shared/components/modal/modal.component';
 import { ModalService } from './../../../shared/components/modal/modal.service';
 import {
@@ -65,6 +70,8 @@ export class CalendarInfoComponent {
   };
 
   private deleteTrainingPlan = () => {
-    console.log(`delete ${this.id}`);
+    this.store.dispatch(LoadingTrainingPlansList());
+    this.store.dispatch(LoadingTrainingPlan());
+    this.store.dispatch(DeleteTrainingPlan({ id: this.id }));
   };
 }

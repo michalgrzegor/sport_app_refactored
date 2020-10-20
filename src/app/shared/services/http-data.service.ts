@@ -60,4 +60,22 @@ export class HttpDataService {
         );
       })
     );
+
+  deleteTrainingPlan = (id: number): Observable<any> =>
+    this.getToken().pipe(
+      switchMap((token) => {
+        return this.httpClient.delete(
+          `${this.URL}training_plans/${id}`,
+          this.getHttpOptions(token)
+        );
+      })
+    );
 }
+
+// deleteTrainingPlan(id: number) {
+//   this._http
+//     .delete(`${this.URL}training_plans/${id}`, this.getHttpOptions())
+//     .subscribe((response) => {
+//       this._store.dispatch(new TilesDataActions.DeleteTpManager(id));
+//     });
+// }

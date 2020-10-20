@@ -11,7 +11,6 @@ export class TrainingPlansDataEfects {
   loadTrainingPlansList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(trainingPlansDataActions.LoadTrainingPlansList),
-      tap(() => trainingPlansDataActions.LoadingTrainingPlansList()),
       switchMap(() =>
         this.httpDataService.getTrainingPlansList().pipe(
           map((trainingPlansList) => {
@@ -28,9 +27,6 @@ export class TrainingPlansDataEfects {
   loadTrainingPlan$ = createEffect(() =>
     this.actions$.pipe(
       ofType(trainingPlansDataActions.LoadTrainingPlan),
-      tap(() => {
-        trainingPlansDataActions.LoadingTrainingPlan();
-      }),
       switchMap((data) =>
         this.httpDataService.getTrainingPlan(`${data.payload}`).pipe(
           map((trainingPlan) => {
@@ -54,6 +50,35 @@ export class TrainingPlansDataEfects {
                   trainingPlansList,
                   trainingPlan,
                 });
+              })
+              // catchError((error) => of(new DeleteItemFailureAction(error)))
+            )
+          )
+        )
+      )
+    )
+  );
+
+  deleteTrainingPlan$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(trainingPlansDataActions.DeleteTrainingPlan),
+      mergeMap(({ id }) =>
+        this.httpDataService.deleteTrainingPlan(id).pipe(
+          switchMap(() =>
+            this.httpDataService.getTrainingPlansList().pipe(
+              switchMap((trainingPlansList) => {
+                return this.httpDataService
+                  .getTrainingPlan(`${trainingPlansList[0].id}`)
+                  .pipe(
+                    map((trainingPlan) => {
+                      return trainingPlansDataActions.SetTrainingPlanAndPlansList(
+                        {
+                          trainingPlansList,
+                          trainingPlan,
+                        }
+                      );
+                    })
+                  );
               })
               // catchError((error) => of(new DeleteItemFailureAction(error)))
             )

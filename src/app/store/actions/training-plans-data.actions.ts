@@ -40,3 +40,7 @@ export const SetTrainingPlanAndPlansList = createAction(
   '[Calendar module] SET_TRAINING_PLAN_AND_PLANS_LIST',
   props<{ trainingPlan: TrainingPlan; trainingPlansList: TrainingPlanInfo[] }>()
 );
+export const DeleteTrainingPlan = createAction(
+  '[Calendar API] DELETE_TRAINING_PLAN',
+  props<{ id: number }>()
+);
