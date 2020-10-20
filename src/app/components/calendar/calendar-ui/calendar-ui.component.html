@@ -4,7 +4,7 @@
 
 
 <ng-template #isTp>
-  <app-calendar-info></app-calendar-info>
+  <app-calendar-info [id]="trainingPlanId$ | async"></app-calendar-info>
   
   <button class="customBtn" (click)="previousMonth()">left</button>
   <h1>{{ trainingPlanName$ | async }}</h1>

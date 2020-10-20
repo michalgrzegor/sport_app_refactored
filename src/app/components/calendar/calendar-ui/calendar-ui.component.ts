@@ -1,4 +1,3 @@
-import { HttpDataService } from 'src/app/shared/services/http-data.service';
 import { getCalendarData } from '../../../store/selectors/calendar-data.selectors';
 import {
   CalendarCreatorService,
@@ -6,6 +5,7 @@ import {
 } from '../../../shared/services/calendar-creator.service';
 import {
   getTrainingPlan,
+  getTrainingPlanId,
   getTrainingPlanName,
 } from '../../../store/selectors/training-plans-data.selectors';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -26,17 +26,16 @@ import { CreateNewTrainingPlan } from 'src/app/store/actions/training-plans-data
   selector: 'app-calendar-ui',
   templateUrl: './calendar-ui.component.html',
   styleUrls: ['./calendar-ui.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarUiComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   public calendarData$: Observable<CalendarDay[]>;
   public trainingPlanName$: Observable<string>;
+  public trainingPlanId$: Observable<number>;
 
   constructor(
     private store: Store,
     private modalService: ModalService,
-    private httpDataService: HttpDataService,
     private calendarCreator: CalendarCreatorService
   ) {}
 
@@ -64,11 +63,12 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
     );
     this.calendarData$ = this.store.select(getCalendarData);
     this.trainingPlanName$ = this.store.select(getTrainingPlanName);
+    this.trainingPlanId$ = this.store.select(getTrainingPlanId);
   }
 
   public openCreator = () => {
     this.modalService
-      .openModal(ModalComponent, CalendarCreatorComponent, {
+      .instantinateModal(ModalComponent, CalendarCreatorComponent, {
         title: 'Training plan creator',
         style: [{ width: '400px' }],
       })

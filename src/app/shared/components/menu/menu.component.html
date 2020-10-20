@@ -1,0 +1,9 @@
+<div class="menu">
+    <div class="menu__relative" (click)="close()" >
+        <div class="menu__container" #menu>
+            <div *ngFor="let element of menuOptions?.menuElementList" >
+                <p class="menu__name" (click)="element.callback()" class="menu__element">{{element.name}}</p>
+            </div>
+        </div>
+    </div>
+</div>

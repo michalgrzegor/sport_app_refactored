@@ -77,7 +77,7 @@ export class ModalService {
     (this.modalsReferences[key][1] as ComponentRef<any>).instance.key = key;
   };
 
-  public openModal = (
+  public instantinateModal = (
     modalComponent: any,
     Component: any,
     modalOptions: ModalOptions = null

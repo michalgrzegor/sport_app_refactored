@@ -17,9 +17,14 @@
     text-transform: uppercase;
   }
 
-  &__btn {
+  &__btn-container {
     position: absolute;
     right: 0;
+    width: 36px;
+    height: 36px;
+  }
+
+  &__btn {
     width: 36px;
     height: 36px;
     border-radius: 50%;

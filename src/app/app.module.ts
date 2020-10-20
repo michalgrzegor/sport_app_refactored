@@ -17,6 +17,7 @@ import { TableRowComponent } from './shared/components/table/table-row/table-row
 import { ModalComponent } from './shared/components/modal/modal.component';
 import { FormsModule } from '@angular/forms';
 import { ShortenTextPipe } from './shared/pipes/shorten-text.pipe';
+import { MenuComponent } from './shared/components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ShortenTextPipe } from './shared/pipes/shorten-text.pipe';
     TableRowComponent,
     ModalComponent,
     ShortenTextPipe,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,
