@@ -1,3 +1,5 @@
+import { PipesModule } from './shared/pipes/pipes.module';
+import { SharedComponentsModule } from './shared/components/shared-components.module';
 import { AppStoreModule } from './store/app-store.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -12,12 +14,7 @@ import { TileEditorComponent } from './components/tile-editor/tile-editor.compon
 import { AthleteManagerComponent } from './components/athlete-manager/athlete-manager.component';
 import { TilesCollectionComponent } from './components/tiles-collection/tiles-collection.component';
 import { TpMenuComponent } from './components/tp-menu/tp-menu.component';
-import { TableComponent } from './shared/components/table/table.component';
-import { TableRowComponent } from './shared/components/table/table-row/table-row.component';
-import { ModalComponent } from './shared/components/modal/modal.component';
 import { FormsModule } from '@angular/forms';
-import { ShortenTextPipe } from './shared/pipes/shorten-text.pipe';
-import { MenuComponent } from './shared/components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -29,11 +26,6 @@ import { MenuComponent } from './shared/components/menu/menu.component';
     AthleteManagerComponent,
     TilesCollectionComponent,
     TpMenuComponent,
-    TableComponent,
-    TableRowComponent,
-    ModalComponent,
-    ShortenTextPipe,
-    MenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +33,8 @@ import { MenuComponent } from './shared/components/menu/menu.component';
     AppStoreModule,
     HttpClientModule,
     FormsModule,
+    SharedComponentsModule,
+    PipesModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

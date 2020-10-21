@@ -15,6 +15,7 @@ import { getTrainingPlanId } from '../../../store/selectors/training-plans-data.
 import { LegendElement } from '../../../components/tp-menu/tp-menu.component';
 import { TrainingPlanInfo } from '../../models/training-plan.interface';
 import { AthleteInformations } from '../../models/athlete.interface';
+import { LoadingTrainingPlan } from '../../../store/actions/training-plans-data.actions';
 
 @Component({
   selector: 'app-table',
@@ -84,6 +85,7 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
         // tutaj odpala store athlete
         break;
       case 'program':
+        this.store.dispatch(LoadingTrainingPlan());
         this.store.dispatch(
           fromTrainingPlansDataActions.LoadTrainingPlan({ payload: id })
         );

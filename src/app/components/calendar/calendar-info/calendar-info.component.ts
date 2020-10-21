@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { MenuService } from './../../../shared/components/menu/menu.service';
 import {
   CreateNewTrainingPlan,
@@ -16,17 +17,19 @@ import {
 } from '@angular/core';
 import { CalendarCreatorComponent } from '../calendar-creator/calendar-creator.component';
 import { Store } from '@ngrx/store';
+import { getTrainingPlanName } from 'src/app/store/selectors/training-plans-data.selectors';
 
 @Component({
   selector: 'app-calendar-info',
   templateUrl: './calendar-info.component.html',
   styleUrls: ['./calendar-info.component.scss'],
 })
-export class CalendarInfoComponent {
+export class CalendarInfoComponent implements OnInit {
   @ViewChild('button_menu', { read: ViewContainerRef })
   buttonMenu: ViewContainerRef;
   @Input()
   id: number;
+  public trainingPlanName$: Observable<string>;
 
   constructor(
     private menuService: MenuService,
@@ -34,7 +37,9 @@ export class CalendarInfoComponent {
     private store: Store
   ) {}
 
-  // ngOnInit(): void {}
+  ngOnInit(): void {
+    this.trainingPlanName$ = this.store.select(getTrainingPlanName);
+  }
 
   public openMenu = (event: MouseEvent) => {
     this.menuService.instantinateMenu(
@@ -64,6 +69,7 @@ export class CalendarInfoComponent {
       })
       .subscribe((data) => {
         if (data) {
+          this.store.dispatch(LoadingTrainingPlan());
           this.store.dispatch(CreateNewTrainingPlan({ newTrainingPlan: data }));
         }
       });

@@ -5,6 +5,7 @@ import { map, catchError, switchMap, tap, mergeMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as trainingPlansDataActions from '../actions/training-plans-data.actions';
 import { HttpDataService } from 'src/app/shared/services/http-data.service';
+import { of } from 'rxjs';
 
 @Injectable()
 export class TrainingPlansDataEfects {
@@ -66,19 +67,28 @@ export class TrainingPlansDataEfects {
         this.httpDataService.deleteTrainingPlan(id).pipe(
           switchMap(() =>
             this.httpDataService.getTrainingPlansList().pipe(
-              switchMap((trainingPlansList) => {
-                return this.httpDataService
-                  .getTrainingPlan(`${trainingPlansList[0].id}`)
-                  .pipe(
-                    map((trainingPlan) => {
-                      return trainingPlansDataActions.SetTrainingPlanAndPlansList(
-                        {
-                          trainingPlansList,
-                          trainingPlan,
-                        }
-                      );
+              mergeMap((trainingPlansList) => {
+                if (trainingPlansList.length > 0) {
+                  return this.httpDataService
+                    .getTrainingPlan(`${trainingPlansList[0].id}`)
+                    .pipe(
+                      map((trainingPlan) => {
+                        return trainingPlansDataActions.SetTrainingPlanAndPlansList(
+                          {
+                            trainingPlansList,
+                            trainingPlan,
+                          }
+                        );
+                      })
+                    );
+                } else {
+                  return of(
+                    trainingPlansDataActions.SetTrainingPlanAndPlansList({
+                      trainingPlansList: null,
+                      trainingPlan: null,
                     })
                   );
+                }
               })
               // catchError((error) => of(new DeleteItemFailureAction(error)))
             )

@@ -1,7 +1,7 @@
 @import "../../../shared/styles/colors";
 @import "../../../shared/styles/mixins";
 
-.calendarUi {
+.calendar-ui-notp {
   box-sizing: border-box;
   width: 100%;
   display: flex;
@@ -23,5 +23,47 @@
     -webkit-text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.26);
     -moz-text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.26);
     text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.26);
+  }
+}
+
+.calendar-ui {
+  width: 100%;
+
+  &__header {
+    width: 100%;
+    height: 72px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  &__btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+
+  &__month {
+    max-width: 160px;
+    width: 100%;
+    @include textLato(400, 16px);
+    text-transform: uppercase;
+  }
+
+  &__days {
+    max-width: 696px;
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  &__day {
+    margin: 0;
+    max-width: 96px;
+    width: 100%;
+    height: 72px;
+    border: cadetblue 1px dotted;
   }
 }

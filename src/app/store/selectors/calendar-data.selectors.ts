@@ -11,3 +11,8 @@ export const getCalendarData = createSelector(
   (calendarData, page) =>
     calendarData.calendarData?.filter((day) => day.page.includes(page))
 );
+
+export const getActualPage = createSelector(
+  selectFeature,
+  (calendarData) => calendarData.actualPage
+);

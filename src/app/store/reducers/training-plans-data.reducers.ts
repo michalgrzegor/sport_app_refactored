@@ -30,7 +30,7 @@ const trainingPlansDataReducer = createReducer(
     (state, { trainingPlansList }) => ({
       ...state,
       trainingPlansLoading: false,
-      trainingPlans: [...trainingPlansList],
+      trainingPlans: trainingPlansList ? [...trainingPlansList] : null,
       trainingPlanLoading: trainingPlansList.length > 0 ? true : false,
     })
   ),
@@ -41,7 +41,7 @@ const trainingPlansDataReducer = createReducer(
   on(TrainingPlansDataActions.SetTrainingPlan, (state, { trainingPlan }) => ({
     ...state,
     trainingPlanLoading: false,
-    trainingPlan: { ...trainingPlan },
+    trainingPlan: trainingPlan ? { ...trainingPlan } : null,
   })),
   on(
     TrainingPlansDataActions.SetTrainingPlanAndPlansList,
@@ -49,8 +49,8 @@ const trainingPlansDataReducer = createReducer(
       ...state,
       trainingPlansLoading: false,
       trainingPlanLoading: false,
-      trainingPlan: { ...trainingPlan },
-      trainingPlans: [...trainingPlansList],
+      trainingPlan: trainingPlan ? { ...trainingPlan } : null,
+      trainingPlans: trainingPlansList ? [...trainingPlansList] : null,
     })
   )
 );

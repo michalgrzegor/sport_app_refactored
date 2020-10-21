@@ -1,3 +1,4 @@
+import { SharedComponentsModule } from './../../shared/components/shared-components.module';
 import { CalendarRoutingModule } from './calendar-routing.module';
 import { NgModule } from '@angular/core';
 import { CalendarComponent } from './calendar.component';
@@ -6,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { CalendarInfoComponent } from './calendar-info/calendar-info.component';
 import { CalendarCreatorComponent } from './calendar-creator/calendar-creator.component';
 import { FormsModule } from '@angular/forms';
+import { CalendarDayComponent } from './calendar-ui/calendar-day/calendar-day.component';
+import { CalendarDayOpenedComponent } from './calendar-ui/calendar-day-opened/calendar-day-opened.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +16,14 @@ import { FormsModule } from '@angular/forms';
     CalendarUiComponent,
     CalendarInfoComponent,
     CalendarCreatorComponent,
+    CalendarDayComponent,
+    CalendarDayOpenedComponent,
   ],
-  imports: [CalendarRoutingModule, CommonModule, FormsModule],
+  imports: [
+    CalendarRoutingModule,
+    CommonModule,
+    FormsModule,
+    SharedComponentsModule,
+  ],
 })
 export class CalendarModule {}
