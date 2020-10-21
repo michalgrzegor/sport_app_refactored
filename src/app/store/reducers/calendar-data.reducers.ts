@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { CalendarDay } from 'src/app/shared/services/calendar-creator.service';
+import { CalendarDay } from 'src/app/shared/models/calendar.interface';
 import * as CalendarDataActions from '../actions/calendar-data.actions';
 
 export interface CalendarState {

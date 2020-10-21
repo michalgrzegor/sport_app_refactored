@@ -4,8 +4,8 @@ import {
   Injectable,
   ViewContainerRef,
 } from '@angular/core';
+import { CalendarDay } from 'src/app/shared/models/calendar.interface';
 import { CalendarDayOpenedComponent } from './calendar-day-opened.component';
-import { CalendarDay } from 'src/app/shared/services/calendar-creator.service';
 
 @Injectable({
   providedIn: 'root',

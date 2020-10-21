@@ -11,18 +11,14 @@ import {
 } from 'date-fns';
 import { map, mergeMap, reduce, toArray } from 'rxjs/operators';
 import { TrainingPlan } from '../models/training-plan.interface';
-
-export interface CalendarDay {
-  date: Date;
-  originalPage: number;
-  page: number[];
-}
+import { CalendarDay } from '../models/calendar.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalendarCreatorService {
   public calendar: Observable<any>;
+  private trainingPlan: TrainingPlan;
   constructor() {}
 
   private makeMonths = (trainingPlan: TrainingPlan): Date[] => {
@@ -83,22 +79,6 @@ export class CalendarCreatorService {
     page: [index],
   });
 
-  private mergeDuplicates = (
-    array: Partial<CalendarDay>[],
-    currentElement: Partial<CalendarDay>
-  ): Partial<CalendarDay>[] => {
-    const duplicateIndex = array.findIndex((el) =>
-      isEqual(el.date, currentElement.date)
-    );
-    duplicateIndex > -1
-      ? (array[duplicateIndex] = this.mergeDuplicate(
-          array[duplicateIndex],
-          currentElement
-        ))
-      : array.push(currentElement);
-    return array;
-  };
-
   private mergeDuplicate = (
     element: Partial<CalendarDay>,
     elementToMerge: Partial<CalendarDay>
@@ -111,10 +91,36 @@ export class CalendarCreatorService {
     return element;
   };
 
-  public createCalendar = (
-    trainingPlan: TrainingPlan
-  ): Observable<Partial<CalendarDay>[]> => {
-    this.calendar = from(this.makeMonths(trainingPlan));
+  private addData = (day: Partial<CalendarDay>) => {
+    const associations = this.trainingPlan.calendar_assocs.filter((asso) =>
+      isEqual(new Date(asso.calendar_date), day.date)
+    );
+    const comments = this.trainingPlan.calendar_comments.filter((comment) =>
+      isEqual(new Date(comment.comment_day), day.date)
+    );
+    day.associations = [...associations];
+    day.comments = [...comments];
+    day.trainingSessions = this.trainingPlan.training_sesion_number;
+    return day;
+  };
+
+  private mergeDuplicatesAndAddData = (
+    array: Partial<CalendarDay>[],
+    currentElement: Partial<CalendarDay>
+  ): Partial<CalendarDay>[] => {
+    const day = this.addData(currentElement);
+    const duplicateIndex = array.findIndex((el) => isEqual(el.date, day.date));
+    duplicateIndex > -1
+      ? (array[duplicateIndex] = this.mergeDuplicate(
+          array[duplicateIndex],
+          day
+        ))
+      : array.push(day);
+    return array;
+  };
+
+  private createObservable = () => {
+    this.calendar = from(this.makeMonths(this.trainingPlan));
     return this.calendar.pipe(
       map((data) => this.makeMonth(data)),
       mergeMap((data, index) =>
@@ -129,9 +135,16 @@ export class CalendarCreatorService {
       ),
       reduce(
         (array: Partial<CalendarDay>[], currentElement: Partial<CalendarDay>) =>
-          this.mergeDuplicates(array, currentElement),
+          this.mergeDuplicatesAndAddData(array, currentElement),
         []
       )
     );
+  };
+
+  public createCalendar = (
+    trainingPlan: TrainingPlan
+  ): Observable<Partial<CalendarDay>[]> => {
+    this.trainingPlan = trainingPlan;
+    return this.createObservable();
   };
 }

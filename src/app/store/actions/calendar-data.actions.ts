@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { CalendarDay } from 'src/app/shared/services/calendar-creator.service';
+import { CalendarDay } from 'src/app/shared/models/calendar.interface';
 
 export const SetCalendarData = createAction(
   '[Create Calendar Service] SET_CALENDAR_DATA',

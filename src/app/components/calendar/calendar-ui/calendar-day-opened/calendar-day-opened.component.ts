@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { CalendarDay } from 'src/app/shared/services/calendar-creator.service';
+import { CalendarDay } from 'src/app/shared/models/calendar.interface';
 
 @Component({
   selector: 'app-calendar-day-opened',

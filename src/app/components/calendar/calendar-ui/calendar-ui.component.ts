@@ -1,10 +1,7 @@
 import { CalendarDayOpenedService } from './calendar-day-opened/calendar-day-opened.service';
 import { getActualPage } from './../../../store/selectors/calendar-data.selectors';
 import { getCalendarData } from '../../../store/selectors/calendar-data.selectors';
-import {
-  CalendarCreatorService,
-  CalendarDay,
-} from '../../../shared/services/calendar-creator.service';
+import { CalendarCreatorService } from '../../../shared/services/calendar-creator.service';
 import {
   getTrainingPlan,
   getTrainingPlanId,
@@ -31,6 +28,7 @@ import { CalendarCreatorComponent } from '../calendar-creator/calendar-creator.c
 import { switchMap, tap } from 'rxjs/operators';
 import * as fromCalendarDataActions from '../../../store/actions/calendar-data.actions';
 import { CreateNewTrainingPlan } from 'src/app/store/actions/training-plans-data.actions';
+import { CalendarDay } from 'src/app/shared/models/calendar.interface';
 
 @Component({
   selector: 'app-calendar-ui',
