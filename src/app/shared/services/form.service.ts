@@ -35,7 +35,6 @@ export class FormService {
   };
 
   private checkEmpty = (inputElement: ElementRef<any>) => {
-    console.log(inputElement.nativeElement.value);
     if (inputElement.nativeElement.value.length > 0) {
       this.renderer.removeClass(inputElement.nativeElement, 'value--empty');
     } else {
