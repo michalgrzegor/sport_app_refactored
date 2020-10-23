@@ -1,0 +1,81 @@
+@import "./colors";
+@import "./mixins";
+
+.tile-editor {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+
+  &__form-group {
+    box-sizing: border-box;
+    background: $WhiteDotOTwo;
+    padding: 6px 6px 12px 6px;
+    margin: 10px 0 24px;
+    border-radius: 4px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    @include boxShadowPreview();
+  }
+
+  &__hidden-form {
+    max-height: 0px;
+    overflow: hidden;
+    transition: 1s;
+  }
+
+  .opened {
+    max-height: 2000px;
+    overflow: auto;
+  }
+
+  &__form-element {
+    width: 100%;
+    border-bottom: 1px solid $WhiteDotTwo;
+  }
+
+  &__header {
+    margin: 0;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    @include textRaleway(800, 16px);
+    text-transform: uppercase;
+    color: $fontWhiteHighContrast;
+    position: relative;
+  }
+
+  &__btn {
+    min-width: 64px;
+    height: 36px;
+    margin-bottom: 24px;
+    background: $WhiteDotOTwo;
+    font-weight: 800;
+    color: $fontWhiteMediumContrast;
+    padding: 1px 12px;
+  }
+
+  &__btn-expand {
+    position: absolute;
+    right: 0;
+    top: 3px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: 0.5s;
+  }
+
+  .border--off {
+    border: none;
+  }
+
+  .margin--top {
+    margin-top: 24px;
+  }
+
+  .margin--left {
+    margin-left: 12px;
+  }
+}

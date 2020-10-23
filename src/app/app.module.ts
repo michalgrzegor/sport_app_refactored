@@ -14,7 +14,10 @@ import { TileEditorComponent } from './components/tile-editor/tile-editor.compon
 import { AthleteManagerComponent } from './components/athlete-manager/athlete-manager.component';
 import { TilesCollectionComponent } from './components/tiles-collection/tiles-collection.component';
 import { TpMenuComponent } from './components/tp-menu/tp-menu.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TileEditorTrainingComponent } from './components/tile-editor/tile-editor-training/tile-editor-training.component';
+import { TileEditorDietComponent } from './components/tile-editor/tile-editor-diet/tile-editor-diet.component';
+import { TileEditorQuestionComponent } from './components/tile-editor/tile-editor-question/tile-editor-question.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,9 @@ import { FormsModule } from '@angular/forms';
     AthleteManagerComponent,
     TilesCollectionComponent,
     TpMenuComponent,
+    TileEditorTrainingComponent,
+    TileEditorDietComponent,
+    TileEditorQuestionComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +39,7 @@ import { FormsModule } from '@angular/forms';
     AppStoreModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     SharedComponentsModule,
     PipesModule,
   ],

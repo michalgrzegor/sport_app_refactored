@@ -1,1 +1,15 @@
-<p>tile-editor works!</p>
+<div class="editor">
+    <div class="editor__types">
+        <button 
+            *ngFor="let type of editorNames"  
+            class="editor__type customBtn" 
+            [ngClass]="{'active': type === editorName}"
+            (click)="changeEditor(type)" 
+        >{{ type }}</button>
+    </div>
+    <div class="editor__outlet" [ngSwitch]="editorName">
+        <app-tile-editor-training *ngSwitchCase="'training'"></app-tile-editor-training>
+        <app-tile-editor-diet *ngSwitchCase="'diet'"></app-tile-editor-diet>
+        <app-tile-editor-question *ngSwitchCase="'question'"></app-tile-editor-question>
+    </div>
+</div>

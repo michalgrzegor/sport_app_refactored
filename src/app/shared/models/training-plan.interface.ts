@@ -3,9 +3,9 @@ export interface TrainingPlan {
   date_from: string;
   date_to: string;
   training_sesion_number: number;
-  calendar_assocs: Association[];
-  calendar_stars: Star[];
-  calendar_comments: CalendarComment[];
+  calendar_assocs?: Association[];
+  calendar_stars?: Star[];
+  calendar_comments?: CalendarComment[];
   id: number;
 }
 

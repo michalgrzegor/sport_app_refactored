@@ -16,6 +16,13 @@
     @include textLato(400, 14px);
   }
 
+  &__textarea {
+    height: 48px;
+    padding: 18px 10px;
+    min-height: 96px;
+    resize: vertical;
+  }
+
   &__label {
     @include textRaleway(400, 14px);
     color: $fontWhiteHighContrast;
@@ -35,8 +42,15 @@
     }
   }
 
-  .ng-dirty,
-  .ng-valid {
+  select:not(.ng-pristine) {
+    + .customForm__label {
+      top: 4px;
+      font-size: 10px;
+      color: $darkerBrightBlue;
+    }
+  }
+
+  input:not(.ng-pristine):not(.ng-invalid):not(.ng-touched) {
     + .customForm__label {
       top: 4px;
       font-size: 10px;
@@ -51,5 +65,22 @@
     padding: 0 10px;
     margin: 0;
     @include textRaleway(400, 14px);
+  }
+
+  &__radio {
+    height: 36px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__radio-input {
+    width: 24px;
+    height: 24px;
+  }
+
+  &__radio-label {
+    @include textLato(400, 16px);
+    padding-left: 16px;
+    color: $fontWhiteMediumContrast;
   }
 }

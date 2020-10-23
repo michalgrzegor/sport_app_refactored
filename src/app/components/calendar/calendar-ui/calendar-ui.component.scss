@@ -49,6 +49,7 @@
     width: 100%;
     @include textLato(400, 16px);
     text-transform: uppercase;
+    text-align: center;
   }
 
   &__days {
@@ -64,6 +65,6 @@
     max-width: 96px;
     width: 100%;
     height: 72px;
-    border: cadetblue 1px dotted;
+    // border: cadetblue 1px dotted;
   }
 }

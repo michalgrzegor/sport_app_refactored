@@ -1,3 +1,11 @@
 <div class="openedday">
-    <p>{{day.date | date}}</p>
+    <h1 class="openedday__header">{{day.date | date: "MMMM dd yyyy"}}</h1>
+    <h2 *ngIf="day.associations.length === 0; else sessions" >open the tile collection and drop here some tiles</h2>
+    <ng-template #sessions>
+        <div class="openedday__sessions">
+            <!-- <div *ngFor="let session of day.trainingSessions"  class="openedday__session">
+    
+            </div> -->
+        </div>
+    </ng-template>
 </div>

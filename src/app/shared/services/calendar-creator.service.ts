@@ -92,12 +92,16 @@ export class CalendarCreatorService {
   };
 
   private addData = (day: Partial<CalendarDay>) => {
-    const associations = this.trainingPlan.calendar_assocs.filter((asso) =>
-      isEqual(new Date(asso.calendar_date), day.date)
-    );
-    const comments = this.trainingPlan.calendar_comments.filter((comment) =>
-      isEqual(new Date(comment.comment_day), day.date)
-    );
+    const associations = this.trainingPlan.calendar_assocs
+      ? this.trainingPlan.calendar_assocs.filter((asso) =>
+          isEqual(new Date(asso.calendar_date), day.date)
+        )
+      : [];
+    const comments = this.trainingPlan.calendar_comments
+      ? this.trainingPlan.calendar_comments.filter((comment) =>
+          isEqual(new Date(comment.comment_day), day.date)
+        )
+      : [];
     day.associations = [...associations];
     day.comments = [...comments];
     day.trainingSessions = this.trainingPlan.training_sesion_number;

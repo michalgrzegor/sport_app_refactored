@@ -1,0 +1,32 @@
+@import "../../shared/styles/colors";
+@import "../../shared/styles/mixins";
+
+.editor {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 10px;
+
+  &__types {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 56px;
+    border-bottom: 1px solid $WhiteDotTwo;
+  }
+
+  &__type {
+    @include textRaleway(400, 14px);
+    text-transform: uppercase;
+    padding: 12px;
+  }
+
+  .active {
+    font-weight: 800;
+  }
+
+  &__outlet {
+    width: 100%;
+  }
+}
