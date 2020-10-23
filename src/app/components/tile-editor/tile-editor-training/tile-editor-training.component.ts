@@ -9,6 +9,8 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { CreateTile } from '../../../store/actions/tile.actions';
 
 @Component({
   selector: 'app-tile-editor-training',
@@ -45,12 +47,15 @@ export class TileEditorTrainingComponent implements OnInit, AfterViewInit {
   constructor(
     private formBuilder: FormBuilder,
     private renderer: Renderer2,
-    private formService: FormService
+    private formService: FormService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
     this.tileTraining = this.formBuilder.group({
       tile_title: ['', Validators.required],
+      tile_type_name: ['training'],
+      tile_type_color: ['#FF5D51'],
       tile_type: ['training'],
       tile_description: [''],
       tile_activities_sets: [''],
@@ -85,9 +90,10 @@ export class TileEditorTrainingComponent implements OnInit, AfterViewInit {
       tile_activity_rest_after_activity_intensity_amount: [''],
     });
 
-  public createTile = () => {
-    console.log(this.tileTraining.value);
-  };
+  public createTile = () =>
+    this.store.dispatch(
+      CreateTile({ data: { tile: this.tileTraining.value, type: 'training' } })
+    );
 
   public toggleForm = (index: number) =>
     this.formService.toggleForm(

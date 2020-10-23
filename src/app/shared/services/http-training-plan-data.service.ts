@@ -6,29 +6,29 @@ import {
   TrainingPlan,
 } from '../models/training-plan.interface';
 import { Store } from '@ngrx/store';
-import { switchMap, skipWhile } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { getAccessToken } from 'src/app/store/selectors/auth.selectors';
 import { NewTrainingPlan } from '../models/new-training-plan';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HttpDataService {
+export class HttpTrainingPlanDataService {
   private URL = 'https://stormy-plains-57531.herokuapp.com/api/v1/';
 
   constructor(private httpClient: HttpClient, private store: Store) {}
 
-  getToken = (): Observable<string> =>
-    this.store.select(getAccessToken).pipe(skipWhile((data) => data === null));
+  private getToken = (): Observable<string> =>
+    this.store.select(getAccessToken).pipe(take(1));
 
-  getHttpOptions = (token: string): { headers: HttpHeaders } => ({
+  private getHttpOptions = (token: string): { headers: HttpHeaders } => ({
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     }),
   });
 
-  getTrainingPlansList = (): Observable<TrainingPlanInfo[]> =>
+  public getTrainingPlansList = (): Observable<TrainingPlanInfo[]> =>
     this.getToken().pipe(
       switchMap((token) => {
         return this.httpClient.get<TrainingPlanInfo[]>(
@@ -38,7 +38,7 @@ export class HttpDataService {
       })
     );
 
-  getTrainingPlan = (id: string): Observable<TrainingPlan> =>
+  public getTrainingPlan = (id: string): Observable<TrainingPlan> =>
     this.getToken().pipe(
       switchMap((token) => {
         return this.httpClient.get<TrainingPlan>(
@@ -48,7 +48,7 @@ export class HttpDataService {
       })
     );
 
-  createTrainingPlan = (
+  public createTrainingPlan = (
     newTrainingPlan: NewTrainingPlan
   ): Observable<TrainingPlan> =>
     this.getToken().pipe(
@@ -61,7 +61,7 @@ export class HttpDataService {
       })
     );
 
-  deleteTrainingPlan = (id: number): Observable<any> =>
+  public deleteTrainingPlan = (id: number): Observable<any> =>
     this.getToken().pipe(
       switchMap((token) => {
         return this.httpClient.delete(
@@ -71,11 +71,3 @@ export class HttpDataService {
       })
     );
 }
-
-// deleteTrainingPlan(id: number) {
-//   this._http
-//     .delete(`${this.URL}training_plans/${id}`, this.getHttpOptions())
-//     .subscribe((response) => {
-//       this._store.dispatch(new TilesDataActions.DeleteTpManager(id));
-//     });
-// }

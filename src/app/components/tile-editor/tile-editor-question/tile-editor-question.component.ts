@@ -8,6 +8,8 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { CreateTile } from '../../../store/actions/tile.actions';
 
 @Component({
   selector: 'app-tile-editor-question',
@@ -22,12 +24,15 @@ export class TileEditorQuestionComponent implements OnInit, AfterViewInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private store: Store,
     private formService: FormService
   ) {}
 
   ngOnInit(): void {
     this.tileQuestion = this.formBuilder.group({
       tile_title: ['', Validators.required],
+      tile_type_name: ['question'],
+      tile_type_color: ['#E8A022'],
       tile_type: ['question'],
       tile_description: [''],
       tile_question: this.formBuilder.group({
@@ -44,9 +49,8 @@ export class TileEditorQuestionComponent implements OnInit, AfterViewInit {
     this.formService.addInputFuncionality(this.inputNodesArray);
   }
 
-  public createTile = () => {
-    console.log(
-      this.tileQuestion.get('tile_question').get('tile_answer_numeric').value
+  public createTile = () =>
+    this.store.dispatch(
+      CreateTile({ data: { tile: this.tileQuestion.value, type: 'question' } })
     );
-  };
 }

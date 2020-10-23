@@ -1,9 +1,7 @@
 import { FormService } from './../../../shared/services/form.service';
-import { element } from 'protractor';
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   OnInit,
   QueryList,
   Renderer2,
@@ -11,6 +9,8 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { CreateTile } from '../../../store/actions/tile.actions';
 
 @Component({
   selector: 'app-tile-editor-diet',
@@ -31,12 +31,15 @@ export class TileEditorDietComponent implements OnInit, AfterViewInit {
   constructor(
     private formBuilder: FormBuilder,
     private renderer: Renderer2,
-    private formService: FormService
+    private formService: FormService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
     this.tileDiet = this.formBuilder.group({
       tile_title: ['', Validators.required],
+      tile_type_name: ['diet'],
+      tile_type_color: ['#88C540'],
       tile_type: ['diet'],
       tile_description: [''],
       tile_diets: this.formBuilder.array([this.getTileMeal()]),
@@ -60,9 +63,10 @@ export class TileEditorDietComponent implements OnInit, AfterViewInit {
       tile_diet_fat_amount: [''],
     });
 
-  public createTile = () => {
-    console.log(this.tileDiet.value);
-  };
+  public createTile = () =>
+    this.store.dispatch(
+      CreateTile({ data: { tile: this.tileDiet.value, type: 'diet' } })
+    );
 
   public toggleForm = (index: number) =>
     this.formService.toggleForm(
