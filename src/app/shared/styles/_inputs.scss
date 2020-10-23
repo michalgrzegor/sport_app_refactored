@@ -42,15 +42,9 @@
     }
   }
 
-  select:not(.ng-pristine) {
-    + .customForm__label {
-      top: 4px;
-      font-size: 10px;
-      color: $darkerBrightBlue;
-    }
-  }
-
-  input:not(.ng-pristine):not(.ng-invalid):not(.ng-touched) {
+  textarea:not(.value--empty),
+  select:not(.value--empty),
+  input:not(.value--empty) {
     + .customForm__label {
       top: 4px;
       font-size: 10px;

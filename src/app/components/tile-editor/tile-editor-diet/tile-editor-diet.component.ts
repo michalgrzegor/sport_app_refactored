@@ -1,5 +1,9 @@
+import { FormService } from './../../../shared/services/form.service';
+import { element } from 'protractor';
 import {
+  AfterViewInit,
   Component,
+  ElementRef,
   OnInit,
   QueryList,
   Renderer2,
@@ -13,16 +17,22 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './tile-editor-diet.component.html',
   styleUrls: ['../../../shared/styles/_tile-editor.scss'],
 })
-export class TileEditorDietComponent implements OnInit {
+export class TileEditorDietComponent implements OnInit, AfterViewInit {
   @ViewChildren('formToExpand', { read: ViewContainerRef })
   formToExpandNodesArray: QueryList<ViewContainerRef>;
   @ViewChildren('expandBtn', { read: ViewContainerRef })
   expandBtnNodesArray: QueryList<ViewContainerRef>;
+  @ViewChildren('input', { read: ViewContainerRef })
+  inputNodesArray: QueryList<ViewContainerRef>;
 
   public tileDiet: FormGroup;
   public energyUnitsArray: string[] = ['kcal', 'kJ', 'g', 'mg'];
 
-  constructor(private formBuilder: FormBuilder, private renderer: Renderer2) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private renderer: Renderer2,
+    private formService: FormService
+  ) {}
 
   ngOnInit(): void {
     this.tileDiet = this.formBuilder.group({
@@ -31,6 +41,10 @@ export class TileEditorDietComponent implements OnInit {
       tile_description: [''],
       tile_diets: this.formBuilder.array([this.getTileMeal()]),
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.formService.addInputFuncionality(this.inputNodesArray);
   }
 
   private getTileMeal = () =>
@@ -50,19 +64,12 @@ export class TileEditorDietComponent implements OnInit {
     console.log(this.tileDiet.value);
   };
 
-  public toggleForm = (index: number) => {
-    const container = this.formToExpandNodesArray.toArray()[index].element
-      .nativeElement;
-    const button = this.expandBtnNodesArray.toArray()[index].element
-      .nativeElement;
-    if (Array.from(container.classList).includes('opened')) {
-      this.renderer.setStyle(button, 'transform', 'rotate(0deg)');
-      this.renderer.removeClass(container, 'opened');
-    } else {
-      this.renderer.setStyle(button, 'transform', 'rotate(180deg)');
-      this.renderer.addClass(container, 'opened');
-    }
-  };
+  public toggleForm = (index: number) =>
+    this.formService.toggleForm(
+      index,
+      this.formToExpandNodesArray,
+      this.expandBtnNodesArray
+    );
 
   public removeMeal = (index: number) =>
     (this.tileDiet.get('tile_diets') as FormArray).removeAt(index);

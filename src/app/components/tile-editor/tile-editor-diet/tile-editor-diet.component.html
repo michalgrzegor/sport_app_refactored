@@ -2,7 +2,7 @@
     <div class="tile-editor__form-element">
         <h2 class="tile-editor__header">Tile Name</h2>
         <div class="customForm">
-            <input class="customForm__input" id="tile_title" type="text" formControlName="tile_title" required>
+            <input #input class="customForm__input" id="tile_title" type="text" formControlName="tile_title" required>
             <label class="customForm__label" for="tile_title">name</label>
         </div>
     </div>
@@ -16,7 +16,7 @@
                     <button (click)="toggleForm(i)" #expandBtn class="customBtn tile-editor__btn-expand"><i class="material-icons">keyboard_arrow_down</i></button>
                 </h2>
                 <div class="customForm">
-                    <input class="customForm__input" id="tile_diet_meal" type="text" formControlName="tile_diet_meal" required>
+                    <input #input class="customForm__input" id="tile_diet_meal" type="text" formControlName="tile_diet_meal" >
                     <label class="customForm__label" for="tile_diet_meal">breakfast, porridge...</label>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 <div class="tile-editor__form-element border--off">
                     <h2 class="tile-editor__header">energy value</h2>
                     <div class="customForm">
-                        <select class="customForm__input" id="tile_diet_energy_unit" formControlName="tile_diet_energy_unit">
+                        <select #input class="customForm__input" id="tile_diet_energy_unit" formControlName="tile_diet_energy_unit">
                             <option *ngFor="let unit of energyUnitsArray"  [value]="unit">{{unit}}</option>
                         </select>
                         <label class="customForm__label" for="tile_diet_energy_unit">unit</label>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input class="customForm__input" id="tile_diet_energy_amount" type="text" formControlName="tile_diet_energy_amount" required>
+                        <input #input class="customForm__input" id="tile_diet_energy_amount" type="text" formControlName="tile_diet_energy_amount" >
                         <label class="customForm__label" for="tile_diet_energy_amount">amount</label>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                 <div class="tile-editor__form-element border--off">
                     <h2 class="tile-editor__header">carbohydrates</h2>
                     <div class="customForm">
-                        <select class="customForm__input" id="tile_diet_carbohydrates_unit" formControlName="tile_diet_carbohydrates_unit">
+                        <select #input class="customForm__input" id="tile_diet_carbohydrates_unit" formControlName="tile_diet_carbohydrates_unit">
                             <option *ngFor="let unit of energyUnitsArray"  [value]="unit">{{unit}}</option>
                         </select>
                         <label class="customForm__label" for="tile_diet_carbohydrates_unit">unit</label>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input class="customForm__input" id="tile_diet_carbohydrates_amount" type="text" formControlName="tile_diet_carbohydrates_amount" required>
+                        <input #input class="customForm__input" id="tile_diet_carbohydrates_amount" type="text" formControlName="tile_diet_carbohydrates_amount" >
                         <label class="customForm__label" for="tile_diet_carbohydrates_amount">amount</label>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                 <div class="tile-editor__form-element border--off">
                     <h2 class="tile-editor__header">protein</h2>
                     <div class="customForm">
-                        <select class="customForm__input" id="tile_diet_protein_unit" formControlName="tile_diet_protein_unit">
+                        <select #input class="customForm__input" id="tile_diet_protein_unit" formControlName="tile_diet_protein_unit">
                             <option *ngFor="let unit of energyUnitsArray"  [value]="unit">{{unit}}</option>
                         </select>
                         <label class="customForm__label" for="tile_diet_protein_unit">unit</label>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input class="customForm__input" id="tile_diet_protein_amount" type="text" formControlName="tile_diet_protein_amount" required>
+                        <input #input class="customForm__input" id="tile_diet_protein_amount" type="text" formControlName="tile_diet_protein_amount" >
                         <label class="customForm__label" for="tile_diet_protein_amount">amount</label>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                 <div class="tile-editor__form-element border--off">
                     <h2 class="tile-editor__header">fat</h2>
                     <div class="customForm">
-                        <select class="customForm__input" id="tile_diet_fat_unit" formControlName="tile_diet_fat_unit">
+                        <select #input class="customForm__input" id="tile_diet_fat_unit" formControlName="tile_diet_fat_unit">
                             <option *ngFor="let unit of energyUnitsArray"  [value]="unit">{{unit}}</option>
                         </select>
                         <label class="customForm__label" for="tile_diet_fat_unit">unit</label>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input class="customForm__input" id="tile_diet_fat_amount" type="text" formControlName="tile_diet_fat_amount" required>
+                        <input #input class="customForm__input" id="tile_diet_fat_amount" type="text" formControlName="tile_diet_fat_amount" >
                         <label class="customForm__label" for="tile_diet_fat_amount">amount</label>
                     </div>
                 </div>
@@ -90,16 +90,6 @@
                     <button class="customBtn tile-editor__btn margin--top margin--left" (click)="removeMeal(i)" >remove meal</button>
                 </div>
             </div>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             
         </div>
     </div>
@@ -112,13 +102,13 @@
     <div class="tile-editor__form-element">
         <h2 class="tile-editor__header">Description</h2>
         <div class="customForm">
-            <textarea class="customForm__input customForm__textarea" id="tile_description" formControlName="tile_description"></textarea>
+            <textarea #input class="customForm__input customForm__textarea" id="tile_description" formControlName="tile_description"></textarea>
             <label class="customForm__label" for="tile_description">you can add comments about the entire tile</label>
         </div>
     </div>
     <div class="tile-editor__form-element border--off">
         <h2 class="tile-editor__header">Finish tile</h2>
-        <button class="customBtn tile-editor__btn" (click)="createTile()" >Create</button>
+        <button class="customBtn tile-editor__btn" type="submit" [disabled]="!tileDiet.valid" (click)="createTile()" >Create</button>
     </div>
 </div>
 

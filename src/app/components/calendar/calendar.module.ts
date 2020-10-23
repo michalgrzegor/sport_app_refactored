@@ -6,7 +6,7 @@ import { CalendarUiComponent } from './calendar-ui/calendar-ui.component';
 import { CommonModule } from '@angular/common';
 import { CalendarInfoComponent } from './calendar-info/calendar-info.component';
 import { CalendarCreatorComponent } from './calendar-creator/calendar-creator.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarDayComponent } from './calendar-ui/calendar-day/calendar-day.component';
 import { CalendarDayOpenedComponent } from './calendar-ui/calendar-day-opened/calendar-day-opened.component';
 
@@ -23,6 +23,7 @@ import { CalendarDayOpenedComponent } from './calendar-ui/calendar-day-opened/ca
     CalendarRoutingModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     SharedComponentsModule,
   ],
 })

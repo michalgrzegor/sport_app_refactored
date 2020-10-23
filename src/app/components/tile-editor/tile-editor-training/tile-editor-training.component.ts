@@ -1,4 +1,6 @@
+import { FormService } from './../../../shared/services/form.service';
 import {
+  AfterViewInit,
   Component,
   OnInit,
   QueryList,
@@ -13,12 +15,14 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './tile-editor-training.component.html',
   styleUrls: ['../../../shared/styles/_tile-editor.scss'],
 })
-export class TileEditorTrainingComponent implements OnInit {
+export class TileEditorTrainingComponent implements OnInit, AfterViewInit {
   public tileTraining: FormGroup;
   @ViewChildren('formToExpand', { read: ViewContainerRef })
   formToExpandNodesArray: QueryList<ViewContainerRef>;
   @ViewChildren('expandBtn', { read: ViewContainerRef })
   expandBtnNodesArray: QueryList<ViewContainerRef>;
+  @ViewChildren('input', { read: ViewContainerRef })
+  inputNodesArray: QueryList<ViewContainerRef>;
 
   public intensityArray: string[] = [
     'km/h',
@@ -38,7 +42,11 @@ export class TileEditorTrainingComponent implements OnInit {
     'hour',
   ];
 
-  constructor(private formBuilder: FormBuilder, private renderer: Renderer2) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private renderer: Renderer2,
+    private formService: FormService
+  ) {}
 
   ngOnInit(): void {
     this.tileTraining = this.formBuilder.group({
@@ -52,6 +60,10 @@ export class TileEditorTrainingComponent implements OnInit {
       tile_activities_sets_rest_intensity_ammount: [''],
       tile_activities: this.formBuilder.array([this.getTileActivities()]),
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.formService.addInputFuncionality(this.inputNodesArray);
   }
 
   private getTileActivities = () =>
@@ -77,19 +89,12 @@ export class TileEditorTrainingComponent implements OnInit {
     console.log(this.tileTraining.value);
   };
 
-  public toggleForm = (index: number) => {
-    const container = this.formToExpandNodesArray.toArray()[index].element
-      .nativeElement;
-    const button = this.expandBtnNodesArray.toArray()[index].element
-      .nativeElement;
-    if (Array.from(container.classList).includes('opened')) {
-      this.renderer.setStyle(button, 'transform', 'rotate(0deg)');
-      this.renderer.removeClass(container, 'opened');
-    } else {
-      this.renderer.setStyle(button, 'transform', 'rotate(180deg)');
-      this.renderer.addClass(container, 'opened');
-    }
-  };
+  public toggleForm = (index: number) =>
+    this.formService.toggleForm(
+      index,
+      this.formToExpandNodesArray,
+      this.expandBtnNodesArray
+    );
 
   public removeActivity = (index: number) =>
     (this.tileTraining.get('tile_activities') as FormArray).removeAt(index);

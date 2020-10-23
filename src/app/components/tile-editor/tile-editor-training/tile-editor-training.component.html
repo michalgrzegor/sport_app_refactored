@@ -2,7 +2,7 @@
     <div class="tile-editor__form-element">
         <h2 class="tile-editor__header">Tile Name</h2>
         <div class="customForm">
-            <input class="customForm__input" id="tile_title" type="text" formControlName="tile_title" required>
+            <input #input class="customForm__input" id="tile_title" type="text" formControlName="tile_title" required>
             <label class="customForm__label" for="tile_title">name</label>
         </div>
     </div>
@@ -16,7 +16,7 @@
                     <button (click)="toggleForm(i)" #expandBtn class="customBtn tile-editor__btn-expand"><i class="material-icons">keyboard_arrow_down</i></button>
                 </h2>
                 <div class="customForm">
-                    <input class="customForm__input" id="tile_activity_name" type="text" formControlName="tile_activity_name" required>
+                    <input #input class="customForm__input" id="tile_activity_name" type="text" formControlName="tile_activity_name" required>
                     <label class="customForm__label" for="tile_activity_name">push-ups, interval run...</label>
                 </div>
             </div>
@@ -24,14 +24,14 @@
                 <div class="tile-editor__form-element">
                     <h2 class="tile-editor__header">how many reps?</h2>
                     <div class="customForm">
-                        <input class="customForm__input" id="tile_activity_reps" type="text" formControlName="tile_activity_reps" required>
+                        <input #input class="customForm__input" id="tile_activity_reps" type="text" formControlName="tile_activity_reps" required>
                         <label class="customForm__label" for="tile_activity_reps">amount</label>
                     </div>
                 </div>
                 <div class="tile-editor__form-element border--off">
                     <h2 class="tile-editor__header">choose activity unit</h2>
                     <div class="customForm">
-                        <select class="customForm__input" id="tile_activity_unit" formControlName="tile_activity_unit">
+                        <select #input class="customForm__input" id="tile_activity_unit" formControlName="tile_activity_unit">
                             <option *ngFor="let unit of unitsArray"  [value]="unit">{{unit}}</option>
                         </select>
                         <label class="customForm__label" for="tile_activity_unit">unit</label>
@@ -39,14 +39,14 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input class="customForm__input" id="tile_activity_amount" type="text" formControlName="tile_activity_amount" required>
+                        <input #input class="customForm__input" id="tile_activity_amount" type="text" formControlName="tile_activity_amount" required>
                         <label class="customForm__label" for="tile_activity_amount">amount</label>
                     </div>
                 </div>
                 <div class="tile-editor__form-element border--off">
                     <h2 class="tile-editor__header">choose intensity</h2>
                     <div class="customForm">
-                        <select class="customForm__input" id="tile_activity_intensity" formControlName="tile_activity_intensity">
+                        <select #input class="customForm__input" id="tile_activity_intensity" formControlName="tile_activity_intensity">
                             <option *ngFor="let intensity of intensityArray"  [value]="intensity">{{intensity}}</option>
                         </select>
                         <label class="customForm__label" for="tile_activity_intensity">unit</label>
@@ -54,14 +54,14 @@
                 </div> 
                     <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input class="customForm__input" id="tile_activity_intensity_amount" type="text" formControlName="tile_activity_intensity_amount" required>
+                        <input #input class="customForm__input" id="tile_activity_intensity_amount" type="text" formControlName="tile_activity_intensity_amount" required>
                         <label class="customForm__label" for="tile_activity_intensity_amount">amount</label>
                     </div>
                 </div>
                 <div class="tile-editor__form-element border--off">
                     <h2 class="tile-editor__header">add rest</h2>
                     <div class="customForm">
-                        <select class="customForm__input" id="tile_activity_rest_unit" formControlName="tile_activity_rest_unit">
+                        <select #input class="customForm__input" id="tile_activity_rest_unit" formControlName="tile_activity_rest_unit">
                             <option *ngFor="let unit of unitsArray"  [value]="unit">{{unit}}</option>
                         </select>
                         <label class="customForm__label" for="tile_activity_rest_unit">unit</label>
@@ -69,14 +69,14 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input class="customForm__input" id="tile_activity_rest_amount" type="text" formControlName="tile_activity_rest_amount" required>
+                        <input #input class="customForm__input" id="tile_activity_rest_amount" type="text" formControlName="tile_activity_rest_amount" required>
                         <label class="customForm__label" for="tile_activity_rest_amount">amount</label>
                     </div>
                 </div>
                 <div class="tile-editor__form-element border--off">
                     <h2 class="tile-editor__header">add rest intensity</h2>
                     <div class="customForm">
-                        <select class="customForm__input" id="tile_activity_rest_intensity" formControlName="tile_activity_rest_intensity">
+                        <select #input class="customForm__input" id="tile_activity_rest_intensity" formControlName="tile_activity_rest_intensity">
                             <option *ngFor="let intensity of intensityArray"  [value]="intensity">{{intensity}}</option>
                         </select>
                         <label class="customForm__label" for="tile_activity_rest_intensity">unit</label>
@@ -84,21 +84,21 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input class="customForm__input" id="tile_activity_rest_intensity_amount" type="text" formControlName="tile_activity_rest_intensity_amount" required>
+                        <input #input class="customForm__input" id="tile_activity_rest_intensity_amount" type="text" formControlName="tile_activity_rest_intensity_amount" required>
                         <label class="customForm__label" for="tile_activity_rest_intensity_amount">amount</label>
                     </div>
                 </div>
                 <div class="tile-editor__form-element">
                     <h2 class="tile-editor__header">notes</h2>
                     <div class="customForm">
-                        <textarea class="customForm__input customForm__textarea" id="tile_activity_note" formControlName="tile_activity_note"></textarea>
+                        <textarea #input class="customForm__input customForm__textarea" id="tile_activity_note" formControlName="tile_activity_note"></textarea>
                         <label class="customForm__label" for="tile_activity_note">notes</label>
                     </div>
                 </div>
                 <div class="tile-editor__form-element border--off">
                     <h2 class="tile-editor__header">add rest after activity</h2>
                     <div class="customForm">
-                        <select class="customForm__input" id="tile_activity_rest_after_activity_unit" formControlName="tile_activity_rest_after_activity_unit">
+                        <select #input class="customForm__input" id="tile_activity_rest_after_activity_unit" formControlName="tile_activity_rest_after_activity_unit">
                             <option *ngFor="let unit of unitsArray"  [value]="unit">{{unit}}</option>
                         </select>
                         <label class="customForm__label" for="tile_activity_rest_after_activity_unit">unit</label>
@@ -106,14 +106,14 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input class="customForm__input" id="tile_activity_rest_after_activity_amount" type="text" formControlName="tile_activity_rest_after_activity_amount" required>
+                        <input #input class="customForm__input" id="tile_activity_rest_after_activity_amount" type="text" formControlName="tile_activity_rest_after_activity_amount" required>
                         <label class="customForm__label" for="tile_activity_rest_after_activity_amount">amount</label>
                     </div>
                 </div>
                 <div class="tile-editor__form-element border--off">
                     <h2 class="tile-editor__header">add rest intensity</h2>
                     <div class="customForm">
-                        <select class="customForm__input" id="tile_activity_rest_after_activity_intensity" formControlName="tile_activity_rest_after_activity_intensity">
+                        <select #input class="customForm__input" id="tile_activity_rest_after_activity_intensity" formControlName="tile_activity_rest_after_activity_intensity">
                             <option *ngFor="let intensity of intensityArray"  [value]="intensity">{{intensity}}</option>
                         </select>
                         <label class="customForm__label" for="tile_activity_rest_after_activity_intensity">unit</label>
@@ -121,7 +121,7 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input class="customForm__input" id="tile_activity_rest_after_activity_intensity_amount" type="text" formControlName="tile_activity_rest_after_activity_intensity_amount" required>
+                        <input #input class="customForm__input" id="tile_activity_rest_after_activity_intensity_amount" type="text" formControlName="tile_activity_rest_after_activity_intensity_amount" required>
                         <label class="customForm__label" for="tile_activity_rest_after_activity_intensity_amount">amount</label>
                     </div>
                 </div>
@@ -148,14 +148,14 @@
     <div class="tile-editor__form-element">
         <h2 class="tile-editor__header">how many sets?</h2>
         <div class="customForm">
-            <input class="customForm__input" id="tile_activities_sets" type="text" formControlName="tile_activities_sets" required>
+            <input #input class="customForm__input" id="tile_activities_sets" type="text" formControlName="tile_activities_sets" required>
             <label class="customForm__label" for="tile_activities_sets">amount</label>
         </div>
     </div>
     <div class="tile-editor__form-element border--off">
         <h2 class="tile-editor__header">add rest between sets</h2>
         <div class="customForm">
-            <select class="customForm__input" id="tile_activities_sets_rest_unit" formControlName="tile_activities_sets_rest_unit">
+            <select #input class="customForm__input" id="tile_activities_sets_rest_unit" formControlName="tile_activities_sets_rest_unit">
                 <option *ngFor="let intensity of intensityArray"  [value]="intensity">{{intensity}}</option>
             </select>
             <label class="customForm__label" for="tile_activities_sets_rest_unit">unit</label>
@@ -163,14 +163,14 @@
     </div>
     <div class="tile-editor__form-element">
         <div class="customForm">
-            <input class="customForm__input" id="tile_activities_sets_rest_ammount" type="text" formControlName="tile_activities_sets_rest_ammount" required>
+            <input #input class="customForm__input" id="tile_activities_sets_rest_ammount" type="text" formControlName="tile_activities_sets_rest_ammount" required>
             <label class="customForm__label" for="tile_activities_sets_rest_ammount">amount</label>
         </div>
     </div>
     <div class="tile-editor__form-element border--off">
         <h2 class="tile-editor__header">set rest intensity</h2>
         <div class="customForm">
-            <select class="customForm__input" id="tile_activities_sets_rest_intensity_unit" formControlName="tile_activities_sets_rest_intensity_unit">
+            <select #input class="customForm__input" id="tile_activities_sets_rest_intensity_unit" formControlName="tile_activities_sets_rest_intensity_unit">
                 <option *ngFor="let intensity of intensityArray"  [value]="intensity">{{intensity}}</option>
             </select>
             <label class="customForm__label" for="tile_activities_sets_rest_intensity_unit">unit</label>
@@ -178,7 +178,7 @@
     </div>
     <div class="tile-editor__form-element">
         <div class="customForm">
-            <input class="customForm__input" id="tile_activities_sets_rest_intensity_ammount" type="text" formControlName="tile_activities_sets_rest_intensity_ammount" required>
+            <input #input class="customForm__input" id="tile_activities_sets_rest_intensity_ammount" type="text" formControlName="tile_activities_sets_rest_intensity_ammount" required>
             <label class="customForm__label" for="tile_activities_sets_rest_intensity_ammount">amount</label>
         </div>
     </div>
@@ -187,7 +187,7 @@
     <div class="tile-editor__form-element">
         <h2 class="tile-editor__header">Description</h2>
         <div class="customForm">
-            <textarea class="customForm__input customForm__textarea" id="tile_description" formControlName="tile_description"></textarea>
+            <textarea #input class="customForm__input customForm__textarea" id="tile_description" formControlName="tile_description"></textarea>
             <label class="customForm__label" for="tile_description">you can add comments about the entire tile</label>
         </div>
     </div>
