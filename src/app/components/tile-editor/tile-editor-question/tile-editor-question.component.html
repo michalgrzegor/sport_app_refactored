@@ -4,6 +4,7 @@
         <div class="customForm">
             <input #input class="customForm__input" id="tile_title" type="text" formControlName="tile_title" required>
             <label class="customForm__label" for="tile_title">name</label>
+            <p [hidden]="tileQuestion.get('tile_title').valid || tileQuestion.get('tile_title').untouched" class="customForm__error">This field is required</p>
         </div>
     </div>
     <div class="tile-editor__form-group" formGroupName="tile_question">
@@ -12,6 +13,7 @@
             <div class="customForm">
                 <textarea #input class="customForm__input customForm__textarea" id="tile_ask_question" formControlName="tile_ask_question" required></textarea>
                 <label class="customForm__label" for="tile_ask_question">how do yoy feel after training?</label>
+                <p [hidden]="tileQuestion.get('tile_question').get('tile_ask_question').valid || tileQuestion.get('tile_question').get('tile_ask_question').untouched" class="customForm__error">This field is required</p>
             </div>
         </div>
         <div class="tile-editor__form-element">
@@ -32,18 +34,18 @@
         <div *ngIf="tileQuestion.get('tile_question').get('tile_answer_numeric').value === true"  class="tile-editor__form-element">
             <h2 class="tile-editor__header">Range</h2>
             <div class="customForm">
-                <input #input class="customForm__input" id="tile_answer_numeric_from" formControlName="tile_answer_numeric_from">
+                <input #input class="customForm__input value--empty"  id="tile_answer_numeric_from" type="number" formControlName="tile_answer_numeric_from">
                 <label class="customForm__label" for="tile_answer_numeric_from">from</label>
             </div>
             <div class="customForm">
-                <input #input class="customForm__input" id="tile_answer_numeric_to" formControlName="tile_answer_numeric_to">
+                <input #input class="customForm__input value--empty" id="tile_answer_numeric_to" type="number" formControlName="tile_answer_numeric_to">
                 <label class="customForm__label" for="tile_answer_numeric_to">to</label>
             </div>
         </div>
         <div *ngIf="tileQuestion.get('tile_question').get('tile_answer_numeric').value === false" class="tile-editor__form-element">
             <h2 class="tile-editor__header">add answers</h2>
             <div class="customForm">
-                <input #input class="customForm__input" id="tile_answers_descriptives" formControlName="tile_answers_descriptives">
+                <input #input class="customForm__input value--empty" id="tile_answers_descriptives" formControlName="tile_answers_descriptives">
                 <label class="customForm__label" for="tile_answers_descriptives">very good, good, so-so...</label>
             </div>
         </div>
@@ -57,6 +59,6 @@
     </div>
     <div class="tile-editor__form-element border--off">
         <h2 class="tile-editor__header">Finish tile</h2>
-        <button class="customBtn tile-editor__btn" (click)="createTile()" >Create</button>
+        <button class="customBtn tile-editor__btn" [ngClass]="{'btn--disabled': !tileQuestion.valid}" [disabled]="!tileQuestion.valid" (click)="createTile()" >Create</button>
     </div>
 </div>

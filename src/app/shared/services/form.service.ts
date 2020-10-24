@@ -12,6 +12,7 @@ import {
 })
 export class FormService {
   private renderer: Renderer2;
+  private eventsReferences: { [key: string]: any[] } = {};
 
   constructor(private rendererFactory: RendererFactory2) {
     this.renderer = rendererFactory.createRenderer(null, null);
@@ -42,22 +43,46 @@ export class FormService {
     }
   };
 
-  private addBlurEvents = (inputNodes: QueryList<ViewContainerRef>) => {
-    inputNodes
-      .toArray()
-      .forEach((input) =>
-        this.renderer.listen(input.element.nativeElement, 'blur', () =>
-          this.checkEmpty(input.element)
-        )
+  private addBlurEvents = (
+    inputNodes: QueryList<ViewContainerRef>,
+    id: string
+  ) => {
+    this.eventsReferences[id] = [];
+    console.log(this.eventsReferences);
+    inputNodes.toArray().forEach((input) => {
+      const event = this.renderer.listen(
+        input.element.nativeElement,
+        'blur',
+        () => this.checkEmpty(input.element)
       );
+      this.eventsReferences[id].push(event);
+    });
   };
 
   private checkAllInputs = (inputNodes: QueryList<ViewContainerRef>) => {
     inputNodes.toArray().forEach((input) => this.checkEmpty(input.element));
   };
 
-  public addInputFuncionality = (inputNodes: QueryList<ViewContainerRef>) => {
+  public removeListener = (id: string) => {
+    this.eventsReferences[id].forEach((event) => event());
+    const { [id]: elementTodelete, ...rest } = this.eventsReferences;
+    this.eventsReferences = rest;
+  };
+
+  public refreshEvents = (
+    inputNodes: QueryList<ViewContainerRef>,
+    id: string
+  ) => {
+    this.removeListener(id);
     this.checkAllInputs(inputNodes);
-    this.addBlurEvents(inputNodes);
+    this.addBlurEvents(inputNodes, id);
+  };
+
+  public addInputFuncionality = (
+    inputNodes: QueryList<ViewContainerRef>,
+    id: string
+  ) => {
+    this.checkAllInputs(inputNodes);
+    this.addBlurEvents(inputNodes, id);
   };
 }

@@ -2,6 +2,7 @@ import { FormService } from './../../../shared/services/form.service';
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
   QueryList,
   Renderer2,
@@ -11,14 +12,18 @@ import {
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { CreateTile } from '../../../store/actions/tile.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tile-editor-training',
   templateUrl: './tile-editor-training.component.html',
   styleUrls: ['../../../shared/styles/_tile-editor.scss'],
 })
-export class TileEditorTrainingComponent implements OnInit, AfterViewInit {
+export class TileEditorTrainingComponent
+  implements OnInit, AfterViewInit, OnDestroy {
   public tileTraining: FormGroup;
+  private subscription: Subscription = new Subscription();
+  private id = 'training';
   @ViewChildren('formToExpand', { read: ViewContainerRef })
   formToExpandNodesArray: QueryList<ViewContainerRef>;
   @ViewChildren('expandBtn', { read: ViewContainerRef })
@@ -68,7 +73,13 @@ export class TileEditorTrainingComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.formService.addInputFuncionality(this.inputNodesArray);
+    this.subscription.add(
+      this.inputNodesArray.changes.subscribe((changes) => {
+        console.log(changes);
+        this.formService.refreshEvents(this.inputNodesArray, this.id);
+      })
+    );
+    this.formService.addInputFuncionality(this.inputNodesArray, this.id);
   }
 
   private getTileActivities = () =>
@@ -110,4 +121,9 @@ export class TileEditorTrainingComponent implements OnInit, AfterViewInit {
       this.getTileActivities()
     );
   };
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.formService.removeListener(this.id);
+  }
 }

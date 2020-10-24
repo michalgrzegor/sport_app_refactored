@@ -2,6 +2,7 @@ import { FormService } from './../../../shared/services/form.service';
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
   QueryList,
   ViewChildren,
@@ -10,17 +11,21 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { CreateTile } from '../../../store/actions/tile.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tile-editor-question',
   templateUrl: './tile-editor-question.component.html',
   styleUrls: ['../../../shared/styles/_tile-editor.scss'],
 })
-export class TileEditorQuestionComponent implements OnInit, AfterViewInit {
+export class TileEditorQuestionComponent
+  implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('input', { read: ViewContainerRef })
   inputNodesArray: QueryList<ViewContainerRef>;
 
   public tileQuestion: FormGroup;
+  private id = 'question';
+  private subscription: Subscription = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,7 +42,7 @@ export class TileEditorQuestionComponent implements OnInit, AfterViewInit {
       tile_description: [''],
       tile_question: this.formBuilder.group({
         tile_ask_question: ['', Validators.required],
-        tile_answer_numeric: ['', Validators.required],
+        tile_answer_numeric: [''],
         tile_answer_numeric_from: [''],
         tile_answer_numeric_to: [''],
         tile_answers_descriptives: [''],
@@ -46,11 +51,22 @@ export class TileEditorQuestionComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.formService.addInputFuncionality(this.inputNodesArray);
+    this.subscription.add(
+      this.inputNodesArray.changes.subscribe((changes) => {
+        console.log(changes);
+        this.formService.refreshEvents(this.inputNodesArray, this.id);
+      })
+    );
+    this.formService.addInputFuncionality(this.inputNodesArray, this.id);
   }
 
   public createTile = () =>
     this.store.dispatch(
       CreateTile({ data: { tile: this.tileQuestion.value, type: 'question' } })
     );
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.formService.removeListener(this.id);
+  }
 }

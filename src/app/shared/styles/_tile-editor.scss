@@ -57,6 +57,10 @@
     padding: 1px 12px;
   }
 
+  .btn--disabled {
+    color: $WhiteDotThree;
+  }
+
   &__btn-expand {
     position: absolute;
     right: 0;

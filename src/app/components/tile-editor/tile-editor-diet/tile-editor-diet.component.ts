@@ -2,6 +2,7 @@ import { FormService } from './../../../shared/services/form.service';
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
   QueryList,
   Renderer2,
@@ -11,13 +12,15 @@ import {
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { CreateTile } from '../../../store/actions/tile.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tile-editor-diet',
   templateUrl: './tile-editor-diet.component.html',
   styleUrls: ['../../../shared/styles/_tile-editor.scss'],
 })
-export class TileEditorDietComponent implements OnInit, AfterViewInit {
+export class TileEditorDietComponent
+  implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('formToExpand', { read: ViewContainerRef })
   formToExpandNodesArray: QueryList<ViewContainerRef>;
   @ViewChildren('expandBtn', { read: ViewContainerRef })
@@ -27,6 +30,8 @@ export class TileEditorDietComponent implements OnInit, AfterViewInit {
 
   public tileDiet: FormGroup;
   public energyUnitsArray: string[] = ['kcal', 'kJ', 'g', 'mg'];
+  private subscription: Subscription = new Subscription();
+  private id = 'diet';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,7 +52,13 @@ export class TileEditorDietComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.formService.addInputFuncionality(this.inputNodesArray);
+    this.subscription.add(
+      this.inputNodesArray.changes.subscribe((changes) => {
+        console.log(changes);
+        this.formService.refreshEvents(this.inputNodesArray, this.id);
+      })
+    );
+    this.formService.addInputFuncionality(this.inputNodesArray, this.id);
   }
 
   private getTileMeal = () =>
@@ -81,4 +92,9 @@ export class TileEditorDietComponent implements OnInit, AfterViewInit {
   public addMeal = () => {
     (this.tileDiet.get('tile_diets') as FormArray).push(this.getTileMeal());
   };
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.formService.removeListener(this.id);
+  }
 }
