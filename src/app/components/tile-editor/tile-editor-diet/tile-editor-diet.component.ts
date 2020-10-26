@@ -53,10 +53,9 @@ export class TileEditorDietComponent
 
   ngAfterViewInit(): void {
     this.subscription.add(
-      this.inputNodesArray.changes.subscribe((changes) => {
-        console.log(changes);
-        this.formService.refreshEvents(this.inputNodesArray, this.id);
-      })
+      this.inputNodesArray.changes.subscribe(() =>
+        this.formService.refreshEvents(this.inputNodesArray, this.id)
+      )
     );
     this.formService.addInputFuncionality(this.inputNodesArray, this.id);
   }

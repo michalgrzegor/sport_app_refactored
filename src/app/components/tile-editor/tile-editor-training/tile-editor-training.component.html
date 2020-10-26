@@ -15,7 +15,7 @@
                     <button (click)="toggleForm(i)" #expandBtn class="customBtn tile-editor__btn-expand"><i class="material-icons">keyboard_arrow_down</i></button>
                 </h2>
                 <div class="customForm">
-                    <input #input class="customForm__input" id="tile_activity_name-{{i}}" type="text" formControlName="tile_activity_name" required>
+                    <input #input class="customForm__input" id="tile_activity_name-{{i}}" type="text" formControlName="tile_activity_name" >
                     <label class="customForm__label" for="tile_activity_name-{{i}}">push-ups, interval run...</label>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <div class="tile-editor__form-element">
                     <h2 class="tile-editor__header">how many reps?</h2>
                     <div class="customForm">
-                        <input #input class="customForm__input" id="tile_activity_reps-{{i}}" type="number" formControlName="tile_activity_reps" required>
+                        <input #input class="customForm__input" id="tile_activity_reps-{{i}}" type="number" formControlName="tile_activity_reps" >
                         <label class="customForm__label" for="tile_activity_reps-{{i}}">amount</label>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input #input class="customForm__input" id="tile_activity_amount-{{i}}" type="number" formControlName="tile_activity_amount" required>
+                        <input #input class="customForm__input" id="tile_activity_amount-{{i}}" type="number" formControlName="tile_activity_amount" >
                         <label class="customForm__label" for="tile_activity_amount-{{i}}">amount</label>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                 </div> 
                     <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input #input class="customForm__input" id="tile_activity_intensity_amount-{{i}}" type="number" formControlName="tile_activity_intensity_amount" required>
+                        <input #input class="customForm__input" id="tile_activity_intensity_amount-{{i}}" type="number" formControlName="tile_activity_intensity_amount" >
                         <label class="customForm__label" for="tile_activity_intensity_amount-{{i}}">amount</label>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input #input class="customForm__input" id="tile_activity_rest_amount-{{i}}" type="number" formControlName="tile_activity_rest_amount" required>
+                        <input #input class="customForm__input" id="tile_activity_rest_amount-{{i}}" type="number" formControlName="tile_activity_rest_amount" >
                         <label class="customForm__label" for="tile_activity_rest_amount-{{i}}">amount</label>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input #input class="customForm__input" id="tile_activity_rest_intensity_amount-{{i}}" type="number" formControlName="tile_activity_rest_intensity_amount" required>
+                        <input #input class="customForm__input" id="tile_activity_rest_intensity_amount-{{i}}" type="number" formControlName="tile_activity_rest_intensity_amount" >
                         <label class="customForm__label" for="tile_activity_rest_intensity_amount-{{i}}">amount</label>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input #input class="customForm__input" id="tile_activity_rest_after_activity_amount-{{i}}" type="number" formControlName="tile_activity_rest_after_activity_amount" required>
+                        <input #input class="customForm__input" id="tile_activity_rest_after_activity_amount-{{i}}" type="number" formControlName="tile_activity_rest_after_activity_amount" >
                         <label class="customForm__label" for="tile_activity_rest_after_activity_amount-{{i}}">amount</label>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
                 </div>
                 <div class="tile-editor__form-element">
                     <div class="customForm">
-                        <input #input class="customForm__input" id="tile_activity_rest_after_activity_intensity_amount-{{i}}" type="number" formControlName="tile_activity_rest_after_activity_intensity_amount" required>
+                        <input #input class="customForm__input" id="tile_activity_rest_after_activity_intensity_amount-{{i}}" type="number" formControlName="tile_activity_rest_after_activity_intensity_amount" >
                         <label class="customForm__label" for="tile_activity_rest_after_activity_intensity_amount-{{i}}">amount</label>
                     </div>
                 </div>
@@ -141,7 +141,7 @@
     <div class="tile-editor__form-element">
         <h2 class="tile-editor__header">how many sets?</h2>
         <div class="customForm">
-            <input #input class="customForm__input" id="tile_activities_sets" type="number" formControlName="tile_activities_sets" required>
+            <input #input class="customForm__input" id="tile_activities_sets" type="number" formControlName="tile_activities_sets" >
             <label class="customForm__label" for="tile_activities_sets">amount</label>
         </div>
     </div>
@@ -156,7 +156,7 @@
     </div>
     <div class="tile-editor__form-element">
         <div class="customForm">
-            <input #input class="customForm__input" id="tile_activities_sets_rest_ammount" type="number" formControlName="tile_activities_sets_rest_ammount" required>
+            <input #input class="customForm__input" id="tile_activities_sets_rest_ammount" type="number" formControlName="tile_activities_sets_rest_ammount" >
             <label class="customForm__label" for="tile_activities_sets_rest_ammount">amount</label>
         </div>
     </div>
@@ -171,7 +171,7 @@
     </div>
     <div class="tile-editor__form-element">
         <div class="customForm">
-            <input #input class="customForm__input" id="tile_activities_sets_rest_intensity_ammount" type="number" formControlName="tile_activities_sets_rest_intensity_ammount" required>
+            <input #input class="customForm__input" id="tile_activities_sets_rest_intensity_ammount" type="number" formControlName="tile_activities_sets_rest_intensity_ammount" >
             <label class="customForm__label" for="tile_activities_sets_rest_intensity_ammount">amount</label>
         </div>
     </div>

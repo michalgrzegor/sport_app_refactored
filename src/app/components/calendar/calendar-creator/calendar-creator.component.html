@@ -2,26 +2,26 @@
     <div class="customForm">
         <input #input class="customForm__input" id="training_plan_name" type="text" formControlName="training_plan_name" required>
         <label class="customForm__label" for="training_plan_name">Training plan Name</label>
-        <!-- <p [hidden]="training_plan_name.invalid && training_plan_name.touched" class="customForm__error">This field is required</p> -->
+        <p [hidden]="calendarCreatorForm.get('training_plan_name').valid || calendarCreatorForm.get('training_plan_name').untouched" class="customForm__error">This field is required</p>
     </div>
     <div class="customForm">
         <input #input class="customForm__input" type="date" id="date_from" formControlName="date_from" required>
         <label class="customForm__label" for="date_from">Training plan start</label>
-        <!-- <p [hidden]="training_plan_name.invalid && training_plan_name.touched" class="customForm__error">This field is required</p> -->
+        <p [hidden]="calendarCreatorForm.get('date_from').valid || calendarCreatorForm.get('date_from').untouched" class="customForm__error">This field is required</p>
     </div>
     <div class="customForm">
         <input #input class="customForm__input" type="date" id="date_to" formControlName="date_to" required>
         <label class="customForm__label" for="date_to">Training plan end</label>
-        <!-- <p [hidden]="training_plan_name.invalid && training_plan_name.touched" class="customForm__error">This field is required</p> -->
+        <p [hidden]="calendarCreatorForm.get('date_to').valid || calendarCreatorForm.get('date_to').untouched" class="customForm__error">This field is required</p>
     </div>
     <div class="customForm">
-        <select #input class="customForm__input" id="training_sesion_number" formControlName="training_sesion_number">
+        <select #input class="customForm__input" id="training_sesion_number" formControlName="training_sesion_number" required>
             <option [ngValue]="1">1</option>
             <option [ngValue]="2">2</option>
             <option [ngValue]="3">3</option>
         </select>
         <label class="customForm__label" for="training_sesion_number">Sesions number</label>
-        <!-- <p [hidden]="training_sesion_number.valid && training_sesion_number.pristine" class="customForm__error">This field is required</p> -->
+        <p [hidden]="calendarCreatorForm.get('training_sesion_number').valid || calendarCreatorForm.get('training_sesion_number').untouched" class="customForm__error">This field is required</p>
     </div>
 
     <div class="creator__btns">

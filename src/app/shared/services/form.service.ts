@@ -35,6 +35,13 @@ export class FormService {
     }
   };
 
+  private checkForRequired = (inputElement: ElementRef<any>) => {
+    this.renderer.removeClass(inputElement.nativeElement, 'value--required');
+    if (inputElement.nativeElement.required) {
+      this.renderer.addClass(inputElement.nativeElement, 'value--required');
+    }
+  };
+
   private checkEmpty = (inputElement: ElementRef<any>) => {
     if (inputElement.nativeElement.value.length > 0) {
       this.renderer.removeClass(inputElement.nativeElement, 'value--empty');
@@ -48,7 +55,6 @@ export class FormService {
     id: string
   ) => {
     this.eventsReferences[id] = [];
-    console.log(this.eventsReferences);
     inputNodes.toArray().forEach((input) => {
       const event = this.renderer.listen(
         input.element.nativeElement,
@@ -60,7 +66,10 @@ export class FormService {
   };
 
   private checkAllInputs = (inputNodes: QueryList<ViewContainerRef>) => {
-    inputNodes.toArray().forEach((input) => this.checkEmpty(input.element));
+    inputNodes.toArray().forEach((input) => {
+      this.checkEmpty(input.element);
+      this.checkForRequired(input.element);
+    });
   };
 
   public removeListener = (id: string) => {

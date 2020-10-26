@@ -99,4 +99,12 @@
     padding-left: 16px;
     color: $fontWhiteMediumContrast;
   }
+
+  .value--required {
+    border-bottom: 1px solid $brightYellow;
+  }
+
+  .value--required:focus {
+    border-bottom: 3px solid $brightYellow;
+  }
 }
