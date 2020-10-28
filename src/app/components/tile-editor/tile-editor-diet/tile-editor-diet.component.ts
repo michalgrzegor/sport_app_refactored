@@ -19,6 +19,7 @@ import {
 import { Subscription } from 'rxjs';
 import { SetRightMenuComponent } from 'src/app/store/actions/menu.actions';
 import { Tile } from 'src/app/shared/models/tile.interface';
+import { TileEditorService } from '../tile-editor.service';
 
 @Component({
   selector: 'app-tile-editor-diet',
@@ -43,6 +44,7 @@ export class TileEditorDietComponent
   constructor(
     private formBuilder: FormBuilder,
     private formService: FormService,
+    private tileEditorService: TileEditorService,
     private store: Store
   ) {}
 
@@ -54,8 +56,13 @@ export class TileEditorDietComponent
       tile_type: ['diet'],
       tile_description: [''],
       id: [''],
-      tile_diets: this.formBuilder.array([this.getTileMeal()]),
+      tile_diets: this.formBuilder.array([]),
     });
+    if (this.tileToEdit && this.tileToEdit.tile_type_name === this.id) {
+      this.patchForm();
+    } else {
+      this.addMeal();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -80,19 +87,16 @@ export class TileEditorDietComponent
       tile_diet_fat_amount: [''],
     });
 
-  public createTile = () => {
-    this.store.dispatch(CreateTile({ tile: this.tileDiet.value }));
-    this.store.dispatch(
-      SetRightMenuComponent({ rightComponent: 'tilecollection' })
-    );
-  };
+  public createTile = () => this.tileEditorService.createTile(this.tileDiet);
 
-  public updateTile = () => {
-    this.store.dispatch(UpdateTile({ tile: this.tileDiet.value }));
-    this.store.dispatch(
-      SetRightMenuComponent({ rightComponent: 'tilecollection' })
+  public updateTile = () => this.tileEditorService.updateTile(this.tileDiet);
+
+  private patchForm = () =>
+    this.tileEditorService.patchForm(
+      this.tileDiet,
+      this.tileToEdit,
+      this.getTileMeal
     );
-  };
 
   public toggleForm = (index: number) =>
     this.formService.toggleForm(

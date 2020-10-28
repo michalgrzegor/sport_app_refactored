@@ -1,3 +1,4 @@
+import { TileEditorService } from './../tile-editor.service';
 import { Tile, TileActivity } from './../../../shared/models/tile.interface';
 import { FormService } from './../../../shared/services/form.service';
 import {
@@ -59,6 +60,7 @@ export class TileEditorTrainingComponent
   constructor(
     private formBuilder: FormBuilder,
     private formService: FormService,
+    private tileEditorService: TileEditorService,
     private store: Store
   ) {}
 
@@ -93,15 +95,6 @@ export class TileEditorTrainingComponent
     this.formService.addInputFuncionality(this.inputNodesArray, this.id);
   }
 
-  private patchForm = () => {
-    this.tileToEdit.tile_activities.forEach(() => {
-      (this.tileTraining.get('tile_activities') as FormArray).push(
-        this.getTileActivities()
-      );
-    });
-    this.tileTraining.patchValue(this.tileToEdit);
-  };
-
   private getTileActivities = () =>
     this.formBuilder.group({
       tile_activity_name: [''],
@@ -121,19 +114,18 @@ export class TileEditorTrainingComponent
       tile_activity_rest_after_activity_intensity_amount: [''],
     });
 
-  public createTile = () => {
-    this.store.dispatch(CreateTile({ tile: this.tileTraining.value }));
-    this.store.dispatch(
-      SetRightMenuComponent({ rightComponent: 'tilecollection' })
-    );
-  };
+  public createTile = () =>
+    this.tileEditorService.createTile(this.tileTraining);
 
-  public updateTile = () => {
-    this.store.dispatch(UpdateTile({ tile: this.tileTraining.value }));
-    this.store.dispatch(
-      SetRightMenuComponent({ rightComponent: 'tilecollection' })
+  public updateTile = () =>
+    this.tileEditorService.updateTile(this.tileTraining);
+
+  private patchForm = () =>
+    this.tileEditorService.patchForm(
+      this.tileTraining,
+      this.tileToEdit,
+      this.getTileActivities
     );
-  };
 
   public toggleForm = (index: number) =>
     this.formService.toggleForm(

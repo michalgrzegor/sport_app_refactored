@@ -58,7 +58,6 @@ export class HttpTileDataService {
   public updateTile = (tile: Tile): Observable<Tile> =>
     this.getToken().pipe(
       switchMap((token) => {
-        console.log(tile);
         return this.httpClient.patch<Tile>(
           `${this.URL}${tile.tile_type}_tiles/${tile.id}`,
           tile,

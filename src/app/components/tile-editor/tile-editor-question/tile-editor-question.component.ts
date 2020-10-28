@@ -19,6 +19,7 @@ import {
 import { Subscription } from 'rxjs';
 import { SetRightMenuComponent } from 'src/app/store/actions/menu.actions';
 import { Tile } from 'src/app/shared/models/tile.interface';
+import { TileEditorService } from '../tile-editor.service';
 
 @Component({
   selector: 'app-tile-editor-question',
@@ -37,8 +38,9 @@ export class TileEditorQuestionComponent
 
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store,
-    private formService: FormService
+    private formService: FormService,
+    private tileEditorService: TileEditorService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -57,7 +59,9 @@ export class TileEditorQuestionComponent
         tile_answers_descriptives: [''],
       }),
     });
-    this.patchForm();
+    if (this.tileToEdit && this.tileToEdit.tile_type_name === this.id) {
+      this.patchForm();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -69,25 +73,14 @@ export class TileEditorQuestionComponent
     this.formService.addInputFuncionality(this.inputNodesArray, this.id);
   }
 
-  private patchForm = () => {
-    if (this.tileToEdit && this.tileToEdit.tile_type_name === this.id) {
-      this.tileQuestion.patchValue(this.tileToEdit);
-    }
-  };
+  private patchForm = () =>
+    this.tileEditorService.patchForm(this.tileQuestion, this.tileToEdit, null);
 
-  public createTile = () => {
-    this.store.dispatch(CreateTile({ tile: this.tileQuestion.value }));
-    this.store.dispatch(
-      SetRightMenuComponent({ rightComponent: 'tilecollection' })
-    );
-  };
+  public createTile = () =>
+    this.tileEditorService.createTile(this.tileQuestion);
 
-  public updateTile = () => {
-    this.store.dispatch(UpdateTile({ tile: this.tileQuestion.value }));
-    this.store.dispatch(
-      SetRightMenuComponent({ rightComponent: 'tilecollection' })
-    );
-  };
+  public updateTile = () =>
+    this.tileEditorService.updateTile(this.tileQuestion);
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
