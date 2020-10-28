@@ -10,15 +10,60 @@ export class TileEfects {
   CreateTile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(tileActions.CreateTile),
-      mergeMap(({ data }) => {
-        return this.httpTileDataService.createTile(data.tile, data.type).pipe(
+      mergeMap(({ tile }) => {
+        return this.httpTileDataService.createTile(tile).pipe(
           map((response) => {
             if (response) {
-              return tileActions.UpdateTiles({ tile: response });
+              return tileActions.AddToTilesCollection({ tile: response });
             }
           })
         );
       })
+    )
+  );
+
+  GetTiles$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(tileActions.GetTiles),
+      mergeMap(() =>
+        this.httpTileDataService.getTiles().pipe(
+          map((response) => {
+            if (response) {
+              return tileActions.SetTiles({ tiles: response });
+            }
+          })
+        )
+      )
+    )
+  );
+
+  DeleteTile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(tileActions.DeleteTile),
+      mergeMap(({ tile }) =>
+        this.httpTileDataService.deleteTile(tile).pipe(
+          map((response) => {
+            if (response) {
+              return tileActions.RemoveFromTilesCollection({ tile });
+            }
+          })
+        )
+      )
+    )
+  );
+
+  UpdateTile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(tileActions.UpdateTile),
+      mergeMap(({ tile }) =>
+        this.httpTileDataService.updateTile(tile).pipe(
+          map((response) => {
+            if (response) {
+              return tileActions.UpdateTileInCollection({ tile });
+            }
+          })
+        )
+      )
     )
   );
 

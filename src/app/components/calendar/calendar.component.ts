@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { shouldLoadingTiles } from './../../store/selectors/tile.selectors';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -9,21 +10,18 @@ import {
   shouldLoadTrainingPlan,
   shouldLoadTrainingPlansList,
 } from '../../store/selectors/training-plans-data.selectors';
+import { GetTiles } from 'src/app/store/actions/tile.actions';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   public isTrainingPlansLoading = false;
   private subscription: Subscription = new Subscription();
 
-  constructor(
-    private store: Store,
-    private changeDetector: ChangeDetectorRef
-  ) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.subscription
@@ -46,6 +44,13 @@ export class CalendarComponent implements OnInit, OnDestroy {
           .select(isTrainingPlanLoading)
           .pipe(tap((data) => (this.isTrainingPlansLoading = !data)))
           .subscribe()
+      )
+      .add(
+        this.store.select(shouldLoadingTiles).subscribe((data) => {
+          if (data) {
+            this.store.dispatch(GetTiles());
+          }
+        })
       );
   }
 

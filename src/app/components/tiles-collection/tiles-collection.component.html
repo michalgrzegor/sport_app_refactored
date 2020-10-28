@@ -1,1 +1,3 @@
-<p>tiles-collection works!</p>
+<div class="tiles-collection">
+    <app-tile [isInTileCollection]="true" [tile]="tile" *ngFor="let tile of (tiles$ | async)" >tiles-collection works!</app-tile>
+</div>

@@ -2,17 +2,23 @@ import { FormService } from './../../../shared/services/form.service';
 import {
   AfterViewInit,
   Component,
+  Input,
   OnDestroy,
   OnInit,
   QueryList,
-  Renderer2,
   ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { CreateTile } from '../../../store/actions/tile.actions';
+import {
+  CreateTile,
+  RemoveTileFromEdit,
+  UpdateTile,
+} from '../../../store/actions/tile.actions';
 import { Subscription } from 'rxjs';
+import { SetRightMenuComponent } from 'src/app/store/actions/menu.actions';
+import { Tile } from 'src/app/shared/models/tile.interface';
 
 @Component({
   selector: 'app-tile-editor-diet',
@@ -27,6 +33,7 @@ export class TileEditorDietComponent
   expandBtnNodesArray: QueryList<ViewContainerRef>;
   @ViewChildren('input', { read: ViewContainerRef })
   inputNodesArray: QueryList<ViewContainerRef>;
+  @Input() tileToEdit: Tile;
 
   public tileDiet: FormGroup;
   public energyUnitsArray: string[] = ['kcal', 'kJ', 'g', 'mg'];
@@ -35,7 +42,6 @@ export class TileEditorDietComponent
 
   constructor(
     private formBuilder: FormBuilder,
-    private renderer: Renderer2,
     private formService: FormService,
     private store: Store
   ) {}
@@ -47,6 +53,7 @@ export class TileEditorDietComponent
       tile_type_color: ['#88C540'],
       tile_type: ['diet'],
       tile_description: [''],
+      id: [''],
       tile_diets: this.formBuilder.array([this.getTileMeal()]),
     });
   }
@@ -73,10 +80,19 @@ export class TileEditorDietComponent
       tile_diet_fat_amount: [''],
     });
 
-  public createTile = () =>
+  public createTile = () => {
+    this.store.dispatch(CreateTile({ tile: this.tileDiet.value }));
     this.store.dispatch(
-      CreateTile({ data: { tile: this.tileDiet.value, type: 'diet' } })
+      SetRightMenuComponent({ rightComponent: 'tilecollection' })
     );
+  };
+
+  public updateTile = () => {
+    this.store.dispatch(UpdateTile({ tile: this.tileDiet.value }));
+    this.store.dispatch(
+      SetRightMenuComponent({ rightComponent: 'tilecollection' })
+    );
+  };
 
   public toggleForm = (index: number) =>
     this.formService.toggleForm(
@@ -95,5 +111,6 @@ export class TileEditorDietComponent
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.formService.removeListener(this.id);
+    this.store.dispatch(RemoveTileFromEdit());
   }
 }

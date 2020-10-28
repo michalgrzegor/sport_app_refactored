@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TileEditorTrainingComponent } from './components/tile-editor/tile-editor-training/tile-editor-training.component';
 import { TileEditorDietComponent } from './components/tile-editor/tile-editor-diet/tile-editor-diet.component';
 import { TileEditorQuestionComponent } from './components/tile-editor/tile-editor-question/tile-editor-question.component';
+import { TileComponent } from './components/tiles-collection/tile/tile.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { TileEditorQuestionComponent } from './components/tile-editor/tile-edito
     TileEditorTrainingComponent,
     TileEditorDietComponent,
     TileEditorQuestionComponent,
+    TileComponent,
   ],
   imports: [
     BrowserModule,

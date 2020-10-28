@@ -1,18 +1,24 @@
+import { Tile, TileActivity } from './../../../shared/models/tile.interface';
 import { FormService } from './../../../shared/services/form.service';
 import {
   AfterViewInit,
   Component,
+  Input,
   OnDestroy,
   OnInit,
   QueryList,
-  Renderer2,
   ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { CreateTile } from '../../../store/actions/tile.actions';
+import {
+  CreateTile,
+  RemoveTileFromEdit,
+  UpdateTile,
+} from '../../../store/actions/tile.actions';
 import { Subscription } from 'rxjs';
+import { SetRightMenuComponent } from 'src/app/store/actions/menu.actions';
 
 @Component({
   selector: 'app-tile-editor-training',
@@ -30,6 +36,7 @@ export class TileEditorTrainingComponent
   expandBtnNodesArray: QueryList<ViewContainerRef>;
   @ViewChildren('input', { read: ViewContainerRef })
   inputNodesArray: QueryList<ViewContainerRef>;
+  @Input() tileToEdit: Tile;
 
   public intensityArray: string[] = [
     'km/h',
@@ -51,7 +58,6 @@ export class TileEditorTrainingComponent
 
   constructor(
     private formBuilder: FormBuilder,
-    private renderer: Renderer2,
     private formService: FormService,
     private store: Store
   ) {}
@@ -68,8 +74,14 @@ export class TileEditorTrainingComponent
       tile_activities_sets_rest_ammount: [''],
       tile_activities_sets_rest_intensity_unit: [''],
       tile_activities_sets_rest_intensity_ammount: [''],
-      tile_activities: this.formBuilder.array([this.getTileActivities()]),
+      id: [''],
+      tile_activities: this.formBuilder.array([]),
     });
+    if (this.tileToEdit && this.tileToEdit.tile_type_name === this.id) {
+      this.patchForm();
+    } else {
+      this.addActivity();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -80,6 +92,15 @@ export class TileEditorTrainingComponent
     );
     this.formService.addInputFuncionality(this.inputNodesArray, this.id);
   }
+
+  private patchForm = () => {
+    this.tileToEdit.tile_activities.forEach(() => {
+      (this.tileTraining.get('tile_activities') as FormArray).push(
+        this.getTileActivities()
+      );
+    });
+    this.tileTraining.patchValue(this.tileToEdit);
+  };
 
   private getTileActivities = () =>
     this.formBuilder.group({
@@ -100,10 +121,19 @@ export class TileEditorTrainingComponent
       tile_activity_rest_after_activity_intensity_amount: [''],
     });
 
-  public createTile = () =>
+  public createTile = () => {
+    this.store.dispatch(CreateTile({ tile: this.tileTraining.value }));
     this.store.dispatch(
-      CreateTile({ data: { tile: this.tileTraining.value, type: 'training' } })
+      SetRightMenuComponent({ rightComponent: 'tilecollection' })
     );
+  };
+
+  public updateTile = () => {
+    this.store.dispatch(UpdateTile({ tile: this.tileTraining.value }));
+    this.store.dispatch(
+      SetRightMenuComponent({ rightComponent: 'tilecollection' })
+    );
+  };
 
   public toggleForm = (index: number) =>
     this.formService.toggleForm(
@@ -124,5 +154,6 @@ export class TileEditorTrainingComponent
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.formService.removeListener(this.id);
+    this.store.dispatch(RemoveTileFromEdit());
   }
 }

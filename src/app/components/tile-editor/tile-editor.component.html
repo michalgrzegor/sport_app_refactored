@@ -8,8 +8,8 @@
         >{{ type }}</button>
     </div>
     <div class="editor__outlet" [ngSwitch]="editorName">
-        <app-tile-editor-training *ngSwitchCase="'training'"></app-tile-editor-training>
-        <app-tile-editor-diet *ngSwitchCase="'diet'"></app-tile-editor-diet>
-        <app-tile-editor-question *ngSwitchCase="'question'"></app-tile-editor-question>
+        <app-tile-editor-training [tileToEdit]="tileToEdit" *ngSwitchCase="'training'"></app-tile-editor-training>
+        <app-tile-editor-diet [tileToEdit]="tileToEdit" *ngSwitchCase="'diet'"></app-tile-editor-diet>
+        <app-tile-editor-question [tileToEdit]="tileToEdit" *ngSwitchCase="'question'"></app-tile-editor-question>
     </div>
 </div>

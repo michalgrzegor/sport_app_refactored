@@ -24,14 +24,43 @@ export class HttpTileDataService {
     }),
   });
 
-  public createTile = (
-    tile: Tile,
-    type: 'diet' | 'question' | 'training'
-  ): Observable<Tile> =>
+  public getTiles = (): Observable<Tile[]> =>
+    this.getToken().pipe(
+      switchMap((token) =>
+        this.httpClient.get<Tile[]>(
+          `${this.URL}tiles`,
+          this.getHttpOptions(token)
+        )
+      )
+    );
+
+  public createTile = (tile: Tile): Observable<Tile> =>
     this.getToken().pipe(
       switchMap((token) => {
         return this.httpClient.post<Tile>(
-          `${this.URL}${type}_tiles`,
+          `${this.URL}${tile.tile_type}_tiles`,
+          tile,
+          this.getHttpOptions(token)
+        );
+      })
+    );
+
+  public deleteTile = (tile: Tile): Observable<Tile> =>
+    this.getToken().pipe(
+      switchMap((token) => {
+        return this.httpClient.delete<Tile>(
+          `${this.URL}${tile.tile_type}_tiles/${tile.id}`,
+          this.getHttpOptions(token)
+        );
+      })
+    );
+
+  public updateTile = (tile: Tile): Observable<Tile> =>
+    this.getToken().pipe(
+      switchMap((token) => {
+        console.log(tile);
+        return this.httpClient.patch<Tile>(
+          `${this.URL}${tile.tile_type}_tiles/${tile.id}`,
           tile,
           this.getHttpOptions(token)
         );

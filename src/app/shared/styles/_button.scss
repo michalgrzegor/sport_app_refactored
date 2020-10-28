@@ -15,6 +15,10 @@
   transition: 0.1s;
   cursor: pointer;
   border-radius: 2px;
+
+  i {
+    color: $fontWhiteMediumContrast;
+  }
 }
 
 .customBtn:hover {

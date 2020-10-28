@@ -1,0 +1,114 @@
+<div class="tile" #tileElement [ngClass]="{'tile--open': isOpen}" >
+
+    <!-- style elements -->
+
+    <div class="tile__stripe" #tileStripe></div>
+    <div class="tile__stripe-gradient"></div>
+    <div class="tile__stripe-shadow"></div>
+    <div class="tile__body-gradient"></div>
+
+    <!-- Tile content -->
+
+    <div class="tile__header">
+        <h1 class="tile__title">{{tile.tile_title | shorten: 16}}</h1>
+        <div class="tile__btns">
+            <button *ngIf="isInTileCollection"  (click)="editTile()" class="customBtn tile__btn"><i class="material-icons">create</i></button>
+            <button *ngIf="isInTileCollection"  (click)="deleteTile()" class="customBtn tile__btn"><i class="material-icons">delete_outline</i></button>
+            <button (click)="toggleTile()" class="customBtn tile__btn btn--rotate"><i class="material-icons">keyboard_arrow_down</i></button>
+        </div>
+    </div>
+    <div class="tile__body" #tileBody>
+
+        <!-- Content for training tiles -->
+  
+        <div class="tile__type" *ngIf="tile.tile_type === 'training'">
+            <div class="tile__section" *ngFor="let activity of tile.tile_activities" [ngClass]="{'section--bg': tile.tile_activities?.length > 1}">
+              <h2 class="tile__section-header">{{activity.tile_activity_name}}</h2>
+              <p class="tile__section-text" *ngIf="activity.tile_activity_reps && !activity.tile_activity_amount && !activity.tile_activity_unit" >{{activity.tile_activity_reps}} reps</p>
+              <p class="tile__section-text">
+                <span *ngIf="activity.tile_activity_reps && activity.tile_activity_amount && activity.tile_activity_unit" >
+                  {{activity.tile_activity_reps}} x
+                </span>
+                <!-- <span *ngIf="activity.tile_activity_reps && !activity.tile_activity_amount && !activity.tile_activity_unit" >
+                  {{activity.tile_activity_reps}} reps
+                </span> -->
+                <span *ngIf="activity.tile_activity_amount && activity.tile_activity_unit" >
+                  {{activity.tile_activity_amount}} {{activity.tile_activity_unit}} 
+                </span>
+                <span *ngIf="activity.tile_activity_intensity_amount && activity.tile_activity_intensity_amount" >
+                  at {{activity.tile_activity_intensity_amount}} {{activity.tile_activity_intensity}} 
+                </span>
+                <span *ngIf="activity.tile_activity_rest_amount && activity.tile_activity_rest_unit" >
+                  rest between: {{activity.tile_activity_rest_amount}} {{activity.tile_activity_rest_unit}}
+                </span>
+                <span *ngIf="activity.tile_activity_rest_intensity && activity.tile_activity_rest_intensity_amount" >
+                  at {{activity.tile_activity_rest_intensity_amount}} {{activity.tile_activity_rest_intensity}} 
+                </span>
+              </p>
+              <p class="tile__section-text text--note" *ngIf="activity.tile_activity_note">{{activity.tile_activity_note}}</p>
+              <p class="tile__section-text">
+                <span *ngIf="activity.tile_activity_rest_after_activity_amount && activity.tile_activity_rest_after_activity_unit" >
+                  rest after activity: {{activity.tile_activity_rest_after_activity_amount}} {{activity.tile_activity_rest_after_activity_unit}}
+                </span>
+                <span *ngIf="activity.tile_activity_rest_after_activity_intensity && activity.tile_activity_rest_after_activity_intensity_amount" >
+                  at {{activity.tile_activity_rest_after_activity_intensity_amount}} {{activity.tile_activity_rest_after_activity_intensity}} 
+                </span>
+              </p>
+            </div>
+            <p class="tile__section-text" *ngIf="tile.tile_activities_sets" >make {{tile.tile_activities_sets}} sets,
+              <span *ngIf="tile.tile_activities_sets_rest_ammount && tile.tile_activities_sets_rest_unit" >
+                rest between: {{tile.tile_activities_sets_rest_ammount}} {{tile.tile_activities_sets_rest_unit}}
+              </span>
+              <span *ngIf="tile.tile_activities_sets_rest_intensity_unit && tile.tile_activities_sets_rest_intensity_ammount" >
+                at {{tile.tile_activities_sets_rest_intensity_ammount}} {{tile.tile_activities_sets_rest_intensity_unit}} 
+              </span>
+            </p>
+          </div>
+    
+          <!-- Content for diet -->
+          
+          <div class="tile__type" *ngIf="tile.tile_type === 'diet'">
+            <div class="tile__section" *ngFor="let diet of tile.tile_diets"  [ngClass]="{'section--bg': tile.tile_diets?.length > 1}">
+              <h2 class="tile__section-header">{{diet.tile_diet_meal}}</h2>
+              <p class="tile__section-text">
+                <span *ngIf="diet.tile_diet_energy_amount && diet.tile_diet_energy_unit" >
+                  Energy: {{diet.tile_diet_energy_amount}} {{diet.tile_diet_energy_unit}} <br>
+                </span>
+                <span *ngIf="diet.tile_diet_carbohydrates_amount && diet.tile_diet_carbohydrates_unit" >
+                  Carbohydrates: {{diet.tile_diet_carbohydrates_amount}} {{diet.tile_diet_carbohydrates_unit}} <br>
+                </span>
+                <span *ngIf="diet.tile_diet_protein_amount && diet.tile_diet_protein_unit" >
+                  protein: {{diet.tile_diet_protein_amount}} {{diet.tile_diet_protein_unit}} <br>
+                </span>
+                <span *ngIf="diet.tile_diet_fat_amount && diet.tile_diet_fat_unit" >
+                  Fats: {{diet.tile_diet_fat_amount}} {{diet.tile_diet_fat_unit}} <br>
+                </span>
+                <!-- <span *ngFor="let nutrient of diet.tile_diet_nutrients">
+                    <span *ngIf="nutrient.tile_diet_nutrient_name">{{nutrient.tile_diet_nutrient_name}}: </span><span *ngIf="nutrient.tile_diet_nutrient_amount && nutrient.tile_diet_nutrient_unit">{{nutrient.tile_diet_nutrient_amount}} {{nutrient.tile_diet_nutrient_unit}} </span><br>
+                </span> -->
+              </p>
+              <p class="tile__section-text text--note" *ngIf="diet.tile_diet_note">{{diet.tile_diet_note}}</p>
+            </div>
+          </div>
+    
+          <!-- Content for question -->
+    
+          <div class="tile__type"  *ngIf="tile.tile_type === 'question'">
+            <div class="tile__section">
+                <p class="tile__section-text">{{tile.tile_question.tile_ask_question}}</p>
+                <p class="tile__section-text" *ngIf="tile.tile_question.tile_answer_numeric" >
+                  Numeric answer from {{tile.tile_question.tile_answer_numeric_from}} to {{tile.tile_question.tile_answer_numeric_to}}
+                </p>
+                <p class="tile__section-text" *ngIf="!tile.tile_question.tile_answer_numeric" >
+                  Answers: {{tile.tile_question.tile_answers_descriptives}}
+                </p>
+            </div>
+          </div>
+    
+          <div class="tile__type">
+            <div class="tile__section">
+                <p class="tile__section-text">{{tile.tile_description}}</p>
+            </div>
+          </div>
+    </div>
+</div>
