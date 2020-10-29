@@ -1,11 +1,15 @@
 <div class="openedday">
-    <h1 class="openedday__header">{{day.date | date: "MMMM dd yyyy"}}</h1>
-    <h2 *ngIf="day.associations.length === 0; else sessions" >open the tile collection and drop here some tiles</h2>
-    <ng-template #sessions>
-        <div class="openedday__sessions">
-            <!-- <div *ngFor="let session of day.trainingSessions"  class="openedday__session">
-    
-            </div> -->
+    <h1 class="openedday__header">{{(day$ | async).date | date: "MMMM dd yyyy"}}</h1>
+    <div class="openedday__sessions">
+        <div 
+            *ngFor="let session of sessionArray; let i = index" 
+            cdkDropList 
+            [cdkDropListData]="session" 
+            [cdkDropListConnectedTo]="['tileCollection']" 
+            (cdkDropListDropped)="drop($event, i)" 
+            class="openedday__session"
+            id="{{ 'list' + i}}">
+            <app-tile  [isInTileCollection]="false" [tile]="tile" *ngFor="let tile of session" ></app-tile>
         </div>
-    </ng-template>
+    </div>
 </div>

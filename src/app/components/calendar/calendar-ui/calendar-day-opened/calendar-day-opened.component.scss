@@ -22,6 +22,16 @@
   }
 
   &__sessions {
-    height: 128px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__session {
+    box-sizing: border-box;
+    min-height: 196px;
+    min-width: 300px;
+    max-width: 50%;
+    width: 100%;
+    border: 2px dotted tomato;
   }
 }

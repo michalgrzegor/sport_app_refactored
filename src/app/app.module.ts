@@ -1,3 +1,4 @@
+import { TileCollectionModule } from './components/tiles-collection/tile-collection.module';
 import { PipesModule } from './shared/pipes/pipes.module';
 import { SharedComponentsModule } from './shared/components/shared-components.module';
 import { AppStoreModule } from './store/app-store.module';
@@ -12,13 +13,12 @@ import { RightToolbarComponent } from './components/navigation/right-toolbar/rig
 import { HttpClientModule } from '@angular/common/http';
 import { TileEditorComponent } from './components/tile-editor/tile-editor.component';
 import { AthleteManagerComponent } from './components/athlete-manager/athlete-manager.component';
-import { TilesCollectionComponent } from './components/tiles-collection/tiles-collection.component';
 import { TpMenuComponent } from './components/tp-menu/tp-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TileEditorTrainingComponent } from './components/tile-editor/tile-editor-training/tile-editor-training.component';
 import { TileEditorDietComponent } from './components/tile-editor/tile-editor-diet/tile-editor-diet.component';
 import { TileEditorQuestionComponent } from './components/tile-editor/tile-editor-question/tile-editor-question.component';
-import { TileComponent } from './components/tiles-collection/tile/tile.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -28,12 +28,10 @@ import { TileComponent } from './components/tiles-collection/tile/tile.component
     RightToolbarComponent,
     TileEditorComponent,
     AthleteManagerComponent,
-    TilesCollectionComponent,
     TpMenuComponent,
     TileEditorTrainingComponent,
     TileEditorDietComponent,
     TileEditorQuestionComponent,
-    TileComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +42,8 @@ import { TileComponent } from './components/tiles-collection/tile/tile.component
     ReactiveFormsModule,
     SharedComponentsModule,
     PipesModule,
+
+    TileCollectionModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

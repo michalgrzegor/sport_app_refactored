@@ -16,14 +16,23 @@ export class TileEditorService {
       SetRightMenuComponent({ rightComponent: 'tilecollection' })
     );
 
+  private checkValidation = (form: FormGroup): boolean => {
+    form.markAllAsTouched();
+    return form.valid;
+  };
+
   public createTile = (form: FormGroup): void => {
-    this.store.dispatch(CreateTile({ tile: form.value }));
-    this.changeToTileCollection();
+    if (this.checkValidation(form)) {
+      this.store.dispatch(CreateTile({ tile: form.value }));
+      this.changeToTileCollection();
+    }
   };
 
   public updateTile = (form: FormGroup): void => {
-    this.store.dispatch(UpdateTile({ tile: form.value }));
-    this.changeToTileCollection();
+    if (this.checkValidation(form)) {
+      this.store.dispatch(UpdateTile({ tile: form.value }));
+      this.changeToTileCollection();
+    }
   };
 
   private getArray = (tile: Tile): string => {

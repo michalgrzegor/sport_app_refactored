@@ -1,3 +1,4 @@
+import { Association } from './../../shared/models/training-plan.interface';
 import { Action, createReducer, on } from '@ngrx/store';
 import {
   TrainingPlanInfo,
@@ -52,6 +53,19 @@ const trainingPlansDataReducer = createReducer(
       trainingPlan: trainingPlan ? { ...trainingPlan } : null,
       trainingPlans: trainingPlansList ? [...trainingPlansList] : null,
     })
+  ),
+  on(
+    TrainingPlansDataActions.UpdateTrainingPlanAssociations,
+    (state, { association }) => {
+      const copyOfTrainingPlan = { ...state.trainingPlan };
+      const copyOfAssociations = [...copyOfTrainingPlan.calendar_assocs];
+      copyOfAssociations.push(association);
+      copyOfTrainingPlan.calendar_assocs = copyOfAssociations;
+      return {
+        ...state,
+        trainingPlan: copyOfTrainingPlan,
+      };
+    }
   )
 );
 

@@ -5,11 +5,13 @@ import * as CalendarDataActions from '../actions/calendar-data.actions';
 export interface CalendarState {
   calendarData: CalendarDay[];
   actualPage: number;
+  openedDay: Date;
 }
 
 const InitialState: CalendarState = {
   calendarData: null,
   actualPage: 0,
+  openedDay: null,
 };
 
 const calendarDataReducer = createReducer(
@@ -29,7 +31,13 @@ const calendarDataReducer = createReducer(
   on(CalendarDataActions.SetPreviousPage, (state) => ({
     ...state,
     actualPage: state.actualPage === 0 ? 0 : state.actualPage - 1,
-  }))
+  })),
+  on(CalendarDataActions.SetOpenedDay, (state, { calendarDay }) => {
+    return {
+      ...state,
+      openedDay: calendarDay.date,
+    };
+  })
 );
 
 export function reducer(

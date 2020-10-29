@@ -15,6 +15,7 @@
   flex-direction: column;
   border-radius: 4px;
   transition: 0.6s;
+  background: $mainGreen;
   @include boxShadow();
 
   &__stripe-shadow,

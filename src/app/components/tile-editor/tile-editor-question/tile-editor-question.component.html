@@ -60,8 +60,8 @@
     <div class="tile-editor__form-element border--off">
         <h2 class="tile-editor__header">Finish tile</h2>
         <div class="tile-editor__btns">
-            <button class="customBtn tile-editor__btn" [ngClass]="{'btn--disabled': !tileQuestion.valid}" [disabled]="!tileQuestion.valid" (click)="createTile()" >Create <span *ngIf="tileToEdit">new tile</span></button>
-            <button class="customBtn tile-editor__btn" [ngClass]="{'btn--disabled': !tileQuestion.valid}" [disabled]="!tileQuestion.valid" (click)="updateTile()" >Update</button>
+            <button class="customBtn tile-editor__btn" [ngClass]="{'btn--disabled': !tileQuestion.valid}" (click)="createTile()" >Create <span *ngIf="tileToEdit">new tile</span></button>
+            <button class="customBtn tile-editor__btn" [ngClass]="{'btn--disabled': !tileQuestion.valid}" (click)="updateTile()" >Update</button>
         </div>
     </div>
 </div>

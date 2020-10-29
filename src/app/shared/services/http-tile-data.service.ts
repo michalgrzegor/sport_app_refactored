@@ -1,3 +1,4 @@
+import { Association } from './../models/training-plan.interface';
 import { Tile } from './../models/tile.interface';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';

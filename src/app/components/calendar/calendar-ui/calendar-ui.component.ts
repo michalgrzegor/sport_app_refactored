@@ -1,3 +1,4 @@
+import { TrainingPlan } from './../../../shared/models/training-plan.interface';
 import { CalendarDayOpenedService } from './calendar-day-opened/calendar-day-opened.service';
 import { getActualPage } from './../../../store/selectors/calendar-data.selectors';
 import { getCalendarData } from '../../../store/selectors/calendar-data.selectors';
@@ -45,6 +46,7 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
   public trainingPlanId$: Observable<number>;
   public actualPage$: Observable<number>;
   private openedDayIndex: number;
+  private dataForOpenDay: { [key: string]: string | number | Date };
 
   constructor(
     private store: Store,
@@ -58,6 +60,7 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
       this.store
         .select(getTrainingPlan)
         .pipe(
+          tap((data) => (this.dataForOpenDay = this.setDataForOpenDay(data))),
           switchMap((trainingPlan) => {
             if (trainingPlan) {
               return this.calendarCreator.createCalendar(trainingPlan);
@@ -96,19 +99,39 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
       });
   };
 
-  public previousMonth = () => this.store.dispatch(SetPreviousPage());
+  public previousMonth = () => {
+    this.store.dispatch(SetPreviousPage());
+    this.calendarDayOpenedService.closeDay();
+  };
 
-  public nextMonth = () => this.store.dispatch(SetNextPage());
+  public nextMonth = () => {
+    this.store.dispatch(SetNextPage());
+    this.calendarDayOpenedService.closeDay();
+  };
+
+  private setDataForOpenDay = (
+    trainingPlan: TrainingPlan
+  ): { [key: string]: string | number } => {
+    return {
+      training_plan: trainingPlan.training_plan_name,
+      training_plan_id: trainingPlan.id,
+    };
+  };
 
   public openDay = (index: number, day: CalendarDay) => {
     if (this.openedDayIndex === index) {
       this.calendarDayOpenedService.closeDay();
       this.openedDayIndex = null;
     } else {
+      this.dataForOpenDay.calendar_date = day.date;
       this.openedDayIndex = index;
       const elementIndex = Math.ceil((index + 1) / 7) * 7 - 1;
       const componentToInject = this.dayNodesArray.toArray()[elementIndex];
-      this.calendarDayOpenedService.openDay(day, componentToInject);
+      this.calendarDayOpenedService.openDay(
+        day,
+        componentToInject,
+        this.dataForOpenDay
+      );
     }
   };
 

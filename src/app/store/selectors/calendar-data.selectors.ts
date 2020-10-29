@@ -1,5 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { AppState } from '../app.reducers';
+import { isEqual } from 'date-fns';
 
 export const selectFeature = (state: AppState) => state.calendarData;
 export const selectFeaturePage = (state: AppState) =>
@@ -15,4 +16,10 @@ export const getCalendarData = createSelector(
 export const getActualPage = createSelector(
   selectFeature,
   (calendarData) => calendarData.actualPage
+);
+
+export const getOpenedDay = createSelector(selectFeature, (calendarData) =>
+  calendarData.calendarData.find((day) =>
+    isEqual(day.date, calendarData.openedDay)
+  )
 );

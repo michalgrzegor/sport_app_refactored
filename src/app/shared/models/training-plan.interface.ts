@@ -19,7 +19,7 @@ export interface Association {
   tile_type: string;
   asso_index_in_array: number;
   asso_temporary_id: number;
-  id: number;
+  id?: number;
 }
 
 export interface CalendarComment {

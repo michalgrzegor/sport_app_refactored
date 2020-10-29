@@ -107,8 +107,8 @@
     <div class="tile-editor__form-element border--off">
         <h2 class="tile-editor__header">Finish tile</h2>
         <div class="tile-editor__btns">
-            <button class="customBtn tile-editor__btn" type="submit" [ngClass]="{'btn--disabled': !tileDiet.valid}" [disabled]="!tileDiet.valid" (click)="createTile()" >Create <span *ngIf="tileToEdit">new tile</span></button>
-            <button *ngIf="tileToEdit"  class="customBtn tile-editor__btn" type="submit" [ngClass]="{'btn--disabled': !tileDiet.valid}" [disabled]="!tileDiet.valid" (click)="updateTile()" >Update</button>
+            <button class="customBtn tile-editor__btn" type="submit" [ngClass]="{'btn--disabled': !tileDiet.valid}" (click)="createTile()" >Create <span *ngIf="tileToEdit">new tile</span></button>
+            <button *ngIf="tileToEdit"  class="customBtn tile-editor__btn" type="submit" [ngClass]="{'btn--disabled': !tileDiet.valid}" (click)="updateTile()" >Update</button>
         </div>
     </div>
 </div>

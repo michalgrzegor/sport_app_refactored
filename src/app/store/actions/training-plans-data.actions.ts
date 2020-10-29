@@ -1,3 +1,4 @@
+import { Association } from './../../shared/models/training-plan.interface';
 import { createAction, props } from '@ngrx/store';
 import { NewTrainingPlan } from 'src/app/shared/models/new-training-plan';
 import {
@@ -46,4 +47,8 @@ export const SetTrainingPlanAndPlansList = createAction(
 export const DeleteTrainingPlan = createAction(
   '[Calendar API] DELETE_TRAINING_PLAN',
   props<{ id: number }>()
+);
+export const UpdateTrainingPlanAssociations = createAction(
+  '[Association API] UPDATE_TRAINING_PLAN_ASSOCIATIONS',
+  props<{ association: Association }>()
 );
