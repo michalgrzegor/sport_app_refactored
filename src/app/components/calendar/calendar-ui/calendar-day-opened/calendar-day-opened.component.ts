@@ -10,24 +10,23 @@ import {
   OnInit,
   Renderer2,
   OnDestroy,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { AddTileToDay } from 'src/app/store/actions/calendar-data.actions';
 
 @Component({
   selector: 'app-calendar-day-opened',
   templateUrl: './calendar-day-opened.component.html',
   styleUrls: ['./calendar-day-opened.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
   public trainingPlanData: { [key: string]: string | number | Date };
   public day$: Observable<CalendarDay>;
   public tiles$: Observable<Tile[]>;
+  public isTilesLoading = true;
 
   private subscription: Subscription = new Subscription();
   public sessionArray: Tile[][] = [];
@@ -46,6 +45,7 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
       combineLatest([this.day$, this.tiles$]).subscribe(
         ([calendarDay, tileArray]) => {
           this.sessionArray = this.makeSessionArray(calendarDay, tileArray);
+          this.isTilesLoading = false;
         }
       )
     );
@@ -71,20 +71,31 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
     return array;
   };
 
+  private makeTileAssociation = (
+    dropTile: Tile,
+    session: number,
+    indexInArray: number
+  ): Association => ({
+    tile_id: dropTile.id,
+    calendar_date: this.trainingPlanData.calendar_date as string,
+    training_plan: this.trainingPlanData.training_plan as string,
+    training_plan_id: this.trainingPlanData.training_plan_id as number,
+    tile_color: dropTile.tile_type_color,
+    training_sesion: session,
+    tile_type: dropTile.tile_type_name,
+    asso_index_in_array: indexInArray,
+    asso_temporary_id: 0,
+  });
+
   public drop = (event: CdkDragDrop<Tile[]>, sessionIndex: number) => {
     if (event.previousContainer !== event.container) {
+      this.isTilesLoading = true;
       const dropTile = event.previousContainer.data[event.previousIndex];
-      const association: Association = {
-        tile_id: dropTile.id,
-        calendar_date: this.trainingPlanData.calendar_date as string,
-        training_plan: this.trainingPlanData.training_plan as string,
-        training_plan_id: this.trainingPlanData.training_plan_id as number,
-        tile_color: dropTile.tile_type_color,
-        training_sesion: sessionIndex + 1,
-        tile_type: dropTile.tile_type_name,
-        asso_index_in_array: event.previousContainer.data.length,
-        asso_temporary_id: 0,
-      };
+      const association = this.makeTileAssociation(
+        dropTile,
+        sessionIndex + 1,
+        event.previousContainer.data.length
+      );
       this.store.dispatch(AddTileToDay({ association }));
     }
   };

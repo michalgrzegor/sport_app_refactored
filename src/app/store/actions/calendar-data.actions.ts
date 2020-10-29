@@ -22,3 +22,8 @@ export const AddTileToDay = createAction(
   '[Association API] ADD_TILE_TO_DAY',
   props<{ association: Association }>()
 );
+
+export const UpdateCalendarAssociations = createAction(
+  '[Associations API] UPDATE_CALENDAR_ASSOCIATIONS',
+  props<{ association: Association }>()
+);

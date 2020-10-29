@@ -1,5 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { CalendarDay } from 'src/app/shared/models/calendar.interface';
+import { isEqual } from 'date-fns';
 import * as CalendarDataActions from '../actions/calendar-data.actions';
 
 export interface CalendarState {
@@ -37,7 +38,25 @@ const calendarDataReducer = createReducer(
       ...state,
       openedDay: calendarDay.date,
     };
-  })
+  }),
+  on(
+    CalendarDataActions.UpdateCalendarAssociations,
+    (state, { association }) => {
+      const index = state.calendarData.findIndex((c) =>
+        isEqual(c.date, new Date(association.calendar_date))
+      );
+      const copiedCalendar = [...state.calendarData];
+      const copiedDay = { ...copiedCalendar[index] };
+      const copiedAssociations = [...copiedDay.associations];
+      copiedAssociations.push(association);
+      copiedDay.associations = copiedAssociations;
+      copiedCalendar[index] = copiedDay;
+      return {
+        ...state,
+        calendarData: copiedCalendar,
+      };
+    }
+  )
 );
 
 export function reducer(

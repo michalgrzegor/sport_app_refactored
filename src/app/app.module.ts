@@ -42,7 +42,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ReactiveFormsModule,
     SharedComponentsModule,
     PipesModule,
-
     TileCollectionModule,
   ],
   providers: [],

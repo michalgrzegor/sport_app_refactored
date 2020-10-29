@@ -5,7 +5,6 @@ import { map, catchError, switchMap, tap, mergeMap } from 'rxjs/operators';
 
 import { Store } from '@ngrx/store';
 import * as calendarDataActions from '../actions/calendar-data.actions';
-import * as trainingPlanDataActions from '../actions/training-plans-data.actions';
 
 @Injectable()
 export class CalendarDataEfects {
@@ -15,7 +14,7 @@ export class CalendarDataEfects {
       mergeMap(({ association }) =>
         this.httpAssociationService.addTileToDay(association).pipe(
           map((response) =>
-            trainingPlanDataActions.UpdateTrainingPlanAssociations({
+            calendarDataActions.UpdateCalendarAssociations({
               association: response,
             })
           )

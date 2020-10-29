@@ -1,6 +1,9 @@
 <div class="openedday">
     <h1 class="openedday__header">{{(day$ | async).date | date: "MMMM dd yyyy"}}</h1>
     <div class="openedday__sessions">
+        <div *ngIf="isTilesLoading"  class="openedday__spinner">
+            <app-spinner></app-spinner>
+        </div>
         <div 
             *ngFor="let session of sessionArray; let i = index" 
             cdkDropList 

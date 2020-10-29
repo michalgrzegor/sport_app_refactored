@@ -9,6 +9,7 @@ import {
   getTrainingPlanName,
 } from '../../../store/selectors/training-plans-data.selectors';
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   OnDestroy,
@@ -35,6 +36,7 @@ import { CalendarDay } from 'src/app/shared/models/calendar.interface';
   selector: 'app-calendar-ui',
   templateUrl: './calendar-ui.component.html',
   styleUrls: ['./calendar-ui.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarUiComponent implements OnInit, OnDestroy {
   @ViewChildren('day', { read: ViewContainerRef }) dayNodesArray: QueryList<

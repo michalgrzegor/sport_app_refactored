@@ -9,6 +9,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [TilesCollectionComponent, TileComponent],
   imports: [CommonModule, SharedComponentsModule, DragDropModule, PipesModule],
-  exports: [TileComponent],
+  exports: [TilesCollectionComponent, TileComponent],
 })
 export class TileCollectionModule {}

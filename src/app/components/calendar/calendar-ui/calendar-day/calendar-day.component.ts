@@ -1,10 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { CalendarDay } from 'src/app/shared/models/calendar.interface';
 
 @Component({
   selector: 'app-calendar-day',
   templateUrl: './calendar-day.component.html',
   styleUrls: ['./calendar-day.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarDayComponent implements OnInit {
   @Input() day: CalendarDay;
