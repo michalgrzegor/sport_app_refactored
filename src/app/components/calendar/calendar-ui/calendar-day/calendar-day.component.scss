@@ -27,9 +27,15 @@
     text-align: center;
     line-height: 44px;
     @include textLato(400, 16px);
+    cursor: pointer;
   }
 
   .faded {
     color: $WhiteDotThree;
+    cursor: initial;
+  }
+
+  .open {
+    @include boxShadowPreview();
   }
 }
