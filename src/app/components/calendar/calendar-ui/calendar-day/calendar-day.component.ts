@@ -31,6 +31,10 @@ export class CalendarDayComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.isOpened$ = this.store
       .select(getOpenedDay)
-      .pipe(map((cd) => isEqual(cd.date, this.day.date)));
+      .pipe(
+        map((cd) =>
+          this.isActualPage ? isEqual(cd.date, this.day.date) : false
+        )
+      );
   }
 }

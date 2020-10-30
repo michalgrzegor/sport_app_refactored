@@ -49,6 +49,7 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
   public actualPage$: Observable<number>;
   private openedDayIndex: number;
   private dataForOpenDay: { [key: string]: string | number | Date };
+  private actualPage: number;
 
   constructor(
     private store: Store,
@@ -85,7 +86,9 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
     this.calendarData$ = this.store.select(getCalendarData);
     this.trainingPlanName$ = this.store.select(getTrainingPlanName);
     this.trainingPlanId$ = this.store.select(getTrainingPlanId);
-    this.actualPage$ = this.store.select(getActualPage);
+    this.actualPage$ = this.store
+      .select(getActualPage)
+      .pipe(tap((page) => (this.actualPage = page)));
   }
 
   public openCreator = () => {
@@ -121,10 +124,13 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
   };
 
   public openDay = (index: number, day: CalendarDay) => {
-    if (this.openedDayIndex === index) {
+    if (this.openedDayIndex === index && this.actualPage === day.originalPage) {
       this.calendarDayOpenedService.closeDay();
       this.openedDayIndex = null;
-    } else {
+    } else if (
+      this.openedDayIndex !== index &&
+      this.actualPage === day.originalPage
+    ) {
       this.dataForOpenDay.calendar_date = day.date;
       this.openedDayIndex = index;
       const elementIndex = Math.ceil((index + 1) / 7) * 7 - 1;

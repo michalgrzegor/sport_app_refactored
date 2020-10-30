@@ -7,7 +7,7 @@
   <div class="calendar-ui">
     <app-calendar-info [id]="trainingPlanId$ | async"></app-calendar-info>
     
-    <div>
+    <div class="calendar-ui">
       <div class="calendar-ui__header">
         <button class="calendar-ui__btn customBtn" (click)="previousMonth()"><i class="material-icons">keyboard_arrow_left</i></button>
         <h1 class="calendar-ui__month">{{ (calendarData$ | async)[15].date | date:"MMMM yyyy" }}</h1>
