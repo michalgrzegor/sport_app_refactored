@@ -34,4 +34,16 @@ export class HttpAssociationService {
         );
       })
     );
+
+  public removeTileFromDay = (
+    association: Association
+  ): Observable<Association> =>
+    this.getToken().pipe(
+      switchMap((token) => {
+        return this.httpClient.delete<Association>(
+          `${this.URL}training_plans/${association.training_plan_id}/calendar_assocs/${association.id}`,
+          this.getHttpOptions(token)
+        );
+      })
+    );
 }

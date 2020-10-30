@@ -1,3 +1,4 @@
+import { Association } from './../../../shared/models/training-plan.interface';
 import { Tile } from './../../../shared/models/tile.interface';
 import {
   Component,
@@ -11,6 +12,10 @@ import {
 import { Store } from '@ngrx/store';
 import { DeleteTile, SetTileToEdit } from 'src/app/store/actions/tile.actions';
 import { SetRightMenuComponent } from 'src/app/store/actions/menu.actions';
+import {
+  RemoveTileFromDay,
+  SetIsCalendarDataLoading,
+} from 'src/app/store/actions/calendar-data.actions';
 
 @Component({
   selector: 'app-tile',
@@ -18,8 +23,9 @@ import { SetRightMenuComponent } from 'src/app/store/actions/menu.actions';
   styleUrls: ['./tile.component.scss'],
 })
 export class TileComponent implements OnInit, AfterViewInit {
-  @Input('tile') tile: Tile;
-  @Input('isInTileCollection') isInTileCollection: boolean;
+  @Input() tile: Tile;
+  @Input() isInTileCollection: boolean;
+  @Input() association: Association;
   @ViewChild('tileElement', { read: ElementRef }) tileElement: ElementRef;
   @ViewChild('tileBody', { read: ElementRef }) tileBody: ElementRef;
   @ViewChild('tileStripe', { read: ElementRef }) tileStripe: ElementRef;
@@ -55,14 +61,27 @@ export class TileComponent implements OnInit, AfterViewInit {
     this.isOpen = !this.isOpen;
   };
 
-  public editTile = () => {
-    this.store.dispatch(SetTileToEdit({ tile: this.tile }));
+  private setRightMenu = () =>
     this.store.dispatch(
       SetRightMenuComponent({ rightComponent: 'tileeditor' })
     );
+
+  private setIsCalendarDataLoading = () =>
+    this.store.dispatch(
+      SetIsCalendarDataLoading({ isCalendarDataLoading: true })
+    );
+
+  public editTile = () => {
+    this.store.dispatch(SetTileToEdit({ tile: this.tile }));
+    this.setRightMenu();
   };
 
   public deleteTile = () => {
-    this.store.dispatch(DeleteTile({ tile: this.tile }));
+    if (this.isInTileCollection) {
+      this.store.dispatch(DeleteTile({ tile: this.tile }));
+    } else {
+      this.setIsCalendarDataLoading();
+      this.store.dispatch(RemoveTileFromDay({ association: this.association }));
+    }
   };
 }

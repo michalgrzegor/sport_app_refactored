@@ -13,7 +13,7 @@
                 (cdkDropListDropped)="drop($event, i)" 
                 class="openedday__drop-container"
                 id="{{ 'list' + i}}">
-                <app-tile  [isInTileCollection]="false" [tile]="tile" *ngFor="let tile of session" ></app-tile>
+                <app-tile  [isInTileCollection]="false" [tile]="element.tile" [association]="element.association"  *ngFor="let element of session" ></app-tile>
             </div>
         </div>
     </div>

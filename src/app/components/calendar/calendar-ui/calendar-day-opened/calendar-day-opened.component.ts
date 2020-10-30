@@ -35,7 +35,7 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
   public isTilesLoading$: Observable<boolean>;
 
   private subscription: Subscription = new Subscription();
-  public sessionArray: Tile[][] = [];
+  public sessionArray: { tile: Tile; association: Association }[][] = [];
 
   constructor(
     private renderer: Renderer2,
@@ -60,7 +60,7 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
   private makeSessionArray = (
     calendarDay: CalendarDay,
     tileArray: Tile[]
-  ): Tile[][] => {
+  ): { tile: Tile; association: Association }[][] => {
     const tiles = [
       ...tileArray.filter((tile) =>
         [...calendarDay.associations.map((a) => a.tile_id)].includes(tile.id)
@@ -71,7 +71,10 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
       array.push([
         ...calendarDay.associations
           .filter((a) => a.training_sesion === i + 1)
-          .map((a) => tiles.find((t) => t.id === a.tile_id)),
+          .map((a) => ({
+            tile: tiles.find((t) => t.id === a.tile_id),
+            association: a,
+          })),
       ]);
     }
     return array;
@@ -113,6 +116,8 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
       this.addTileToDay(association);
     }
   };
+
+  // public getAssociation = (id: number) => this.associations.find(a => a.tile_id === )
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

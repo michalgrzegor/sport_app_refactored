@@ -8,7 +8,7 @@ import * as calendarDataActions from '../actions/calendar-data.actions';
 
 @Injectable()
 export class CalendarDataEfects {
-  loadTrainingPlansList$ = createEffect(() =>
+  addTileToDay$ = createEffect(() =>
     this.actions$.pipe(
       ofType(calendarDataActions.AddTileToDay),
       mergeMap(({ association }) =>
@@ -16,6 +16,21 @@ export class CalendarDataEfects {
           map((response) =>
             calendarDataActions.UpdateCalendarAssociations({
               association: response,
+            })
+          )
+        )
+      )
+    )
+  );
+
+  removeTileFromDay$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(calendarDataActions.RemoveTileFromDay),
+      mergeMap(({ association }) =>
+        this.httpAssociationService.removeTileFromDay(association).pipe(
+          map(() =>
+            calendarDataActions.RemoveCalendarAssociations({
+              association,
             })
           )
         )

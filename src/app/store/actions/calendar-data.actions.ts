@@ -32,3 +32,13 @@ export const UpdateCalendarAssociations = createAction(
   '[Associations API] UPDATE_CALENDAR_ASSOCIATIONS',
   props<{ association: Association }>()
 );
+
+export const RemoveTileFromDay = createAction(
+  '[Association API] REMOVE_TILE_FROM_DAY',
+  props<{ association: Association }>()
+);
+
+export const RemoveCalendarAssociations = createAction(
+  '[Associations API] REMOVE_CALENDAR_ASSOCIATIONS',
+  props<{ association: Association }>()
+);

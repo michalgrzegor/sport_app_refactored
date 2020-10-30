@@ -6,5 +6,5 @@
     cdkDropList
     id="tileCollection"
     >
-    <app-tile [isInTileCollection]="true" [tile]="tile" *ngFor="let tile of (tiles$ | async)" cdkDrag>tiles-collection works!</app-tile>
+    <app-tile [isInTileCollection]="true" [tile]="tile" [association]="null" *ngFor="let tile of (tiles$ | async)" cdkDrag>tiles-collection works!</app-tile>
 </div>

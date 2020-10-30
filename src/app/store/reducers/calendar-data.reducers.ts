@@ -67,6 +67,26 @@ const calendarDataReducer = createReducer(
         calendarData: copiedCalendar,
       };
     }
+  ),
+  on(
+    CalendarDataActions.RemoveCalendarAssociations,
+    (state, { association }) => {
+      const index = state.calendarData.findIndex((c) =>
+        isEqual(c.date, new Date(association.calendar_date))
+      );
+      const copiedCalendar = [...state.calendarData];
+      const copiedDay = { ...copiedCalendar[index] };
+      const copiedAssociations = [
+        ...copiedDay.associations.filter((a) => a.id !== association.id),
+      ];
+      copiedDay.associations = copiedAssociations;
+      copiedCalendar[index] = copiedDay;
+      return {
+        ...state,
+        isCalendarDataLoading: false,
+        calendarData: copiedCalendar,
+      };
+    }
   )
 );
 
