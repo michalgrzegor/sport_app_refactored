@@ -2,6 +2,11 @@ import { Association } from './../../shared/models/training-plan.interface';
 import { createAction, props } from '@ngrx/store';
 import { CalendarDay } from 'src/app/shared/models/calendar.interface';
 
+export const SetIsCalendarDataLoading = createAction(
+  '[Associations API] SET_IS_CALENDAR_DATA_LOADING',
+  props<{ isCalendarDataLoading: boolean }>()
+);
+
 export const SetCalendarData = createAction(
   '[Create Calendar Service] SET_CALENDAR_DATA',
   props<{ calendar: CalendarDay[] }>()

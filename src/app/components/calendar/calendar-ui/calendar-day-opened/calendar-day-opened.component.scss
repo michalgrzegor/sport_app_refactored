@@ -14,6 +14,7 @@
     height: 48px;
     margin: 0;
     @include textRaleway(800, 16px);
+    color: $fontWhiteMediumContrast;
     text-transform: uppercase;
     line-height: 48px;
     text-align: center;
@@ -22,9 +23,10 @@
   }
 
   &__sessions {
+    box-sizing: border-box;
     position: relative;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
   &__spinner {
@@ -43,9 +45,31 @@
   &__session {
     box-sizing: border-box;
     min-height: 196px;
-    min-width: 300px;
-    max-width: 50%;
+    min-width: 308px;
+    // width: 100%;
+    margin: 6px;
+    padding: 0 12px 12px;
+    background: $WhiteDotOne;
+    border-radius: 4px;
+  }
+
+  &__session-header {
+    @include textLato(400, 16px);
+    color: $fontWhiteLowContrast;
     width: 100%;
-    border: 2px dotted tomato;
+    height: 36px;
+    line-height: 36px;
+    margin: 0 0 6px;
+    text-align: center;
+    border-bottom: 1px solid $WhiteDotTwo;
+  }
+
+  &__drop-container {
+    width: 100%;
+    height: calc(100% - 36px);
+    min-height: 144px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

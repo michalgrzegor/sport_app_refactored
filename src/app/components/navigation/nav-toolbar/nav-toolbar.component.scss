@@ -5,6 +5,7 @@
   background: $mainGreenLight;
   height: 64px;
   width: 100%;
+  z-index: 1000;
   @include boxShadow();
   .container-center {
     max-width: 1440px;

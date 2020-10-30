@@ -85,6 +85,7 @@ export class TileEditorDietComponent
       tile_diet_protein_amount: [''],
       tile_diet_fat_unit: [''],
       tile_diet_fat_amount: [''],
+      id: [''],
     });
 
   public createTile = () => this.tileEditorService.createTile(this.tileDiet);

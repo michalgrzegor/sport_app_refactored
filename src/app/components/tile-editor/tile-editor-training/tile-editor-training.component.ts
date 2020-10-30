@@ -112,6 +112,7 @@ export class TileEditorTrainingComponent
       tile_activity_rest_after_activity_amount: [''],
       tile_activity_rest_after_activity_intensity: [''],
       tile_activity_rest_after_activity_intensity_amount: [''],
+      id: [''],
     });
 
   public createTile = () =>

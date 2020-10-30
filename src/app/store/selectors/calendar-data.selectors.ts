@@ -23,3 +23,8 @@ export const getOpenedDay = createSelector(selectFeature, (calendarData) =>
     isEqual(day.date, calendarData.openedDay)
   )
 );
+
+export const getIsCalendarDataLoading = createSelector(
+  selectFeature,
+  (calendarData) => calendarData.isCalendarDataLoading
+);

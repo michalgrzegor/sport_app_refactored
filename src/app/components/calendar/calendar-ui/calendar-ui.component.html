@@ -4,25 +4,27 @@
 
 
 <ng-template #isTp>
-  <app-calendar-info [id]="trainingPlanId$ | async"></app-calendar-info>
-  
   <div class="calendar-ui">
-    <div class="calendar-ui__header">
-      <button class="calendar-ui__btn customBtn" (click)="previousMonth()"><i class="material-icons">keyboard_arrow_left</i></button>
-      <h1 class="calendar-ui__month">{{ (calendarData$ | async)[15].date | date:"MMMM yyyy" }}</h1>
-      <button class="calendar-ui__btn customBtn" (click)="nextMonth()"><i class="material-icons">keyboard_arrow_right</i></button>
-    </div>
-    <ng-container *ngIf="calendarData$ | async">
-      <div class="calendar-ui__days">
-        <app-calendar-day 
-          #day
-          class="calendar-ui__day" 
-          *ngFor="let day of (calendarData$ | async); let index = index" 
-          [day]="day" 
-          [isActualPage]="(actualPage$ | async) === day.originalPage"
-          (click)="openDay(index, day)" 
-        ></app-calendar-day>
+    <app-calendar-info [id]="trainingPlanId$ | async"></app-calendar-info>
+    
+    <div>
+      <div class="calendar-ui__header">
+        <button class="calendar-ui__btn customBtn" (click)="previousMonth()"><i class="material-icons">keyboard_arrow_left</i></button>
+        <h1 class="calendar-ui__month">{{ (calendarData$ | async)[15].date | date:"MMMM yyyy" }}</h1>
+        <button class="calendar-ui__btn customBtn" (click)="nextMonth()"><i class="material-icons">keyboard_arrow_right</i></button>
       </div>
-    </ng-container>
+      <ng-container *ngIf="calendarData$ | async">
+        <div class="calendar-ui__days">
+          <app-calendar-day 
+            #day
+            class="calendar-ui__day" 
+            *ngFor="let day of (calendarData$ | async); let index = index" 
+            [day]="day" 
+            [isActualPage]="(actualPage$ | async) === day.originalPage"
+            (click)="openDay(index, day)" 
+          ></app-calendar-day>
+        </div>
+      </ng-container>
+    </div>
   </div>
 </ng-template>

@@ -2,7 +2,10 @@ import { Association } from './../../../../shared/models/training-plan.interface
 import { CalendarDay } from './../../../../shared/models/calendar.interface';
 import { GetTiles } from 'src/app/store/selectors/tile.selectors';
 import { Tile } from './../../../../shared/models/tile.interface';
-import { getOpenedDay } from './../../../../store/selectors/calendar-data.selectors';
+import {
+  getIsCalendarDataLoading,
+  getOpenedDay,
+} from './../../../../store/selectors/calendar-data.selectors';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import {
   Component,
@@ -14,7 +17,10 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { AddTileToDay } from 'src/app/store/actions/calendar-data.actions';
+import {
+  AddTileToDay,
+  SetIsCalendarDataLoading,
+} from 'src/app/store/actions/calendar-data.actions';
 
 @Component({
   selector: 'app-calendar-day-opened',
@@ -26,7 +32,7 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
   public trainingPlanData: { [key: string]: string | number | Date };
   public day$: Observable<CalendarDay>;
   public tiles$: Observable<Tile[]>;
-  public isTilesLoading = true;
+  public isTilesLoading$: Observable<boolean>;
 
   private subscription: Subscription = new Subscription();
   public sessionArray: Tile[][] = [];
@@ -41,11 +47,11 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
     this.renderer.setStyle(this.el.nativeElement, 'gridColumn', '1 / 8');
     this.day$ = this.store.select(getOpenedDay);
     this.tiles$ = this.store.select(GetTiles);
+    this.isTilesLoading$ = this.store.select(getIsCalendarDataLoading);
     this.subscription.add(
       combineLatest([this.day$, this.tiles$]).subscribe(
         ([calendarDay, tileArray]) => {
           this.sessionArray = this.makeSessionArray(calendarDay, tileArray);
-          this.isTilesLoading = false;
         }
       )
     );
@@ -87,16 +93,24 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
     asso_temporary_id: 0,
   });
 
-  public drop = (event: CdkDragDrop<Tile[]>, sessionIndex: number) => {
+  private setIsCalendarDataLoading = (): void =>
+    this.store.dispatch(
+      SetIsCalendarDataLoading({ isCalendarDataLoading: true })
+    );
+
+  private addTileToDay = (association: Association): void =>
+    this.store.dispatch(AddTileToDay({ association }));
+
+  public drop = (event: CdkDragDrop<Tile[]>, sessionIndex: number): void => {
     if (event.previousContainer !== event.container) {
-      this.isTilesLoading = true;
+      this.setIsCalendarDataLoading();
       const dropTile = event.previousContainer.data[event.previousIndex];
       const association = this.makeTileAssociation(
         dropTile,
         sessionIndex + 1,
         event.previousContainer.data.length
       );
-      this.store.dispatch(AddTileToDay({ association }));
+      this.addTileToDay(association);
     }
   };
 

@@ -4,12 +4,14 @@ import { isEqual } from 'date-fns';
 import * as CalendarDataActions from '../actions/calendar-data.actions';
 
 export interface CalendarState {
+  isCalendarDataLoading: boolean;
   calendarData: CalendarDay[];
   actualPage: number;
   openedDay: Date;
 }
 
 const InitialState: CalendarState = {
+  isCalendarDataLoading: true,
   calendarData: null,
   actualPage: 0,
   openedDay: null,
@@ -19,8 +21,16 @@ const calendarDataReducer = createReducer(
   InitialState,
   on(CalendarDataActions.SetCalendarData, (state, { calendar }) => ({
     ...state,
+    isCalendarDataLoading: false,
     calendarData: [...calendar],
   })),
+  on(
+    CalendarDataActions.SetIsCalendarDataLoading,
+    (state, { isCalendarDataLoading }) => ({
+      ...state,
+      isCalendarDataLoading,
+    })
+  ),
   on(CalendarDataActions.SetNextPage, (state) => {
     const lastDay = state.calendarData[state.calendarData.length - 1];
     const lastPage = lastDay.page[lastDay.page.length - 1];
@@ -53,6 +63,7 @@ const calendarDataReducer = createReducer(
       copiedCalendar[index] = copiedDay;
       return {
         ...state,
+        isCalendarDataLoading: false,
         calendarData: copiedCalendar,
       };
     }
