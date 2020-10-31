@@ -10,12 +10,20 @@
     width: 100%;
     display: grid;
     grid-template-columns: auto 1fr auto;
+    position: relative;
   }
 
   &__outlet {
     height: calc(100vh - 6.4rem);
     padding: 0 0 0 1rem;
-    // overflow: auto;
     overflow-y: scroll;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    &__container {
+      grid-template-columns: 1fr;
+    }
   }
 }

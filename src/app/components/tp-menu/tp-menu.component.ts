@@ -74,9 +74,6 @@ export class TpMenuComponent implements OnInit, OnDestroy {
   private loadTrainingPlansList = () =>
     this.store.dispatch(fromTrainingPlansDataActions.LoadTrainingPlansList());
 
-  public closeTrainingPlansListBoard = () =>
-    console.log(`close tp board in tablet and handset mode`);
-
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

@@ -1,0 +1,4 @@
+<div class="left-toolbar-handset-bg" (click)="toggleLeftMenu()"  [ngStyle]="{ left: (isLeftOpen$ | async) ?  '-100vw' : '0rem'}"></div>
+<div class="left-toolbar-handset" [ngStyle]="{ left: (isLeftOpen$ | async) ?  '-25.6rem' : '0rem'}">
+    <app-left-toolbar-navigator></app-left-toolbar-navigator>
+</div>

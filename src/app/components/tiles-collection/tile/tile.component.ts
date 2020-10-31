@@ -49,7 +49,7 @@ export class TileComponent implements OnInit, AfterViewInit {
       this.renderer.setStyle(
         this.tileElement.nativeElement,
         'maxHeight',
-        `${(62 + this.tileBody.nativeElement.offsetHeight) * 0.1}rem`
+        `${62 + this.tileBody.nativeElement.offsetHeight}px`
       );
     } else {
       this.renderer.setStyle(

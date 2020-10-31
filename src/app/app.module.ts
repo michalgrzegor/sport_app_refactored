@@ -19,6 +19,8 @@ import { TileEditorTrainingComponent } from './components/tile-editor/tile-edito
 import { TileEditorDietComponent } from './components/tile-editor/tile-editor-diet/tile-editor-diet.component';
 import { TileEditorQuestionComponent } from './components/tile-editor/tile-editor-question/tile-editor-question.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { LeftToolbarHandsetComponent } from './components/navigation/left-toolbar/left-toolbar-handset/left-toolbar-handset.component';
+import { LeftToolbarNavigatorComponent } from './components/navigation/left-toolbar/left-toolbar-navigator/left-toolbar-navigator.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     TileEditorTrainingComponent,
     TileEditorDietComponent,
     TileEditorQuestionComponent,
+    LeftToolbarHandsetComponent,
+    LeftToolbarNavigatorComponent,
   ],
   imports: [
     BrowserModule,

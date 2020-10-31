@@ -4,11 +4,12 @@
   <app-nav-toolbar></app-nav-toolbar>
   <div class="main">
     <div class="main__container">
-      <app-left-toolbar></app-left-toolbar>
+      <app-left-toolbar *ngIf="(isWeb$ | async)"></app-left-toolbar>
+      <app-left-toolbar-handset *ngIf="!(isWeb$ | async)"></app-left-toolbar-handset>
       <div class="main__outlet">
         <router-outlet></router-outlet>
       </div>
-      <app-right-toolbar *ngIf="isWeb$ | async" ></app-right-toolbar>
+      <app-right-toolbar *ngIf="(isWeb$ | async)" ></app-right-toolbar>
     </div>
   </div>
 </ng-template>

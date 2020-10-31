@@ -1,3 +1,5 @@
+import { ToggleLeftMenu } from './store/actions/menu.actions';
+import { tap } from 'rxjs/operators';
 import { BreakePointService } from './shared/services/breakpoint.service';
 import { Subscription, Observable } from 'rxjs';
 import { getIsAuthenticated } from './store/selectors/auth.selectors';
@@ -25,7 +27,13 @@ export class AppComponent implements OnInit, OnDestroy {
         this.isAuthenticated = data;
       })
     );
-    this.isWeb$ = this.breakePointService.isWeb;
+    this.isWeb$ = this.breakePointService.isWeb.pipe(
+      tap((isWeb) => {
+        if (!isWeb) {
+          this.store.dispatch(ToggleLeftMenu());
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
