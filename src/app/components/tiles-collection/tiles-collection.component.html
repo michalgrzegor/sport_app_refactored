@@ -2,7 +2,7 @@
     class="tiles-collection"  
     #tileCollection="cdkDropList" 
     [cdkDropListData]="(tiles$ | async)" 
-    [cdkDropListConnectedTo]="['list0','list1','list2']" 
+    [cdkDropListConnectedTo]="cdkDropListConnectedTo" 
     cdkDropList
     id="tileCollection"
     >

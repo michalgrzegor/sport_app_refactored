@@ -6,10 +6,10 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 36px;
+  margin-top: 3.6rem;
 
   &__noTp {
-    @include textRaleway(400, 18px);
+    @include textRaleway(400, 1.8rem);
   }
 
   &__create {
@@ -20,9 +20,9 @@
   }
 
   &__create:hover {
-    -webkit-text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.26);
-    -moz-text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.26);
-    text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.26);
+    -webkit-text-shadow: 0rem 0rem 1.2rem rgba(0, 0, 0, 0.26);
+    -moz-text-shadow: 0rem 0rem 1.2rem rgba(0, 0, 0, 0.26);
+    text-shadow: 0rem 0rem 1.2rem rgba(0, 0, 0, 0.26);
   }
 }
 
@@ -31,7 +31,7 @@
 
   &__header {
     width: 100%;
-    height: 72px;
+    height: 7.2rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -39,21 +39,21 @@
   }
 
   &__btn {
-    width: 48px;
-    height: 48px;
+    width: 4.8rem;
+    height: 4.8rem;
     border-radius: 50%;
   }
 
   &__month {
-    max-width: 160px;
+    max-width: 16rem;
     width: 100%;
-    @include textLato(400, 16px);
+    @include textLato(400, 1.6rem);
     text-transform: uppercase;
     text-align: center;
   }
 
   &__days {
-    max-width: 696px;
+    max-width: 69.6rem;
     width: 100%;
     margin: 0 auto;
     display: grid;
@@ -62,9 +62,9 @@
 
   &__day {
     margin: 0;
-    max-width: 96px;
+    max-width: 9.6rem;
     width: 100%;
-    height: 72px;
-    // border: cadetblue 1px dotted;
+    height: 7.2rem;
+    // border: cadetblue .1rem dotted;
   }
 }

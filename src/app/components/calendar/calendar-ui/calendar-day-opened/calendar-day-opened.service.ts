@@ -25,6 +25,7 @@ export class CalendarDayOpenedService {
     if (this.isInjected) {
       this.openedDay.destroy();
       this.isInjected = false;
+      this.store.dispatch(SetOpenedDay({ calendarDay: null }));
     }
   };
 

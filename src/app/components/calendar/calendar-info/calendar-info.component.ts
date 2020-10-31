@@ -65,7 +65,7 @@ export class CalendarInfoComponent implements OnInit {
     this.modalService
       .instantinateModal(ModalComponent, CalendarCreatorComponent, {
         title: 'Training plan creator',
-        style: [{ width: '400px' }],
+        style: [{ width: '40rem' }],
       })
       .subscribe((data) => {
         if (data) {

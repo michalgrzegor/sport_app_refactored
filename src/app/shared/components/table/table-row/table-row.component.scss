@@ -3,21 +3,21 @@
 
 .row__container {
   box-sizing: border-box;
-  border-bottom: 1px solid $WhiteDotTwo;
-  height: 48px;
+  border-bottom: 0.1rem solid $WhiteDotTwo;
+  height: 4.8rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
 
   .row__value {
-    min-width: 84px;
+    min-width: 8.4rem;
     text-align: center;
 
     p {
       margin: 0;
       width: 100%;
       text-align: left;
-      @include textLato(700, 14px);
+      @include textLato(700, 1.4rem);
       color: $fontWhiteMediumContrast;
     }
 

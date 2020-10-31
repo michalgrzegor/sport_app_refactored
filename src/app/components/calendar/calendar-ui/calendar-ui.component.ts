@@ -1,3 +1,4 @@
+import { SetOpenedDay } from './../../../store/actions/calendar-data.actions';
 import { TrainingPlan } from './../../../shared/models/training-plan.interface';
 import { CalendarDayOpenedService } from './calendar-day-opened/calendar-day-opened.service';
 import { getActualPage } from './../../../store/selectors/calendar-data.selectors';
@@ -11,7 +12,6 @@ import {
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   OnDestroy,
   OnInit,
   QueryList,
@@ -73,6 +73,7 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
           }),
           tap((data) => {
             if (data) {
+              this.resetCalendarData();
               this.store.dispatch(
                 fromCalendarDataActions.SetCalendarData({
                   calendar: data as CalendarDay[],
@@ -95,7 +96,7 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
     this.modalService
       .instantinateModal(ModalComponent, CalendarCreatorComponent, {
         title: 'Training plan creator',
-        style: [{ width: '400px' }],
+        style: [{ width: '40rem' }],
       })
       .subscribe((data) => {
         if (data) {
@@ -113,6 +114,9 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
     this.store.dispatch(SetNextPage());
     this.calendarDayOpenedService.closeDay();
   };
+
+  private resetCalendarData = () =>
+    this.store.dispatch(SetOpenedDay({ calendarDay: null }));
 
   private setDataForOpenDay = (
     trainingPlan: TrainingPlan

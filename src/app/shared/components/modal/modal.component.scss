@@ -24,9 +24,9 @@
 
   &__header {
     box-sizing: border-box;
-    height: 56px;
-    border-bottom: 1px solid $WhiteDotTwo;
-    margin-bottom: 6px;
+    height: 5.6rem;
+    border-bottom: 0.1rem solid $WhiteDotTwo;
+    margin-bottom: 0.6rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,19 +34,19 @@
   }
 
   &__title {
-    @include textRaleway(400, 16px);
+    @include textRaleway(400, 1.6rem);
   }
 
   &__button {
     position: absolute;
-    right: 12px;
-    height: 36px;
-    width: 36px;
+    right: 1.2rem;
+    height: 3.6rem;
+    width: 3.6rem;
     border-radius: 50%;
   }
 
   &__component {
-    max-height: calc(80vh - 56px);
+    max-height: calc(80vh - 5.6rem);
     overflow: auto;
   }
 }

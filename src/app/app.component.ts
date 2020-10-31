@@ -1,4 +1,5 @@
-import { Subscription } from 'rxjs';
+import { BreakePointService } from './shared/services/breakpoint.service';
+import { Subscription, Observable } from 'rxjs';
 import { getIsAuthenticated } from './store/selectors/auth.selectors';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -11,8 +12,12 @@ import { Store } from '@ngrx/store';
 export class AppComponent implements OnInit, OnDestroy {
   public isAuthenticated: boolean;
   private subscription: Subscription = new Subscription();
+  public isWeb$: Observable<boolean>;
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private breakePointService: BreakePointService
+  ) {}
 
   ngOnInit(): void {
     this.subscription.add(
@@ -20,6 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.isAuthenticated = data;
       })
     );
+    this.isWeb$ = this.breakePointService.isWeb;
   }
 
   ngOnDestroy(): void {

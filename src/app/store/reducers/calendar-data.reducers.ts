@@ -46,7 +46,7 @@ const calendarDataReducer = createReducer(
   on(CalendarDataActions.SetOpenedDay, (state, { calendarDay }) => {
     return {
       ...state,
-      openedDay: calendarDay.date,
+      openedDay: calendarDay ? calendarDay.date : null,
     };
   }),
   on(

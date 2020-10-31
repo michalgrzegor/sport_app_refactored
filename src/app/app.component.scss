@@ -2,9 +2,9 @@
 @import "./shared/styles/mixins";
 
 .main {
-  max-width: 1440px;
+  max-width: 144rem;
   margin: 0 auto;
-  height: calc(100vh - 64px);
+  height: calc(100vh - 6.4rem);
 
   &__container {
     width: 100%;
@@ -13,8 +13,8 @@
   }
 
   &__outlet {
-    height: calc(100vh - 64px);
-    padding: 0 0 0 10px;
+    height: calc(100vh - 6.4rem);
+    padding: 0 0 0 1rem;
     // overflow: auto;
     overflow-y: scroll;
   }

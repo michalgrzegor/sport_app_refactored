@@ -8,7 +8,7 @@
       <div class="main__outlet">
         <router-outlet></router-outlet>
       </div>
-      <app-right-toolbar></app-right-toolbar>
+      <app-right-toolbar *ngIf="isWeb$ | async" ></app-right-toolbar>
     </div>
   </div>
 </ng-template>

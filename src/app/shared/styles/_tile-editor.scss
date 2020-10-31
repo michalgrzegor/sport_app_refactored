@@ -6,14 +6,14 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 24px;
+  margin-bottom: 2.4rem;
 
   &__form-group {
     box-sizing: border-box;
     background: $WhiteDotOTwo;
-    padding: 6px 6px 12px 6px;
-    margin: 10px 0 24px;
-    border-radius: 4px;
+    padding: 0.6rem 0.6rem 1.2rem 0.6rem;
+    margin: 1rem 0 2.4rem;
+    border-radius: 0.4rem;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -21,26 +21,26 @@
   }
 
   &__hidden-form {
-    max-height: 0px;
+    max-height: 0rem;
     overflow: hidden;
     transition: 1s;
   }
 
   .opened {
-    max-height: 2000px;
+    max-height: 200rem;
   }
 
   &__form-element {
     width: 100%;
-    border-bottom: 1px solid $WhiteDotTwo;
+    border-bottom: 0.1rem solid $WhiteDotTwo;
   }
 
   &__header {
     margin: 0;
-    height: 42px;
-    line-height: 42px;
+    height: 4.2rem;
+    line-height: 4.2rem;
     text-align: center;
-    @include textRaleway(800, 16px);
+    @include textRaleway(800, 1.6rem);
     text-transform: uppercase;
     color: $fontWhiteHighContrast;
     position: relative;
@@ -52,14 +52,14 @@
   }
 
   &__btn {
-    min-width: 64px;
-    height: 36px;
-    margin-bottom: 24px;
-    margin-right: 12px;
+    min-width: 6.4rem;
+    height: 3.6rem;
+    margin-bottom: 2.4rem;
+    margin-right: 1.2rem;
     background: $WhiteDotOTwo;
     font-weight: 800;
     color: $fontWhiteMediumContrast;
-    padding: 1px 12px;
+    padding: 0.1rem 1.2rem;
   }
 
   .btn--disabled {
@@ -69,9 +69,9 @@
   &__btn-expand {
     position: absolute;
     right: 0;
-    top: 3px;
-    width: 36px;
-    height: 36px;
+    top: 0.3rem;
+    width: 3.6rem;
+    height: 3.6rem;
     border-radius: 50%;
     transition: 0.5s;
   }
@@ -81,10 +81,10 @@
   }
 
   .margin--top {
-    margin-top: 24px;
+    margin-top: 2.4rem;
   }
 
   .margin--left {
-    margin-left: 12px;
+    margin-left: 1.2rem;
   }
 }

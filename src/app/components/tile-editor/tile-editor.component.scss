@@ -4,7 +4,7 @@
 .editor {
   box-sizing: border-box;
   width: 100%;
-  padding: 0 10px;
+  padding: 0 1rem;
 
   &__types {
     box-sizing: border-box;
@@ -12,14 +12,14 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    height: 56px;
-    border-bottom: 1px solid $WhiteDotTwo;
+    height: 5.6rem;
+    border-bottom: 0.1rem solid $WhiteDotTwo;
   }
 
   &__type {
-    @include textRaleway(400, 14px);
+    @include textRaleway(400, 1.4rem);
     text-transform: uppercase;
-    padding: 12px;
+    padding: 1.2rem;
   }
 
   .active {

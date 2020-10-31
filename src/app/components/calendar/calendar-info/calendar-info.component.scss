@@ -4,8 +4,8 @@
 .info {
   box-sizing: border-box;
   width: 100%;
-  height: 56px;
-  border-bottom: 1px solid $WhiteDotTwo;
+  height: 5.6rem;
+  border-bottom: 0.1rem solid $WhiteDotTwo;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,20 +13,20 @@
 
   &__title {
     margin: 0;
-    @include textRaleway(800, 16px);
+    @include textRaleway(800, 1.6rem);
     text-transform: uppercase;
   }
 
   &__btn-container {
     position: absolute;
-    right: 0;
-    width: 36px;
-    height: 36px;
+    right: 0.6rem;
+    width: 3.6rem;
+    height: 3.6rem;
   }
 
   &__btn {
-    width: 36px;
-    height: 36px;
+    width: 3.6rem;
+    height: 3.6rem;
     border-radius: 50%;
   }
 }
