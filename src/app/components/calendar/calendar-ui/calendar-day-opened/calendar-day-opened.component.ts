@@ -1,3 +1,4 @@
+import { BreakePointService } from './../../../../shared/services/breakpoint.service';
 import { Association } from './../../../../shared/models/training-plan.interface';
 import { CalendarDay } from './../../../../shared/models/calendar.interface';
 import { GetTiles } from 'src/app/store/selectors/tile.selectors';
@@ -33,6 +34,7 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
   public day$: Observable<CalendarDay>;
   public tiles$: Observable<Tile[]>;
   public isTilesLoading$: Observable<boolean>;
+  public isWeb$: Observable<boolean>;
 
   private subscription: Subscription = new Subscription();
   public sessionArray: { tile: Tile; association: Association }[][] = [];
@@ -40,7 +42,8 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
   constructor(
     private renderer: Renderer2,
     private el: ElementRef,
-    private store: Store
+    private store: Store,
+    private breakPointService: BreakePointService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +51,7 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
     this.day$ = this.store.select(getOpenedDay);
     this.tiles$ = this.store.select(GetTiles);
     this.isTilesLoading$ = this.store.select(getIsCalendarDataLoading);
+    this.isWeb$ = this.breakPointService.isWeb;
     this.subscription.add(
       combineLatest([this.day$, this.tiles$]).subscribe(
         ([calendarDay, tileArray]) => {
@@ -116,6 +120,8 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
       this.addTileToDay(association);
     }
   };
+
+  public addTile = () => {};
 
   // public getAssociation = (id: number) => this.associations.find(a => a.tile_id === )
 
