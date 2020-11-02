@@ -1,3 +1,4 @@
+import { BreakePointService } from './../../shared/services/breakpoint.service';
 import { TrainingPlan } from './../../shared/models/training-plan.interface';
 import { getTrainingPlan } from './../../store/selectors/training-plans-data.selectors';
 import { Tile } from './../../shared/models/tile.interface';
@@ -13,13 +14,18 @@ import { GetTiles } from 'src/app/store/selectors/tile.selectors';
 })
 export class TilesCollectionComponent implements OnInit, OnDestroy {
   public tiles$: Observable<Tile[]>;
+  public isWeb$: Observable<boolean>;
   private subscription: Subscription = new Subscription();
   public cdkDropListConnectedTo: string[];
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private breakPointService: BreakePointService
+  ) {}
 
   ngOnInit(): void {
     this.tiles$ = this.store.select(GetTiles);
+    this.isWeb$ = this.breakPointService.isWeb;
     this.subscription.add(
       this.store
         .select(getTrainingPlan)

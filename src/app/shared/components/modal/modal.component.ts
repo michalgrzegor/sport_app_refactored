@@ -28,7 +28,7 @@ export class ModalComponent implements AfterViewInit {
   }
 
   private styleModal = () => {
-    this.options.style.forEach((st) =>
+    this.options.style.forEach((st, index) =>
       this.renderer.setStyle(
         this.container.nativeElement,
         Object.keys(st)[0],

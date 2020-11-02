@@ -1,5 +1,5 @@
+import { TilesCollectionComponent } from './../../../tiles-collection/tiles-collection.component';
 import { ToggleLeftMenu } from './../../../../store/actions/menu.actions';
-import { take, tap } from 'rxjs/operators';
 import {
   Component,
   ElementRef,
@@ -13,6 +13,9 @@ import { Observable, Subscription } from 'rxjs';
 import { BreakePointService } from 'src/app/shared/services/breakpoint.service';
 import { SetRightMenuComponent } from 'src/app/store/actions/menu.actions';
 import { isLeftMenuOpen } from 'src/app/store/selectors/menu.selectors';
+import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
+import { TileEditorComponent } from 'src/app/components/tile-editor/tile-editor.component';
 
 @Component({
   selector: 'app-left-toolbar-navigator',
@@ -38,6 +41,7 @@ export class LeftToolbarNavigatorComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store,
     private router: Router,
+    private modalService: ModalService,
     private breakePointService: BreakePointService
   ) {}
 
@@ -75,10 +79,34 @@ export class LeftToolbarNavigatorComponent implements OnInit, OnDestroy {
     this.router.navigate([`/${routerAddress}`]);
   };
 
-  private changeComponent = (componentName: string) =>
-    this.store.dispatch(
-      SetRightMenuComponent({ rightComponent: componentName })
+  private getComponent = (componentName: string): any => {
+    switch (componentName) {
+      case 'tileeditor':
+        return TileEditorComponent;
+      case 'tilecollection':
+        return TilesCollectionComponent;
+    }
+  };
+
+  private openModal = (componentName: string) =>
+    this.modalService.instantinateModal(
+      ModalComponent,
+      this.getComponent(componentName),
+      {
+        title: 'Tile Collection',
+        style: [{ height: '80vh' }, { width: '90vw' }],
+      }
     );
+
+  private changeComponent = (componentName: string) => {
+    if (this.isWeb) {
+      this.store.dispatch(
+        SetRightMenuComponent({ rightComponent: componentName })
+      );
+    } else {
+      this.openModal(componentName);
+    }
+  };
 
   private makeNavigation = (index: number) => {
     const button = this.HTMLNavigatorElementsArray[index];
