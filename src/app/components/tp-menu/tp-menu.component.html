@@ -1,7 +1,3 @@
-<div class="training-plans-list__header" *ngIf="!isWeb">
-  <h4 class="header__title">Program board</h4>
-</div>
-
 <app-table
   *ngIf="!isTrainingPlansListLoading; else loading"
   [tableData]="trainingPlanList"

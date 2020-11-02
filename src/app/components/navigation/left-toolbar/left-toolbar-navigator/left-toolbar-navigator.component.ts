@@ -6,6 +6,10 @@ import {
   OnInit,
   ViewChild,
   OnDestroy,
+  ViewChildren,
+  QueryList,
+  ViewContainerRef,
+  AfterViewInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -20,17 +24,12 @@ import { ModalMediatorService } from 'src/app/shared/components/modal/modal-medi
   templateUrl: './left-toolbar-navigator.component.html',
   styleUrls: ['./left-toolbar-navigator.component.scss'],
 })
-export class LeftToolbarNavigatorComponent implements OnInit, OnDestroy {
+export class LeftToolbarNavigatorComponent
+  implements OnInit, AfterViewInit, OnDestroy {
   private subscription: Subscription = new Subscription();
-  // Buttons to navigate
-  @ViewChild('athleteCards', { static: true }) athleteCards: ElementRef;
-  @ViewChild('programs', { static: true }) programs: ElementRef;
-  @ViewChild('board', { static: true }) board: ElementRef;
-  @ViewChild('loop', { static: true }) loop: ElementRef;
-
-  // Buttons to change right panel
-  @ViewChild('tilecollection', { static: true }) tilecollection: ElementRef;
-  @ViewChild('tileeditor', { static: true }) tileeditor: ElementRef;
+  @ViewChildren('btn', { read: ViewContainerRef }) btnNodesArray: QueryList<
+    ViewContainerRef
+  >;
 
   private HTMLNavigatorElementsArray: HTMLElement[];
   public isLeftOpen$: Observable<boolean>;
@@ -44,22 +43,17 @@ export class LeftToolbarNavigatorComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.HTMLNavigatorElementsArray = this.generateHTMLElementArray();
     this.isLeftOpen$ = this.store.select(isLeftMenuOpen);
     this.subscription.add(
       this.breakePointService.isWeb.subscribe((isWeb) => (this.isWeb = isWeb))
     );
   }
 
-  private generateHTMLElementArray = (): HTMLElement[] =>
-    [
-      this.athleteCards,
-      this.programs,
-      this.board,
-      this.loop,
-      this.tilecollection,
-      this.tileeditor,
-    ].map((element) => element.nativeElement);
+  ngAfterViewInit(): void {
+    this.HTMLNavigatorElementsArray = this.btnNodesArray
+      .toArray()
+      .map((n) => n.element.nativeElement);
+  }
 
   private getIndexOfNavigatorButton = (pathArray: HTMLElement[]): number => {
     return this.HTMLNavigatorElementsArray.map((nodeElement) =>
@@ -91,6 +85,12 @@ export class LeftToolbarNavigatorComponent implements OnInit, OnDestroy {
           style: [{ height: '80vh' }, { width: '90vw' }],
         });
         break;
+      case 'tp':
+        this.modalMediatorService.OpenTrainingPlanMenuComponent({
+          title: 'Programs board',
+          style: [{ height: '80vh' }, { width: '90vw' }],
+        });
+        break;
     }
   };
 
@@ -117,7 +117,7 @@ export class LeftToolbarNavigatorComponent implements OnInit, OnDestroy {
     this.toggleLeftMenu();
   };
 
-  navigate = (e) => {
+  public navigate = (e) => {
     const index = this.getIndexOfNavigatorButton(e.path);
     if (index >= 0) {
       this.makeNavigation(index);

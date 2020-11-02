@@ -22,7 +22,6 @@ export interface LegendElement {
   styleUrls: ['./tp-menu.component.scss'],
 })
 export class TpMenuComponent implements OnInit, OnDestroy {
-  public isWeb: boolean;
   public isTrainingPlansListLoading = true;
   public trainingPlanList: TrainingPlanInfo[];
   public tableLegend: LegendElement[];
@@ -49,9 +48,6 @@ export class TpMenuComponent implements OnInit, OnDestroy {
       },
     ];
     this.subscription
-      .add(
-        this.breakPointService.isWeb.subscribe((data) => (this.isWeb = data))
-      )
       .add(
         this.store.select(shouldLoadTrainingPlansList).subscribe((data) => {
           if (data) {

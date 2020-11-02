@@ -7,6 +7,7 @@ import { CalendarCreatorComponent } from 'src/app/components/calendar/calendar-c
 import { TilesCollectionHandsetComponent } from 'src/app/components/tiles-collection/tiles-collection-handset/tiles-collection-handset.component';
 import { TileEditorComponent } from 'src/app/components/tile-editor/tile-editor.component';
 import { TilesCollectionComponent } from 'src/app/components/tiles-collection/tiles-collection.component';
+import { TpMenuComponent } from 'src/app/components/tp-menu/tp-menu.component';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,9 @@ export class ModalMediatorService {
 
   public OpenTilesCollectionComponent = (modalOptions: ModalOptions) =>
     this.openModal('tilesCollection', TilesCollectionComponent, modalOptions);
+
+  public OpenTrainingPlanMenuComponent = (modalOptions: ModalOptions) =>
+    this.openModal('trainingPlanMenu', TpMenuComponent, modalOptions);
 
   public closeModal = (key: string) => this.modalService.closeModal(key);
 }
