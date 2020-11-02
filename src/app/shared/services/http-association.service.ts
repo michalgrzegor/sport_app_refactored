@@ -27,6 +27,7 @@ export class HttpAssociationService {
   public addTileToDay = (association: Association): Observable<Association> =>
     this.getToken().pipe(
       switchMap((token) => {
+        console.log(association);
         return this.httpClient.post<Association>(
           `${this.URL}training_plans/${association.training_plan_id}/calendar_assocs`,
           association,

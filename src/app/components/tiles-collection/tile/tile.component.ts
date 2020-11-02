@@ -25,6 +25,7 @@ import {
 export class TileComponent implements OnInit, AfterViewInit {
   @Input() tile: Tile;
   @Input() isInTileCollection: boolean;
+  @Input() isInHandsetCollection: boolean;
   @Input() association: Association;
   @ViewChild('tileElement', { read: ElementRef }) tileElement: ElementRef;
   @ViewChild('tileBody', { read: ElementRef }) tileBody: ElementRef;

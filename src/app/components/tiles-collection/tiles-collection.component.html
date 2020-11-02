@@ -8,6 +8,7 @@
     >
     <app-tile 
         [isInTileCollection]="true" 
+        [isInHandsetCollection]="false"
         [tile]="tile" 
         [association]="null" 
         *ngFor="let tile of (tiles$ | async)" 

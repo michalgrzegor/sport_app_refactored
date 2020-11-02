@@ -74,7 +74,20 @@ export class ModalService {
     (this.modalsReferences[key][0] as ComponentRef<
       any
     >).instance.options = modalOptions;
+  };
+
+  private passDataToInjectedComponent = (
+    modalOptions: ModalOptions,
+    key: string
+  ) => {
+    // pass key to injected component to emit data after close
     (this.modalsReferences[key][1] as ComponentRef<any>).instance.key = key;
+
+    // pass any data to injected component
+    if (modalOptions?.data) {
+      (this.modalsReferences[key][1] as ComponentRef<any>).instance.passData =
+        modalOptions.data;
+    }
   };
 
   public instantinateModal = (
@@ -86,6 +99,7 @@ export class ModalService {
     this.createModalRef(modalComponent, Component);
     this.attachModalView(key);
     this.passDataToModalComponent(modalOptions, key);
+    this.passDataToInjectedComponent(modalOptions, key);
     this.id++;
     return this.createSubject(key);
   };

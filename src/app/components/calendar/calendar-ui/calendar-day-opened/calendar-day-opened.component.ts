@@ -1,3 +1,5 @@
+import { TileAssociationsService } from './../../../../shared/services/tile-associations.service';
+import { TilesCollectionHandsetComponent } from './../../../tiles-collection/tiles-collection-handset/tiles-collection-handset.component';
 import { BreakePointService } from './../../../../shared/services/breakpoint.service';
 import { Association } from './../../../../shared/models/training-plan.interface';
 import { CalendarDay } from './../../../../shared/models/calendar.interface';
@@ -18,10 +20,8 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import {
-  AddTileToDay,
-  SetIsCalendarDataLoading,
-} from 'src/app/store/actions/calendar-data.actions';
+import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-calendar-day-opened',
@@ -37,12 +37,15 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
   public isWeb$: Observable<boolean>;
 
   private subscription: Subscription = new Subscription();
+  private day: CalendarDay;
   public sessionArray: { tile: Tile; association: Association }[][] = [];
 
   constructor(
     private renderer: Renderer2,
     private el: ElementRef,
     private store: Store,
+    private tileAssociationService: TileAssociationsService,
+    private modalService: ModalService,
     private breakPointService: BreakePointService
   ) {}
 
@@ -56,6 +59,7 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
       combineLatest([this.day$, this.tiles$]).subscribe(
         ([calendarDay, tileArray]) => {
           this.sessionArray = this.makeSessionArray(calendarDay, tileArray);
+          this.day = calendarDay;
         }
       )
     );
@@ -84,46 +88,28 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
     return array;
   };
 
-  private makeTileAssociation = (
-    dropTile: Tile,
-    session: number,
-    indexInArray: number
-  ): Association => ({
-    tile_id: dropTile.id,
-    calendar_date: this.trainingPlanData.calendar_date as string,
-    training_plan: this.trainingPlanData.training_plan as string,
-    training_plan_id: this.trainingPlanData.training_plan_id as number,
-    tile_color: dropTile.tile_type_color,
-    training_sesion: session,
-    tile_type: dropTile.tile_type_name,
-    asso_index_in_array: indexInArray,
-    asso_temporary_id: 0,
-  });
-
-  private setIsCalendarDataLoading = (): void =>
-    this.store.dispatch(
-      SetIsCalendarDataLoading({ isCalendarDataLoading: true })
-    );
-
-  private addTileToDay = (association: Association): void =>
-    this.store.dispatch(AddTileToDay({ association }));
-
   public drop = (event: CdkDragDrop<Tile[]>, sessionIndex: number): void => {
     if (event.previousContainer !== event.container) {
-      this.setIsCalendarDataLoading();
       const dropTile = event.previousContainer.data[event.previousIndex];
-      const association = this.makeTileAssociation(
+      this.tileAssociationService.addAssociation(
         dropTile,
-        sessionIndex + 1,
+        sessionIndex,
         event.previousContainer.data.length
       );
-      this.addTileToDay(association);
     }
   };
 
-  public addTile = () => {};
-
-  // public getAssociation = (id: number) => this.associations.find(a => a.tile_id === )
+  public addTile = (sessionIndex: number, sessionLength: number) => {
+    this.modalService.instantinateModal(
+      ModalComponent,
+      TilesCollectionHandsetComponent,
+      {
+        title: `Add tile to ${sessionIndex + 1} session`,
+        style: [{ height: '80vh' }, { width: '90vw' }],
+        data: { sessionIndex, day: this.day, sessionLength },
+      }
+    );
+  };
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

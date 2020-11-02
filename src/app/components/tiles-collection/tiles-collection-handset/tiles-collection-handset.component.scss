@@ -1,0 +1,36 @@
+@import "../../../shared/styles/colors";
+@import "../../../shared/styles/mixins";
+
+.tile-collection-handset {
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(80vh - 5.6rem);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 5.6rem;
+
+  &__tiles {
+    box-sizing: border-box;
+    overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: flex-start;
+  }
+
+  &__btns {
+    box-sizing: border-box;
+    height: 5.6rem;
+    border-top: 0.1rem solid $WhiteDotTwo;
+  }
+
+  &__btn {
+    height: 3.6rem;
+    margin-top: 0.6rem;
+    margin-left: 1.2rem;
+  }
+
+  .selected {
+    filter: brightness(90%);
+  }
+}

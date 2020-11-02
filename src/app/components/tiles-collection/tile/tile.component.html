@@ -13,7 +13,7 @@
         <h1 class="tile__title">{{tile.tile_title | shorten: 16}}</h1>
         <div class="tile__btns">
             <button *ngIf="isInTileCollection"  (click)="editTile()" class="customBtn tile__btn"><i class="material-icons">create</i></button>
-            <button (click)="deleteTile()" class="customBtn tile__btn"><i class="material-icons">delete_outline</i></button>
+            <button *ngIf="!isInHandsetCollection"  (click)="deleteTile()" class="customBtn tile__btn"><i class="material-icons">delete_outline</i></button>
             <button (click)="toggleTile()" class="customBtn tile__btn btn--rotate"><i class="material-icons">keyboard_arrow_down</i></button>
         </div>
     </div>

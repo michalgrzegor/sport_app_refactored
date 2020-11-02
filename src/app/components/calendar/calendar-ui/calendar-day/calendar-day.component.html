@@ -6,12 +6,4 @@
         <p class="day__date" [ngClass]="{'faded': !isActualPage}">{{day.date | date: "dd"}}</p>
     </div>
 </div>
-<!-- <div class="day">
-    <div #background class="day__background" [ngClass]="{'open': (isOpened$ | async)}">
-        <div #colorDot *ngFor="let association of day.associations" class="day__color-dot-container">
-            <div class="day__color-dot" [ngStyle]="{'background-color': association.tile_color}"></div>
-        </div>
-        <p class="day__date" [ngClass]="{'faded': !isActualPage}">{{day.date | date: "dd"}}</p>
-    </div>
-</div> -->
 

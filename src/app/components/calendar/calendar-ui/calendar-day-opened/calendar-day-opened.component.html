@@ -13,10 +13,16 @@
                 (cdkDropListDropped)="drop($event, i)" 
                 class="openedday__drop-container"
                 id="{{ 'list' + i}}">
-                <app-tile  [isInTileCollection]="false" [tile]="element.tile" [association]="element.association"  *ngFor="let element of session" ></app-tile>
+                <app-tile  
+                    [isInTileCollection]="false" 
+                    [isInHandsetCollection]="false" 
+                    [tile]="element.tile" 
+                    [association]="element.association"  
+                    *ngFor="let element of session" 
+                ></app-tile>
             </div>
             <div *ngIf="!(isWeb$ | async)"  class="openedday__handset-btns">
-                <button class="info__btn customBtn" (click)="addTile()">
+                <button class="info__btn customBtn" (click)="addTile(i, session.length)">
                     <i class="material-icons">add_circle_outline</i>Add tile
                 </button>
             </div>

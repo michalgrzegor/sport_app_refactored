@@ -1,1 +1,18 @@
-<p>tiles-collection-handset works!</p>
+<div class="tile-collection-handset">
+    <div class="tile-collection-handset__tiles">
+        <app-tile 
+        [isInTileCollection]="false" 
+        [isInHandsetCollection]="true"
+        [tile]="tile" 
+        [association]="null" 
+        (click)="selectTile(tile)" 
+        [ngClass]="{'selected': tile.id === selectedTile?.id}"
+        *ngFor="let tile of (tiles$ | async)" 
+    >tiles-collection works!</app-tile>
+    </div>
+    <div class="tile-collection-handset__btns">
+        <button class="tile-collection-handset__btn customBtn" (click)="addTile()">
+            <i class="material-icons">add_circle_outline</i>Add tile
+        </button>
+    </div>
+</div>
