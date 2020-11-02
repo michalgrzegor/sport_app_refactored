@@ -18,7 +18,6 @@ export class ModalService {
   private modalsReferences: {
     [key: string]: (ComponentRef<any> | Subject<any>)[];
   } = {};
-  private id = 0;
   private renderer: Renderer2;
 
   constructor(
@@ -30,17 +29,18 @@ export class ModalService {
     this.renderer = rendererFactory.createRenderer(null, null);
   }
 
-  private createModalRef = (modalComponent: any, Component: any) => {
+  private createModalRef = (
+    modalComponent: any,
+    Component: any,
+    key: string
+  ) => {
     const modalContainer = this.componentFactoryResolver
       .resolveComponentFactory(modalComponent)
       .create(this.injector);
     const injectedComponent = this.componentFactoryResolver
       .resolveComponentFactory(Component)
       .create(this.injector);
-    this.modalsReferences[`modalNumber${this.id}`] = [
-      modalContainer,
-      injectedComponent,
-    ];
+    this.modalsReferences[`${key}`] = [modalContainer, injectedComponent];
   };
 
   private attachModalView = (key: string) => {
@@ -54,11 +54,7 @@ export class ModalService {
       .hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
     this.renderer.appendChild(componentContainer, childELement);
     this.renderer.appendChild(document.body, parentELement);
-    this.renderer.setAttribute(
-      parentELement,
-      'modalid',
-      `modalNumber${this.id}`
-    );
+    this.renderer.setAttribute(parentELement, 'modalid', `${key}`);
   };
 
   private createSubject = (key: string): Subject<any> => {
@@ -91,16 +87,15 @@ export class ModalService {
   };
 
   public instantinateModal = (
+    key: string,
     modalComponent: any,
     Component: any,
     modalOptions: ModalOptions = null
   ): Subject<any> => {
-    const key = `modalNumber${this.id}`;
-    this.createModalRef(modalComponent, Component);
+    this.createModalRef(modalComponent, Component, key);
     this.attachModalView(key);
     this.passDataToModalComponent(modalOptions, key);
     this.passDataToInjectedComponent(modalOptions, key);
-    this.id++;
     return this.createSubject(key);
   };
 

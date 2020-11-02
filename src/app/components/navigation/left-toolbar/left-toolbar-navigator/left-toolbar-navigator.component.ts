@@ -13,9 +13,7 @@ import { Observable, Subscription } from 'rxjs';
 import { BreakePointService } from 'src/app/shared/services/breakpoint.service';
 import { SetRightMenuComponent } from 'src/app/store/actions/menu.actions';
 import { isLeftMenuOpen } from 'src/app/store/selectors/menu.selectors';
-import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
-import { TileEditorComponent } from 'src/app/components/tile-editor/tile-editor.component';
+import { ModalMediatorService } from 'src/app/shared/components/modal/modal-mediator.service';
 
 @Component({
   selector: 'app-left-toolbar-navigator',
@@ -41,7 +39,7 @@ export class LeftToolbarNavigatorComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store,
     private router: Router,
-    private modalService: ModalService,
+    private modalMediatorService: ModalMediatorService,
     private breakePointService: BreakePointService
   ) {}
 
@@ -79,24 +77,22 @@ export class LeftToolbarNavigatorComponent implements OnInit, OnDestroy {
     this.router.navigate([`/${routerAddress}`]);
   };
 
-  private getComponent = (componentName: string): any => {
+  private openModal = (componentName: string) => {
     switch (componentName) {
       case 'tileeditor':
-        return TileEditorComponent;
+        this.modalMediatorService.OpenTileEditorComponent({
+          title: 'Tile Editor',
+          style: [{ height: '80vh' }, { width: '90vw' }],
+        });
+        break;
       case 'tilecollection':
-        return TilesCollectionComponent;
+        this.modalMediatorService.OpenTilesCollectionComponent({
+          title: 'Tiles Collection',
+          style: [{ height: '80vh' }, { width: '90vw' }],
+        });
+        break;
     }
   };
-
-  private openModal = (componentName: string) =>
-    this.modalService.instantinateModal(
-      ModalComponent,
-      this.getComponent(componentName),
-      {
-        title: 'Tile Collection',
-        style: [{ height: '80vh' }, { width: '90vw' }],
-      }
-    );
 
   private changeComponent = (componentName: string) => {
     if (this.isWeb) {

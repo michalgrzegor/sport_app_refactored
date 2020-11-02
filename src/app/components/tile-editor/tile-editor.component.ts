@@ -11,7 +11,7 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./tile-editor.component.scss'],
 })
 export class TileEditorComponent implements OnInit, OnDestroy {
-  public editorName: string = 'training';
+  public editorName = 'training';
   public editorNames = ['training', 'diet', 'question'];
   public tileToEdit: Tile;
 

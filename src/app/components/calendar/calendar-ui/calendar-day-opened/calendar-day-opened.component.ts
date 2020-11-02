@@ -1,5 +1,4 @@
 import { TileAssociationsService } from './../../../../shared/services/tile-associations.service';
-import { TilesCollectionHandsetComponent } from './../../../tiles-collection/tiles-collection-handset/tiles-collection-handset.component';
 import { BreakePointService } from './../../../../shared/services/breakpoint.service';
 import { Association } from './../../../../shared/models/training-plan.interface';
 import { CalendarDay } from './../../../../shared/models/calendar.interface';
@@ -20,8 +19,8 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
+import { ModalMediatorService } from 'src/app/shared/components/modal/modal-mediator.service';
+import { take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-calendar-day-opened',
@@ -45,7 +44,7 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
     private el: ElementRef,
     private store: Store,
     private tileAssociationService: TileAssociationsService,
-    private modalService: ModalService,
+    private modalMediatorService: ModalMediatorService,
     private breakPointService: BreakePointService
   ) {}
 
@@ -99,17 +98,19 @@ export class CalendarDayOpenedComponent implements OnInit, OnDestroy {
     }
   };
 
-  public addTile = (sessionIndex: number, sessionLength: number) => {
-    this.modalService.instantinateModal(
-      ModalComponent,
-      TilesCollectionHandsetComponent,
-      {
+  public addTile = (sessionIndex: number, sessionLength: number) =>
+    this.modalMediatorService
+      .OpenTilesCollectionHandset({
         title: `Add tile to ${sessionIndex + 1} session`,
         style: [{ height: '80vh' }, { width: '90vw' }],
         data: { sessionIndex, day: this.day, sessionLength },
-      }
-    );
-  };
+      })
+      .pipe(take(1))
+      .subscribe((data) => {
+        if (data) {
+          this.modalMediatorService.closeModal('tilesCollectionHandset');
+        }
+      });
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

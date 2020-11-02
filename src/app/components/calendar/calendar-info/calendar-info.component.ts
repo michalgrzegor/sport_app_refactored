@@ -1,3 +1,4 @@
+import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MenuService } from './../../../shared/components/menu/menu.service';
 import {
@@ -6,8 +7,6 @@ import {
   LoadingTrainingPlan,
   LoadingTrainingPlansList,
 } from './../../../store/actions/training-plans-data.actions';
-import { ModalComponent } from './../../../shared/components/modal/modal.component';
-import { ModalService } from './../../../shared/components/modal/modal.service';
 import {
   Component,
   Input,
@@ -15,9 +14,9 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { CalendarCreatorComponent } from '../calendar-creator/calendar-creator.component';
 import { Store } from '@ngrx/store';
 import { getTrainingPlanName } from 'src/app/store/selectors/training-plans-data.selectors';
+import { ModalMediatorService } from 'src/app/shared/components/modal/modal-mediator.service';
 
 @Component({
   selector: 'app-calendar-info',
@@ -33,7 +32,7 @@ export class CalendarInfoComponent implements OnInit {
 
   constructor(
     private menuService: MenuService,
-    private modalService: ModalService,
+    private modalMediatorService: ModalMediatorService,
     private store: Store
   ) {}
 
@@ -61,23 +60,31 @@ export class CalendarInfoComponent implements OnInit {
     );
   };
 
-  private openCreator = () => {
-    this.modalService
-      .instantinateModal(ModalComponent, CalendarCreatorComponent, {
+  private loadTrainingPlan = () => this.store.dispatch(LoadingTrainingPlan());
+
+  private deleteTrainingPlanAction = () =>
+    this.store.dispatch(DeleteTrainingPlan({ id: this.id }));
+
+  private loadTrainingPlanList = () =>
+    this.store.dispatch(LoadingTrainingPlansList());
+
+  private openCreator = () =>
+    this.modalMediatorService
+      .OpenTrainingPlanCreator({
         title: 'Training plan creator',
         style: [{ width: '40rem' }],
       })
+      .pipe(take(1))
       .subscribe((data) => {
         if (data) {
-          this.store.dispatch(LoadingTrainingPlan());
+          this.loadTrainingPlan();
           this.store.dispatch(CreateNewTrainingPlan({ newTrainingPlan: data }));
         }
       });
-  };
 
   private deleteTrainingPlan = () => {
-    this.store.dispatch(LoadingTrainingPlansList());
-    this.store.dispatch(LoadingTrainingPlan());
-    this.store.dispatch(DeleteTrainingPlan({ id: this.id }));
+    this.loadTrainingPlanList();
+    this.loadTrainingPlan();
+    this.deleteTrainingPlanAction();
   };
 }

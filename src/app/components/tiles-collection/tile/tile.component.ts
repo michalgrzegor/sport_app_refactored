@@ -1,3 +1,4 @@
+import { take, tap } from 'rxjs/operators';
 import { Association } from './../../../shared/models/training-plan.interface';
 import { Tile } from './../../../shared/models/tile.interface';
 import {
@@ -16,6 +17,8 @@ import {
   RemoveTileFromDay,
   SetIsCalendarDataLoading,
 } from 'src/app/store/actions/calendar-data.actions';
+import { BreakePointService } from 'src/app/shared/services/breakpoint.service';
+import { ModalMediatorService } from 'src/app/shared/components/modal/modal-mediator.service';
 
 @Component({
   selector: 'app-tile',
@@ -33,7 +36,12 @@ export class TileComponent implements OnInit, AfterViewInit {
 
   public isOpen = false;
 
-  constructor(private renderer: Renderer2, private store: Store) {}
+  constructor(
+    private renderer: Renderer2,
+    private store: Store,
+    private breakePointService: BreakePointService,
+    private modalMediatorService: ModalMediatorService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -72,9 +80,27 @@ export class TileComponent implements OnInit, AfterViewInit {
       SetIsCalendarDataLoading({ isCalendarDataLoading: true })
     );
 
+  private openTileEditor = () =>
+    this.modalMediatorService.OpenTileEditorComponent({
+      title: 'Tile Editor',
+      style: [{ height: '80vh' }, { width: '90vw' }],
+    });
+
   public editTile = () => {
     this.store.dispatch(SetTileToEdit({ tile: this.tile }));
-    this.setRightMenu();
+    this.breakePointService.isWeb
+      .pipe(
+        take(1),
+        tap((isWeb) => {
+          if (isWeb) {
+            this.setRightMenu();
+          } else {
+            this.modalMediatorService.closeModal('tilesCollection');
+            this.openTileEditor();
+          }
+        })
+      )
+      .subscribe();
   };
 
   public deleteTile = () => {

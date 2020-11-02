@@ -1,5 +1,5 @@
 import { TileEditorService } from './../tile-editor.service';
-import { Tile, TileActivity } from './../../../shared/models/tile.interface';
+import { Tile } from './../../../shared/models/tile.interface';
 import { FormService } from './../../../shared/services/form.service';
 import {
   AfterViewInit,
@@ -13,13 +13,8 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import {
-  CreateTile,
-  RemoveTileFromEdit,
-  UpdateTile,
-} from '../../../store/actions/tile.actions';
+import { RemoveTileFromEdit } from '../../../store/actions/tile.actions';
 import { Subscription } from 'rxjs';
-import { SetRightMenuComponent } from 'src/app/store/actions/menu.actions';
 
 @Component({
   selector: 'app-tile-editor-training',

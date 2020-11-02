@@ -17,6 +17,7 @@ export class TilesCollectionComponent implements OnInit, OnDestroy {
   public isWeb$: Observable<boolean>;
   private subscription: Subscription = new Subscription();
   public cdkDropListConnectedTo: string[];
+  public key: string;
 
   constructor(
     private store: Store,

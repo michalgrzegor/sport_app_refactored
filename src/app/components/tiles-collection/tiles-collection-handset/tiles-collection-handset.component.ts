@@ -1,7 +1,7 @@
+import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { ModalDataOptions } from 'src/app/shared/models/modal-options';
 import { Tile } from 'src/app/shared/models/tile.interface';
 import { TileAssociationsService } from 'src/app/shared/services/tile-associations.service';
@@ -16,7 +16,7 @@ export class TilesCollectionHandsetComponent implements OnInit {
   public passData: ModalDataOptions;
   public tiles$: Observable<Tile[]>;
   public selectedTile: Tile;
-  private key: string;
+  public key: string;
 
   constructor(
     private store: Store,
@@ -26,7 +26,6 @@ export class TilesCollectionHandsetComponent implements OnInit {
 
   ngOnInit(): void {
     this.tiles$ = this.store.select(GetTiles);
-    console.log(this.passData);
   }
 
   public selectTile = (tile: Tile) => {
@@ -39,6 +38,6 @@ export class TilesCollectionHandsetComponent implements OnInit {
       this.passData.sessionIndex,
       this.passData.sessionLength
     );
-    this.modalService.closeModal(this.key);
+    this.modalService.emitData('tilesCollectionHandset', true);
   };
 }

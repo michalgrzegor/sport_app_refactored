@@ -24,13 +24,11 @@ import {
   SetPreviousPage,
   SetNextPage,
 } from '../../../store/actions/calendar-data.actions';
-import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
-import { CalendarCreatorComponent } from '../calendar-creator/calendar-creator.component';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap, take } from 'rxjs/operators';
 import * as fromCalendarDataActions from '../../../store/actions/calendar-data.actions';
 import { CreateNewTrainingPlan } from 'src/app/store/actions/training-plans-data.actions';
 import { CalendarDay } from 'src/app/shared/models/calendar.interface';
+import { ModalMediatorService } from 'src/app/shared/components/modal/modal-mediator.service';
 
 @Component({
   selector: 'app-calendar-ui',
@@ -53,7 +51,7 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store,
-    private modalService: ModalService,
+    private modalMediatorService: ModalMediatorService,
     private calendarCreator: CalendarCreatorService,
     private calendarDayOpenedService: CalendarDayOpenedService
   ) {}
@@ -92,18 +90,18 @@ export class CalendarUiComponent implements OnInit, OnDestroy {
       .pipe(tap((page) => (this.actualPage = page)));
   }
 
-  public openCreator = () => {
-    this.modalService
-      .instantinateModal(ModalComponent, CalendarCreatorComponent, {
+  public openCreator = () =>
+    this.modalMediatorService
+      .OpenTrainingPlanCreator({
         title: 'Training plan creator',
         style: [{ width: '40rem' }],
       })
+      .pipe(take(1))
       .subscribe((data) => {
         if (data) {
           this.store.dispatch(CreateNewTrainingPlan({ newTrainingPlan: data }));
         }
       });
-  };
 
   public previousMonth = () => {
     this.store.dispatch(SetPreviousPage());
