@@ -94,12 +94,15 @@ export class LeftToolbarNavigatorComponent
     }
   };
 
-  private changeComponent = (componentName: string) => {
+  private changeComponent = (
+    componentName: string,
+    isRouterAdress: boolean
+  ) => {
     if (this.isWeb) {
       this.store.dispatch(
         SetRightMenuComponent({ rightComponent: componentName })
       );
-    } else {
+    } else if (isRouterAdress) {
       this.openModal(componentName);
     }
   };
@@ -108,11 +111,12 @@ export class LeftToolbarNavigatorComponent
     const button = this.HTMLNavigatorElementsArray[index];
     const rightPanelComponent = button.getAttribute('rightpanel');
     const routerAddress = button.getAttribute('routeraddress');
-    if (routerAddress) {
+    const addressesUnderDevelopment = ['athletecard', 'board', 'loops'];
+    if (routerAddress && !addressesUnderDevelopment.includes(routerAddress)) {
       this.navigateToAddress(routerAddress);
     }
     if (rightPanelComponent) {
-      this.changeComponent(rightPanelComponent);
+      this.changeComponent(rightPanelComponent, !routerAddress);
     }
     this.toggleLeftMenu();
   };

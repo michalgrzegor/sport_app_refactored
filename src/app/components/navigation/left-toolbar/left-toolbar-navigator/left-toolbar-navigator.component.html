@@ -13,7 +13,8 @@
       #btn
       routeraddress="athletecard"
       rightpanel="athletemanager"
-      class="customBtn"
+      class="customBtn customBtn__disabled"
+      disabled
     >
       <i class="material-icons">supervised_user_circle</i>
       <span *ngIf="isLeftOpen$ | async" class="element__name"
@@ -28,13 +29,13 @@
     </button>
   </div>
   <div class="left-toolbar__element">
-    <button #btn routeraddress="board" rightpanel="tp" class="customBtn">
+    <button #btn routeraddress="board" rightpanel="tp" class="customBtn customBtn__disabled" disabled>
       <i class="material-icons">dashboard</i>
       <span *ngIf="isLeftOpen$ | async" class="element__name">Board</span>
     </button>
   </div>
   <div class="left-toolbar__element">
-    <button #btn routeraddress="loops" class="customBtn">
+    <button #btn routeraddress="loops" class="customBtn customBtn__disabled" disabled>
       <i class="material-icons">loop</i>
       <span *ngIf="isLeftOpen$ | async" class="element__name">Loops</span>
     </button>
