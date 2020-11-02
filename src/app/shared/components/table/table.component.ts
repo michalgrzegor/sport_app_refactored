@@ -1,3 +1,5 @@
+import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { BreakePointService } from 'src/app/shared/services/breakpoint.service';
 import {
   AfterViewInit,
   Component,
@@ -16,6 +18,7 @@ import { LegendElement } from '../../../components/tp-menu/tp-menu.component';
 import { TrainingPlanInfo } from '../../models/training-plan.interface';
 import { AthleteInformations } from '../../models/athlete.interface';
 import { LoadingTrainingPlan } from '../../../store/actions/training-plans-data.actions';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-table',
@@ -33,7 +36,12 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   public sortIndex: number = null;
   public activeId: string;
 
-  constructor(private renderer: Renderer2, private store: Store) {}
+  constructor(
+    private renderer: Renderer2,
+    private store: Store,
+    private modalService: ModalService,
+    private breakePointService: BreakePointService
+  ) {}
 
   ngOnInit(): void {
     this.subscription.add(
@@ -79,16 +87,26 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   };
 
+  private loadTrainingPlan = () => this.store.dispatch(LoadingTrainingPlan());
+
+  private emitData = () =>
+    this.breakePointService.isWeb.pipe(take(1)).subscribe((isWeb) => {
+      if (!isWeb) {
+        this.modalService.emitData('trainingPlanMenu', true);
+      }
+    });
+
   private makeRequest = (id: string, type: string) => {
     switch (type) {
       case 'athlete':
         // tutaj odpala store athlete
         break;
       case 'program':
-        this.store.dispatch(LoadingTrainingPlan());
+        this.loadTrainingPlan();
         this.store.dispatch(
           fromTrainingPlansDataActions.LoadTrainingPlan({ payload: id })
         );
+        this.emitData();
         break;
     }
   };

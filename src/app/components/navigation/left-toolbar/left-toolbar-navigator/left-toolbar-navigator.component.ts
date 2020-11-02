@@ -1,3 +1,4 @@
+import { take } from 'rxjs/operators';
 import { TilesCollectionComponent } from './../../../tiles-collection/tiles-collection.component';
 import { ToggleLeftMenu } from './../../../../store/actions/menu.actions';
 import {
@@ -86,23 +87,27 @@ export class LeftToolbarNavigatorComponent
         });
         break;
       case 'tp':
-        this.modalMediatorService.OpenTrainingPlanMenuComponent({
-          title: 'Programs board',
-          style: [{ height: '80vh' }, { width: '90vw' }],
-        });
+        this.modalMediatorService
+          .OpenTrainingPlanMenuComponent({
+            title: 'Programs board',
+            style: [{ height: '80vh' }, { width: '90vw' }],
+          })
+          .pipe(take(1))
+          .subscribe((data) => {
+            if (data) {
+              this.modalMediatorService.closeModal('trainingPlanMenu');
+            }
+          });
         break;
     }
   };
 
-  private changeComponent = (
-    componentName: string,
-    isRouterAdress: boolean
-  ) => {
+  private changeComponent = (componentName: string) => {
     if (this.isWeb) {
       this.store.dispatch(
         SetRightMenuComponent({ rightComponent: componentName })
       );
-    } else if (isRouterAdress) {
+    } else {
       this.openModal(componentName);
     }
   };
@@ -115,8 +120,11 @@ export class LeftToolbarNavigatorComponent
     if (routerAddress && !addressesUnderDevelopment.includes(routerAddress)) {
       this.navigateToAddress(routerAddress);
     }
-    if (rightPanelComponent) {
-      this.changeComponent(rightPanelComponent, !routerAddress);
+    if (
+      rightPanelComponent &&
+      !addressesUnderDevelopment.includes(routerAddress)
+    ) {
+      this.changeComponent(rightPanelComponent);
     }
     this.toggleLeftMenu();
   };
