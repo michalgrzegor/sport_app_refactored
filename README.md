@@ -1,27 +1,44 @@
-# Sportapp
+# Sport App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.3.
+### Application for coaching athletes
 
-## Development server
+![Logo](work_1.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Link to app
 
-## Code scaffolding
+[sport app](https://goofy-elion-e84290.netlify.app/)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## General Info
 
-## Build
+Application to create training and nutrition plans. Analysis of data collected from training. Creating a board with notes.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Tech info
 
-## Running unit tests
+This code is a refactored application from [this repository](https://github.com/michalgrzegor/sport-app).
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- The sports app is written in **Angular 10**.
+- The legacy code was using libraries like **moment.js**, **lodash.js**, **highcharts.js**. Authentication and authorization were implemented using **auth0.js**.
+- In the refactored application, I used **date-fns.js** to manage all dates.
+- I used the **redux** (**ngrx**) library to manage the state of the application.
+- Authentication and authorization have been implemented based on the **OAuth 2.0** protocol using
+  the **Authorization Code Grant** flow.
+- An **access token** is stored in an ngrx store and when refreshing the page or when the access token
+  expires, **the refresh token** allows an application to obtain a new access token.
+- **Angular SDK** helped me create **drag and drop** functionality.
+- The project uses **methodology BEM** to name CSS classes.
+- I used the **RxJS** library to handle asynchronous events.
 
-## Running end-to-end tests
+## Technologies and libraries
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+- angular 10
+- ngrx
+- OAuth 2.0
+- date-fns.js
+- SASS
+- methodology BEM
+- RxJS
+- ESLint
 
-## Further help
+## Link to REST API
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+[rest api](https://github.com/matigrzegor/sport-api)
