@@ -1,7 +1,35 @@
+@import "../../shared/styles/colors";
+@import "../../shared/styles/mixins";
+
 .auth {
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &__btns {
+    width: 36rem;
+    height: 24rem;
+    @include boxShadowPreview();
+    border-radius: 4px;
+    padding: 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__header {
+    @include textRaleway(800, 1.8rem);
+    text-transform: uppercase;
+    width: 100%;
+    text-align: center;
+  }
+
+  &__btn {
+    padding: 1.2rem;
+    min-width: 12.8rem;
+    border: 1px solid $fontWhiteMediumContrast;
+  }
 }
