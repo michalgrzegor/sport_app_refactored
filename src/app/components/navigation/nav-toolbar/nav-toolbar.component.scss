@@ -1,51 +1,60 @@
 @import "../../../shared/styles/colors";
 @import "../../../shared/styles/mixins";
 
-.nav__container {
+.nav {
   background: $mainGreenLight;
   height: 6.4rem;
   width: 100%;
   z-index: 1000;
   @include boxShadow();
-  .container-center {
+
+  &__container-center {
     max-width: 144rem;
     width: 100%;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
+  }
 
-    .nav__subcontainer {
-      max-width: 50%;
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      height: 6.4rem;
+  &__subcontainer {
+    max-width: 50%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 6.4rem;
+  }
 
-      .nav__burger {
-        width: 6.4rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+  &__burger {
+    width: 6.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-        button {
-          min-width: 4.8rem;
-          height: 4.8rem;
-          padding: 0;
-          border-radius: 50%;
-        }
-      }
+  &__setting {
+    height: 100%;
+    padding-right: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-      .nav__logo {
-        width: 12.8rem;
-      }
-    }
+  &__btn {
+    min-width: 4.8rem;
+    height: 4.8rem;
+    padding: 0;
+    border-radius: 50%;
+  }
 
-    .position--left {
-      justify-content: flex-start;
-    }
+  &__logo {
+    width: 12.8rem;
+  }
 
-    .position--right {
-      justify-content: flex-end;
-    }
+  .position--left {
+    justify-content: flex-start;
+  }
+
+  .position--right {
+    justify-content: flex-end;
   }
 }

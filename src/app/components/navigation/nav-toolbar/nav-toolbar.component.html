@@ -1,8 +1,8 @@
-<div class="nav__container">
-  <div class="container-center">
+<div class="nav">
+  <div class="nav__container-center">
     <div class="nav__subcontainer position--left">
       <div class="nav__burger">
-        <button mat-button class="customBtn" (click)="toggleLeftMenu()">
+        <button mat-button class="customBtn nav__btn" (click)="toggleLeftMenu()">
           <i class="material-icons">menu</i>
         </button>
       </div>
@@ -11,7 +11,12 @@
     <div class="nav__subcontainer position--right">
       <div class="nav__upgrade"></div>
       <div class="nav__notification"></div>
-      <div class="nav__setting"></div>
+      <div class="nav__setting">
+        <button mat-button class="customBtn nav__btn" (click)="openMenu($event)">
+          <i class="material-icons">settings</i>
+        </button>
+        <ng-template #button_menu></ng-template>
+      </div>
     </div>
   </div>
 </div>

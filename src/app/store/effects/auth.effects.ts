@@ -79,6 +79,23 @@ export class AuthEfects {
     )
   );
 
+  logOut$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.LogOut),
+      mergeMap(() =>
+        this.httpAuthService.logOut().pipe(
+          map((response) => {
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('refresh_token_created_at');
+            localStorage.removeItem('refresh_token_expired_time');
+            this.router.navigate(['/login']);
+            return authActions.HandleLogOut();
+          })
+        )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private httpAuthService: HttpAuthService,

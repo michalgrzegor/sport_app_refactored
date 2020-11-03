@@ -59,7 +59,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
           .select(GetShouldUpdateTrainingPlan)
           .pipe(
             map((shouldLoad) => {
-              console.log(shouldLoad);
               if (shouldLoad) {
                 this.upDateTrainingPlan();
               }

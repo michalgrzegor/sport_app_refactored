@@ -30,6 +30,12 @@ const authReducer = createReducer(
   on(authActions.HandleError, (state, { errorMessage }) => ({
     ...state,
     error: errorMessage,
+  })),
+  on(authActions.HandleLogOut, (state) => ({
+    ...state,
+    isInAuthProcess: false,
+    isAuthenticated: false,
+    accessToken: null,
   }))
 );
 
