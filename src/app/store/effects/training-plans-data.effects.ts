@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, catchError, switchMap, tap, mergeMap } from 'rxjs/operators';
-
-import { Store } from '@ngrx/store';
 import * as trainingPlansDataActions from '../actions/training-plans-data.actions';
 import { HttpTrainingPlanDataService } from 'src/app/shared/services/http-training-plan-data.service';
 import { of } from 'rxjs';
@@ -104,7 +102,6 @@ export class TrainingPlansDataEfects {
 
   constructor(
     private actions$: Actions,
-    private httpTrainingPlanDataService: HttpTrainingPlanDataService,
-    private store: Store
+    private httpTrainingPlanDataService: HttpTrainingPlanDataService
   ) {}
 }

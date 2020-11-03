@@ -16,3 +16,8 @@ export const GetTileToEdit = createSelector(
   selectFeature,
   (tile) => tile.tileToEdit
 );
+
+export const GetShouldUpdateTrainingPlan = createSelector(
+  selectFeature,
+  (tile) => tile.shouldUpdateTrainingPlan
+);

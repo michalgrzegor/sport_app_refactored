@@ -32,7 +32,7 @@ const trainingPlansDataReducer = createReducer(
       ...state,
       trainingPlansLoading: false,
       trainingPlans: trainingPlansList ? [...trainingPlansList] : null,
-      trainingPlanLoading: trainingPlansList.length > 0 ? true : false,
+      trainingPlanLoading: trainingPlansList?.length > 0 ? true : false,
     })
   ),
   on(TrainingPlansDataActions.LoadingTrainingPlan, (state) => ({

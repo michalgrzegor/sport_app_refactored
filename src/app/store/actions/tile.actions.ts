@@ -10,6 +10,11 @@ export const SetTiles = createAction(
   props<{ tiles: Tile[] }>()
 );
 
+export const SetShouldUpdateTrainingPlan = createAction(
+  '[Tile API] SET_SHOULD_UPDATE_TRAINING_PLAN',
+  props<{ setUpdate: boolean }>()
+);
+
 export const CreateTile = createAction(
   '[Tile API] CREATE_TILE',
   props<{ tile: Tile }>()

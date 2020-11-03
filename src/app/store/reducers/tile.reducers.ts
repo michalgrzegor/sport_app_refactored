@@ -5,6 +5,7 @@ import * as TileActions from '../actions/tile.actions';
 export interface TileState {
   isTilesLoading: boolean;
   shouldLoadingTiles: boolean;
+  shouldUpdateTrainingPlan: boolean;
   tiles: Tile[];
   tileToEdit: Tile;
 }
@@ -12,6 +13,7 @@ export interface TileState {
 const InitialState: TileState = {
   isTilesLoading: true,
   shouldLoadingTiles: true,
+  shouldUpdateTrainingPlan: false,
   tiles: [],
   tileToEdit: null,
 };
@@ -32,10 +34,15 @@ const menuReducer = createReducer(
       tiles: newTiles,
     };
   }),
+  on(TileActions.SetShouldUpdateTrainingPlan, (state, { setUpdate }) => ({
+    ...state,
+    shouldUpdateTrainingPlan: setUpdate,
+  })),
   on(TileActions.RemoveFromTilesCollection, (state, { tile }) => {
     const newTiles = [...state.tiles.filter((t) => t.id !== tile.id)];
     return {
       ...state,
+      shouldUpdateTrainingPlan: true,
       tiles: newTiles,
     };
   }),
@@ -57,6 +64,7 @@ const menuReducer = createReducer(
     newTiles[index] = tile;
     return {
       ...state,
+      shouldUpdateTrainingPlan: true,
       tiles: newTiles,
     };
   })

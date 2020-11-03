@@ -1,9 +1,22 @@
-import { shouldLoadingTiles } from './../../store/selectors/tile.selectors';
+import {
+  getTrainingPlan,
+  getTrainingPlansList,
+} from './../../store/selectors/training-plans-data.selectors';
+import { SetShouldUpdateTrainingPlan } from './../../store/actions/tile.actions';
+import {
+  LoadingTrainingPlan,
+  SetTrainingPlan,
+  SetTrainingPlansList,
+} from './../../store/actions/training-plans-data.actions';
+import {
+  shouldLoadingTiles,
+  GetShouldUpdateTrainingPlan,
+} from './../../store/selectors/tile.selectors';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap, take } from 'rxjs/operators';
 import * as fromTrainingPlansDataActions from '../../store/actions/training-plans-data.actions';
 import {
   isTrainingPlanLoading,
@@ -26,11 +39,13 @@ export class CalendarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription
       .add(
-        this.store.select(shouldLoadTrainingPlansList).subscribe((data) => {
-          if (data) {
-            this.loadTrainingPlansList();
-          }
-        })
+        this.store
+          .select(shouldLoadTrainingPlansList)
+          .subscribe((shouldLoad) => {
+            if (shouldLoad) {
+              this.loadTrainingPlansList();
+            }
+          })
       )
       .add(
         this.store.select(shouldLoadTrainingPlan).subscribe((data) => {
@@ -38,6 +53,19 @@ export class CalendarComponent implements OnInit, OnDestroy {
             this.loadTrainingPlan(data);
           }
         })
+      )
+      .add(
+        this.store
+          .select(GetShouldUpdateTrainingPlan)
+          .pipe(
+            map((shouldLoad) => {
+              console.log(shouldLoad);
+              if (shouldLoad) {
+                this.upDateTrainingPlan();
+              }
+            })
+          )
+          .subscribe()
       )
       .add(
         this.store
@@ -54,13 +82,28 @@ export class CalendarComponent implements OnInit, OnDestroy {
       );
   }
 
+  private upDateTrainingPlan = () =>
+    this.store
+      .select(getTrainingPlan)
+      .pipe(
+        take(1),
+        tap(() => this.store.dispatch(LoadingTrainingPlan())),
+        map((trainingPlan) => this.loadTrainingPlan(trainingPlan.id))
+      )
+      .subscribe();
+
   private loadTrainingPlansList = () =>
     this.store.dispatch(fromTrainingPlansDataActions.LoadTrainingPlansList());
 
-  private loadTrainingPlan = (id: number) =>
+  private loadTrainingPlan = (id: number) => {
     this.store.dispatch(
       fromTrainingPlansDataActions.LoadTrainingPlan({ payload: `${id}` })
     );
+    this.setShouldUpdateTrainingPlan();
+  };
+
+  private setShouldUpdateTrainingPlan = () =>
+    this.store.dispatch(SetShouldUpdateTrainingPlan({ setUpdate: false }));
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

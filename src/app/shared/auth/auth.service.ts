@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CONFIG } from './config';
 
 @Injectable({
   providedIn: 'root',
@@ -6,18 +7,10 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   private CONFIG: { [propName: string]: string };
   private URL: string;
+
   constructor() {
     this.URL = 'https://stormy-plains-57531.herokuapp.com/';
-
-    this.CONFIG = {
-      client_id: '47IJONQpYYxJa9SfynWN2Fgh7dJ4mvA-wDqHLF-RLSo',
-      // redirect_uri: 'http://localhost:4200/redirect',
-      redirect_uri: 'https://goofy-elion-e84290.netlify.app/redirect',
-      authorization_endpoint: 'oauth/authorize',
-      token_endpoint: 'oauth/token',
-      requested_scopes: 'openid',
-      client_secret: 'GMaLKm0YXWuKKQiqNN9qhPv5np2yVlgI_9rCuaky2CI',
-    };
+    this.CONFIG = CONFIG;
   }
 
   private generateRandomString(): string {

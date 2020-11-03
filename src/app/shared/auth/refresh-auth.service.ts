@@ -5,23 +5,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SuccessfulAccesToken } from '../models/auth.interface';
 import { Store } from '@ngrx/store';
 import * as fromAuthActions from '../../store/actions/auth.actions';
+import { CONFIG } from './config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RefreshAuthService {
-  private CONFIG = {
-    client_id: '47IJONQpYYxJa9SfynWN2Fgh7dJ4mvA-wDqHLF-RLSo',
-    // redirect_uri: 'http://localhost:4200/redirect',
-    redirect_uri: 'https://goofy-elion-e84290.netlify.app/redirect',
-    authorization_endpoint: 'oauth/authorize',
-    token_endpoint: 'oauth/token',
-    requested_scopes: 'openid',
-    client_secret: 'GMaLKm0YXWuKKQiqNN9qhPv5np2yVlgI_9rCuaky2CI',
-  };
+  private CONFIG: { [propName: string]: string };
   private URL = 'https://stormy-plains-57531.herokuapp.com/';
 
-  constructor(private httpClient: HttpClient, private store: Store) {}
+  constructor(private httpClient: HttpClient, private store: Store) {
+    this.CONFIG = CONFIG;
+  }
 
   private getHttpOptions = (): { headers: HttpHeaders } => ({
     headers: new HttpHeaders({
