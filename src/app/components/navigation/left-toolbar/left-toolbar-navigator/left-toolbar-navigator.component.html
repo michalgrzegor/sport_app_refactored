@@ -8,7 +8,7 @@
       >Main panel actions:</span
     >
   </div>
-  <div class="left-toolbar__element">
+  <!-- <div class="left-toolbar__element">
     <button
       #btn
       routeraddress="athletecard"
@@ -21,14 +21,14 @@
         >Athlete cards</span
       >
     </button>
-  </div>
+  </div> -->
   <div class="left-toolbar__element">
-    <button #btn routeraddress="calendar" rightpanel="tp" class="customBtn">
+    <button #btn routeraddress="calendar" rightpanel="tp" title="Programs" class="customBtn">
       <i class="material-icons">assignment</i>
       <span *ngIf="isLeftOpen$ | async" class="element__name">Programs</span>
     </button>
   </div>
-  <div class="left-toolbar__element">
+  <!-- <div class="left-toolbar__element">
     <button #btn routeraddress="board" rightpanel="tp" class="customBtn customBtn__disabled" disabled>
       <i class="material-icons">dashboard</i>
       <span *ngIf="isLeftOpen$ | async" class="element__name">Board</span>
@@ -39,7 +39,7 @@
       <i class="material-icons">loop</i>
       <span *ngIf="isLeftOpen$ | async" class="element__name">Loops</span>
     </button>
-  </div>
+  </div> -->
   <div class="left-toolbar__element click--none">
     <i class="material-icons">chrome_reader_mode</i>
     <span *ngIf="isLeftOpen$ | async" class="element__name"
@@ -47,7 +47,7 @@
     >
   </div>
   <div class="left-toolbar__element">
-    <button #btn rightpanel="tilecollection" class="customBtn">
+    <button #btn rightpanel="tilecollection" class="customBtn" title="Tile collection">
       <i class="material-icons">collections_bookmark</i>
       <span *ngIf="isLeftOpen$ | async" class="element__name"
         >Tile collection</span
@@ -55,13 +55,13 @@
     </button>
   </div>
   <div class="left-toolbar__element">
-    <button #btn rightpanel="tileeditor" class="customBtn">
+    <button #btn rightpanel="tileeditor" class="customBtn" title="Tile editor">
       <i class="material-icons">edit</i>
       <span *ngIf="isLeftOpen$ | async" class="element__name">Tile editor</span>
     </button>
   </div>
   <div class="left-toolbar__element">
-    <button #btn rightpanel="tp" class="customBtn">
+    <button #btn rightpanel="tp" class="customBtn" title="Programs board">
       <i class="material-icons">list</i>
       <span *ngIf="isLeftOpen$ | async" class="element__name">Programs board</span>
     </button>
