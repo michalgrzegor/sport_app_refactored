@@ -17,15 +17,15 @@ Application to create training and nutrition plans. Analysis of data collected f
 This code is a refactored application from [this repository](https://github.com/michalgrzegor/sport-app).
 
 - The sports app is written in **Angular 10**.
-- The legacy code was using libraries like **moment.js**, **lodash.js**, **highcharts.js**. Authentication and authorization were implemented using **auth0.js**.
+- The legacy code used libraries like **moment.js**, **lodash.js**, **highcharts.js**. Authentication and authorization were implemented using **auth0.js**.
 - In the refactored application, I used **date-fns.js** to manage all dates.
 - I used the **redux** (**ngrx**) library to manage the state of the application.
-- Authentication and authorization have been implemented based on the **OAuth 2.0** protocol using
+- Authentication and authorization were implemented based on the **OAuth 2.0** protocol using
   the **Authorization Code Grant** flow.
-- An **access token** is stored in an ngrx store and when refreshing the page or when the access token
-  expires, **the refresh token** allows an application to obtain a new access token.
+- An **access token** is stored in an ngrx store and when refreshing the page or when an access token
+  expires, **a refresh token** allows the application to obtain a new access token.
 - **Angular SDK** helped me create **drag and drop** functionality.
-- The project uses **methodology BEM** to name CSS classes.
+- The project uses **BEM methodology** to name CSS classes.
 - I used the **RxJS** library to handle asynchronous events.
 
 ## Technologies and libraries
